@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import heroImage from "../../assets/forstehjelp.jpg"
 
 const OuterContainer = styled.div`
   min-width: 100rem;
@@ -9,7 +10,7 @@ const OuterContainer = styled.div`
   min-height: 42rem;
   max-height: 60rem;
   position: relative;
-  background-image: url("../../assets/forstehjelp.jpg");
+  background-image: url(${heroImage});
 `;
 
 const H1 = styled.h1`
