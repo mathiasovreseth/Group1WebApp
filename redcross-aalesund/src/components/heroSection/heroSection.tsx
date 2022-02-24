@@ -1,13 +1,13 @@
 import React from "react";
-function HeroSection() {
-<<<<<<< HEAD
-    return (
-        <div id={"hero-section"}>Harry Maguire asdf</div>
-    )
+import styled from "styled-components";
 
-=======
-  return <div id={"hero-section"}>Harry Maguire</div>;
->>>>>>> cfadc3c4e65788a8d18fbcc87eeda805b507ce5c
+const OuterContainer = styled.div`
+  color: red;
+  font-size: 3.6rem;
+`;
+
+function HeroSection() {
+  return <OuterContainer id={"hero-section"}>Harry Maguire</OuterContainer>;
 }
 
 export default HeroSection;
