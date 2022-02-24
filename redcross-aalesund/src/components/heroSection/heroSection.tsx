@@ -12,12 +12,17 @@ const OuterContainer = styled.div`
   background-color: white;
 `;
 
+const H1 = styled.h1`
+    color: black;
+`;
+
 const Button = styled.button`
   color: red;
 `;
 
 function HeroSection() {
-    return <OuterContainer id={"hero-section"}>Harry Maguire
+    return <OuterContainer id={"hero-section"}>
+        <H1>Lorem Ipsum</H1>
         <Button>Book your training</Button>
     </OuterContainer>;
 }
