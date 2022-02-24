@@ -3,21 +3,33 @@ import styled from "styled-components";
 
 const OuterContainer = styled.div`
   min-width: 100rem;
-  height: 20vw;
+  height: 60vw;
   border: 1px solid black;
   background-size: 100%;
   min-height: 42rem;
   max-height: 60rem;
   position: relative;
-  background-color: white;
+  background-image: url("../../assets/forstehjelp.jpg");
 `;
 
 const H1 = styled.h1`
-    color: black;
+  color: black;
+  font-size: 4.8rem;
+  font-weight: normal;
+  margin: 10% 8rem;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const Button = styled.button`
-  color: red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 8rem;
+  margin-top: 28%;
+  font-size: 2.4rem;
+  padding: 1.5rem 2rem;
 `;
 
 function HeroSection() {
