@@ -5,10 +5,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-size: 62.5%;
-    background: teal;
-    font-family: Open-Sans, Helvetica, Sans-Serif;
+    background: #f3f3f3;
     font-family: myriad-pro, sans-serif;
     font-weight: 700;
+    box-sizing: border-box;
     font-style: normal;
   }
 `;
