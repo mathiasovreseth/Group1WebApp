@@ -5,12 +5,12 @@ import heroImage from "../../assets/forstehjelp.jpg"
 const OuterContainer = styled.div`
   min-width: 100rem;
   height: 60vw;
-  border: 1px solid black;
   background-size: 100%;
   min-height: 42rem;
   max-height: 60rem;
   position: relative;
   background-image: url(${heroImage});
+  background-repeat: no-repeat;
 `;
 
 const H1 = styled.h1`
@@ -31,6 +31,8 @@ const Button = styled.button`
   margin-top: 28%;
   font-size: 2.4rem;
   padding: 1.5rem 2rem;
+  background-color: #D52B1E;
+  color: white;
 `;
 
 function HeroSection() {
