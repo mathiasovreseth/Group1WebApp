@@ -14,30 +14,40 @@ const OuterContainer = styled.div`
 `;
 
 const H1 = styled.h1`
-  color: black;
-  font-size: 4.8rem;
+  color: white;
+  background-color: transparent;
+  font-size: 4rem;
   font-weight: normal;
   margin: 10% 8rem;
   position: absolute;
   top: 0;
   left: 0;
+
+  @media (max-width: 60em) {
+    font-size: 3rem;
+  }
 `;
 
 const Button = styled.button`
   position: absolute;
-  top: 0;
-  left: 0;
   margin-left: 8rem;
-  margin-top: 28%;
+  margin-top: 25%;
+  border: 0;
+  border-radius: 0.5rem;
   font-size: 2.4rem;
   padding: 1.5rem 2rem;
   background-color: #D52B1E;
+  top: 0;
+  left: 0;
   color: white;
+  cursor: pointer;
 `;
 
+
+
 function HeroSection() {
-    return <OuterContainer id={"hero-section"}>
-        <H1>Lorem Ipsum</H1>
+    return <OuterContainer>
+        <H1>We value every live. <br/> Serving anyone without exceptions is our goal. <br/> We care for people.</H1>
         <Button>Book your training</Button>
     </OuterContainer>;
 }
