@@ -2,9 +2,8 @@ import React, {Ref} from 'react';
 import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-menu";
 import styled from "styled-components";
 import { FaBars } from 'react-icons/fa';
-const DropdownMenuItem = styled.p`
-    font-size: 1.6rem;
-`;
+import {SmallText} from "../../styles/commonStyles";
+
 
 const MenuButton = styled.button `
   border-radius: 0;
@@ -36,15 +35,15 @@ function MyDropDownMenu() {
                 </MenuButton>
             )}
         >
-            <DropdownItemGroup css={{fontSize: '1.6rem'}} >
-                <DropdownItem css={{fontSize: '1.6rem'}}>
-                    <DropdownMenuItem>About us</DropdownMenuItem>
+            <DropdownItemGroup >
+                <DropdownItem>
+                    <SmallText>About us</SmallText>
                 </DropdownItem>
                 <DropdownItem>
-                    <DropdownMenuItem>Community</DropdownMenuItem>
+                    <SmallText>Community</SmallText>
                 </DropdownItem>
                 <DropdownItem>
-                    <DropdownMenuItem>Company</DropdownMenuItem>
+                    <SmallText>Company</SmallText>
                 </DropdownItem>
             </DropdownItemGroup>
         </DropdownMenu>

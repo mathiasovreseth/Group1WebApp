@@ -16,7 +16,7 @@ const OuterContainer = styled.div`
 const H1 = styled.h1`
   color: white;
   background-color: transparent;
-  font-size: 4rem;
+  font-size: ${props => `${props.theme.fontSizes.xLarge}`};
   font-weight: normal;
   margin: 10% 8rem;
   position: absolute;
@@ -24,7 +24,7 @@ const H1 = styled.h1`
   left: 0;
 
   @media (max-width: 60em) {
-    font-size: 3rem;
+    font-size: ${props => `${props.theme.fontSizes.large}`};
   }
 `;
 
@@ -33,10 +33,10 @@ const Button = styled.button`
   margin-left: 8rem;
   margin-top: 25%;
   border: 0;
-  border-radius: 0.5rem;
-  font-size: 2.4rem;
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  font-size: ${props => `${props.theme.fontSizes.large}`};
   padding: 1.5rem 2rem;
-  background-color: #D52B1E;
+  background-color: ${props => `${props.theme.palette.primary.accentColor}`};
   box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
   top: 0;
   left: 0;

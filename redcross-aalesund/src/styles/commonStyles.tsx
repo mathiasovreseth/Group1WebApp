@@ -10,3 +10,20 @@ export const FlexColumnContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
+export const XSmallText = styled.text`
+    font-size: ${props => `${props.theme.fontSizes.xSmall}`};
+`;
+export const SmallText = styled.text`
+    font-size: ${props => `${props.theme.fontSizes.small}`};
+`;
+export const MediumText = styled.text`
+    font-size: ${props => `${props.theme.fontSizes.medium}`};
+`;
+export const LargeText = styled.text`
+    font-size: ${props => `${props.theme.fontSizes.large}`};
+`;
+export const xLargeText = styled.text`
+    font-size: ${props => `${props.theme.fontSizes.xLarge}`};
+`;
+

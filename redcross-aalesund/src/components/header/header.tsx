@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
 import MyDropDownMenu from "../buttons/dropdownMenu";
+import {LargeText} from "../../styles/commonStyles";
 
 const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-  padding: 0 4rem;
+    padding: 0 4rem;
 
   @media (max-width: 25em) {
     padding: 0 1.6rem;
@@ -23,18 +24,18 @@ const RedCrossImage = styled.img`
 `;
 const Center = styled.div`
     display: flex;
-    @media (max-width: 50em) {
+    @media (max-width: ${props => `${props.theme.breakPoints.tablet}`}) {
       display: none;
     }
 `
 // make this  a link button or sometghin instead of h2
 const LinkElement = styled.h2`
-    font-size: 1.8rem;
-    margin-right: 6rem;
+   font-size: ${props => `${props.theme.fontSizes.medium}`};
+   margin-right: 6rem;
    `;
 // make this a link button or sometghin instead of h2
 const LogInButton = styled.h2`
-   font-size: 1.8rem;
+   font-size: ${props => `${props.theme.fontSizes.medium}`};
    margin-left: 1.6rem;
 `
 
@@ -45,7 +46,7 @@ const RightSection = styled.div`
 
 const DropDownMenuContainer = styled.div `
   display: none;
-  @media (max-width: 50em) {
+  @media (max-width: ${props => `${props.theme.breakPoints.tablet}`}) {
     display: block;
   }
 `;
@@ -61,7 +62,7 @@ function Header() {
         <HeaderContainer>
             <LeftSection>
                 <RedCrossImage src={'red-cross-logo.png'} alt={'Red cross'}/>
-                <h1 style={{fontSize: '2.4rem'}}>Røde kors</h1>
+                <LargeText>Røde kors</LargeText>
             </LeftSection>
                 <Center>
                     <LinkElement>About us</LinkElement>

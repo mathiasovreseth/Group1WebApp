@@ -37,8 +37,8 @@ const FooterLinkContainer= styled.div`
 
 `;
 const FooterLinkItem= styled.h1`
-    font-size: 1.8rem;
-    margin-right: 7rem;
+  font-size: ${props => `${props.theme.fontSizes.medium}`};
+  margin-right: 7rem;
     @media (max-width: 56.25em) {
           margin-right: 0;
           text-align: start;
@@ -71,7 +71,7 @@ const ImageElement = styled.img`
   }
 `;
 const CopyRightText = styled.h1`
-    font-size: 1.6rem;
+    font-size: ${props => `${props.theme.fontSizes.small}`};
     margin-top: 2.4rem;
 
 `;
