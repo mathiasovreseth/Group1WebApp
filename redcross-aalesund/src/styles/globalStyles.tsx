@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-
-
 const GlobalStyle = createGlobalStyle`
   html {
     margin: 2rem;
@@ -25,6 +23,5 @@ const GlobalStyle = createGlobalStyle`
     background: ${props => `${props.theme.palette.common.white}`};
   }
 `;
-
 
 export default GlobalStyle;
