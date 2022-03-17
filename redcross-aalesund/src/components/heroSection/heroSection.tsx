@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import heroImage from "../../assets/forstehjelp.jpg"
 
-const OuterContainer = styled.div`
+const HeroContainer = styled.div`
   min-width: 100rem;
   height: 60vw;
   background-size: 100%;
@@ -26,6 +26,10 @@ const H1 = styled.h1`
   @media (max-width: 60em) {
     font-size: 3rem;
   }
+
+  @media (max-width: 47em) {
+    font-size: 2rem;
+  }
 `;
 
 const Button = styled.button`
@@ -45,12 +49,11 @@ const Button = styled.button`
 `;
 
 
-
 function HeroSection() {
-    return <OuterContainer>
+    return <HeroContainer>
         <H1>We value every live. <br/> Serving anyone without exceptions is our goal. <br/> We care for people.</H1>
         <Button>Book your training</Button>
-    </OuterContainer>;
+    </HeroContainer>;
 }
 
 export default HeroSection;
