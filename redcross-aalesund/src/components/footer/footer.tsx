@@ -5,7 +5,7 @@ import mathiasL from "../../assets/mathiasL.jpeg";
 import mathiasJ from "../../assets/mathiasj.jpeg";
 import sjur from "../../assets/sjur.jpeg";
 import michal from "../../assets/michal.jpeg";
-
+import redCrossImage from "../../assets/red-cross-image.png";
 
 const FooterContainer = styled.div`
     display: flex;
@@ -37,8 +37,8 @@ const FooterLinkContainer= styled.div`
 
 `;
 const FooterLinkItem= styled.h1`
-    font-size: 1.8rem;
-    margin-right: 7rem;
+  font-size: ${props => `${props.theme.fontSizes.medium}`};
+  margin-right: 7rem;
     @media (max-width: 56.25em) {
           margin-right: 0;
           text-align: start;
@@ -71,7 +71,7 @@ const ImageElement = styled.img`
   }
 `;
 const CopyRightText = styled.h1`
-    font-size: 1.6rem;
+    font-size: ${props => `${props.theme.fontSizes.small}`};
     margin-top: 2.4rem;
 
 `;
@@ -87,7 +87,7 @@ function Footer() {
                 <FooterLinkItem>About us</FooterLinkItem>
                 <FooterLinkItem>Community</FooterLinkItem>
                 <FooterLinkItem>Company</FooterLinkItem>
-                <RedCrossImage src={'red-cross-logo.png'} alt={'Red cross'}/>
+                <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
                 <FooterLinkItem>Mobile app</FooterLinkItem>
                 <FooterLinkItem>Community</FooterLinkItem>
                 <FooterLinkItem style={{marginRight: 0}}>Company</FooterLinkItem>
