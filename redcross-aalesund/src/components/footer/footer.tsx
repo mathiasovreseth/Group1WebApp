@@ -5,7 +5,7 @@ import mathiasL from "../../assets/mathiasL.jpeg";
 import mathiasJ from "../../assets/mathiasj.jpeg";
 import sjur from "../../assets/sjur.jpeg";
 import michal from "../../assets/michal.jpeg";
-
+import redCrossImage from "../../assets/red-cross-image.png";
 
 const FooterContainer = styled.div`
     display: flex;
@@ -87,7 +87,7 @@ function Footer() {
                 <FooterLinkItem>About us</FooterLinkItem>
                 <FooterLinkItem>Community</FooterLinkItem>
                 <FooterLinkItem>Company</FooterLinkItem>
-                <RedCrossImage src={'red-cross-logo.png'} alt={'Red cross'}/>
+                <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
                 <FooterLinkItem>Mobile app</FooterLinkItem>
                 <FooterLinkItem>Community</FooterLinkItem>
                 <FooterLinkItem style={{marginRight: 0}}>Company</FooterLinkItem>

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import MyDropDownMenu from "../buttons/dropdownMenu";
 import {LargeText} from "../../styles/commonStyles";
+import redCrossImage from "../../assets/red-cross-image.png";
 
 const HeaderContainer = styled.div`
     display: flex;
@@ -19,8 +20,8 @@ const LeftSection = styled.div`
    align-items: center;
 `
 const RedCrossImage = styled.img`
-    height: 5rem;
-    margin-right: 1.2rem;
+    height: 4rem;
+    margin-right: 1.6rem;
 `;
 const Center = styled.div`
     display: flex;
@@ -61,7 +62,7 @@ function Header() {
     return(
         <HeaderContainer>
             <LeftSection>
-                <RedCrossImage src={'red-cross-logo.png'} alt={'Red cross'}/>
+                <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
                 <LargeText>Røde kors</LargeText>
             </LeftSection>
                 <Center>
