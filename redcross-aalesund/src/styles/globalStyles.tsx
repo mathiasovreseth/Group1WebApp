@@ -6,7 +6,10 @@ const GlobalStyle = createGlobalStyle`
   html {
     margin: 2rem;
   }
-  
+  a:-webkit-any-link {
+    color: inherit;
+    text-decoration: none;
+  }
   * {
     margin: 0;
     padding: 0;
