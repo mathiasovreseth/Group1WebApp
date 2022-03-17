@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
     box-sizing: border-box;
     font-style: normal;
+    overflow-x: hidden;
   }
   body {
     background: #f3f3f3;
