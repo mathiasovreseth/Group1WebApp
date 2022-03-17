@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    margin: 2rem;
+  }
+  
   * {
     margin: 0;
     padding: 0;
