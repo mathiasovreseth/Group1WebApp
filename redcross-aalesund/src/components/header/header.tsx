@@ -1,8 +1,10 @@
-import React from 'react';
-import styled from "styled-components";
+import React, {useContext} from 'react';
+import styled, {DefaultTheme, ThemeContext, ThemeProps, ThemeProvider} from "styled-components";
 import MyDropDownMenu from "../buttons/dropdownMenu";
-import {LargeText} from "../../styles/commonStyles";
+import {LargeText, Li, MediumText} from "../../styles/commonStyles";
 import redCrossImage from "../../assets/red-cross-image.png";
+import {Link} from "react-router-dom";
+import {defaultTheme} from "../../styles/theme";
 
 const HeaderContainer = styled.div`
     display: flex;
@@ -25,17 +27,14 @@ const RedCrossImage = styled.img`
 `;
 const Center = styled.div`
     display: flex;
+    width: 42rem;
+    justify-content: space-between;
     @media (max-width: ${props => `${props.theme.breakPoints.tablet}`}) {
       display: none;
     }
 `
-// make this  a link button or sometghin instead of h2
-const LinkElement = styled.h2`
-   font-size: ${props => `${props.theme.fontSizes.medium}`};
-   margin-right: 6rem;
-   `;
-// make this a link button or sometghin instead of h2
-const LogInButton = styled.h2`
+
+const LogInButton = styled(MediumText)`
    font-size: ${props => `${props.theme.fontSizes.medium}`};
    margin-left: 1.6rem;
 `
@@ -55,10 +54,6 @@ const DropDownMenuContainer = styled.div `
 
 
 function Header() {
-    const options = [
-        'About us', 'Community', 'Company'
-    ];
-    const defaultOption = options[0];
     return(
         <HeaderContainer>
             <LeftSection>
@@ -66,16 +61,24 @@ function Header() {
                 <LargeText>Røde kors</LargeText>
             </LeftSection>
                 <Center>
-                    <LinkElement>About us</LinkElement>
-                    <LinkElement>Community</LinkElement>
-                    <LinkElement>Company</LinkElement>
+                    <Link to='/about'>
+                        <MediumText>About us</MediumText>
+                    </Link>
+                    <Link to='/community'>
+                        <MediumText>Community</MediumText>
+                    </Link>
+                    <Link to='/company'>
+                        <MediumText>Company</MediumText>
+                    </Link>
                 </Center>
 
             <RightSection>
                 <DropDownMenuContainer>
                     <MyDropDownMenu/>
                 </DropDownMenuContainer>
-                <LogInButton>Log in</LogInButton>
+                <Link to={"/login"}>
+                    <LogInButton>Log in</LogInButton>
+                </Link>
             </RightSection>
 
 

@@ -1,18 +1,21 @@
 import React from 'react';
-import HeroSection from "./components/heroSection/heroSection";
 import GlobalStyles from "./styles/globalStyles";
-import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
 import { ThemeProvider } from 'styled-components';
 import {defaultTheme} from "./styles/theme";
+import LandingPage from "./pages/landingPage";
+import {Route, Routes } from 'react-router-dom';
+import AboutPage from "./pages/aboutPage";
+import LoginPage from "./pages/loginPage";
 
 export default function App() {
     return (
         <ThemeProvider theme={defaultTheme}>
             <GlobalStyles/>
-            <Header/>
-            <HeroSection/>
-            <Footer/>
+            <Routes>
+                <Route path={"/"} element={<LandingPage/>}/>
+                <Route path={"/about"} element={<AboutPage/>}/>
+                <Route path={"/login"} element={<LoginPage/>}/>
+            </Routes>
         </ThemeProvider>
     );
 }
