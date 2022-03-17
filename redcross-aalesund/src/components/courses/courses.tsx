@@ -60,25 +60,25 @@ const Textbox = styled.div`
 `;
 
 function Courses() {
-  return (
-    <CoursesContainer>
-      <LeftSection>
-        <Box>1 day course</Box>
-        <Textbox>hellio</Textbox>
-        <SelectButton>Select</SelectButton>
-      </LeftSection>
-      <MiddleSection>
-        <Box>2 day course</Box>
-        <Textbox>yoyoyo</Textbox>
-        <SelectButton>Select</SelectButton>
-      </MiddleSection>
-      <RightSection>
-        <Box>Short conciliation</Box>
-        <Textbox>ayeees</Textbox>
-        <SelectButton>Select</SelectButton>
-      </RightSection>
-    </CoursesContainer>
-  );
+    return (
+        <CoursesContainer>
+            <LeftSection>
+                <Box>1 day course</Box>
+                <Textbox>hellio</Textbox>
+                <SelectButton>Select</SelectButton>
+            </LeftSection>
+            <MiddleSection>
+                <Box>2 day course</Box>
+                <Textbox>yoyoyo</Textbox>
+                <SelectButton>Select</SelectButton>
+            </MiddleSection>
+            <RightSection>
+                <Box>Short conciliation</Box>
+                <Textbox>ayeees</Textbox>
+                <SelectButton>Select</SelectButton>
+            </RightSection>
+        </CoursesContainer>
+    );
 }
 
 export default Courses;
