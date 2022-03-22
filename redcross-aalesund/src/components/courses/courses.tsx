@@ -1,4 +1,5 @@
 import React from "react";
+import { FaSquare } from "react-icons/fa";
 import styled from "styled-components";
 
 const H1 = styled.h1`
@@ -86,27 +87,27 @@ function Courses() {
             <Section>
                 <Box>1 Day Course</Box>
                 <BulletPoints>
-                  <LI> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
-                  <LI> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
-                  <LI> Something else random stuff that doesnt mattter but is nice to have!</LI>
+                  <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
+                  <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
+                  <LI><FaSquare style={{marginRight: ".8rem"}}/> Something else random stuff that doesnt mattter but is nice to have!</LI>
                 </BulletPoints>
                 <SelectButton>Select</SelectButton>
             </Section>
             <Section>
                 <Box>2 Day Course</Box>
                 <BulletPoints>
-                <LI> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
-                <LI> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
-                <LI> Something else random stuff that doesnt mattter but is nice to have!</LI>
+                <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
+                <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
+                <LI><FaSquare style={{marginRight: ".8rem"}}/> Something else random stuff that doesnt mattter but is nice to have!</LI>
                 </BulletPoints>
                 <SelectButton>Select</SelectButton>
             </Section>
             <Section>
                 <Box>Short Conciliation</Box>
                 <BulletPoints>
-                <LI> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
-                <LI> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
-                <LI> Something else random stuff that doesnt mattter but is nice to have!</LI>
+                <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
+                <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
+                <LI><FaSquare style={{marginRight: ".8rem"}}/> Something else random stuff that doesnt mattter but is nice to have!</LI>
                 </BulletPoints>
                 <SelectButton>Select</SelectButton>
             </Section>
