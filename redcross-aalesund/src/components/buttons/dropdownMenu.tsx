@@ -1,11 +1,11 @@
 import React, {Ref} from 'react';
 import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-menu";
 import styled from "styled-components";
-import { FaBars } from 'react-icons/fa';
+import {FaBars} from 'react-icons/fa';
 import {SmallText} from "../../styles/commonStyles";
 
 
-const MenuButton = styled.button `
+const MenuButton = styled.button`
   border-radius: 0;
   background: inherit;
   padding: 0;
@@ -24,18 +24,18 @@ const MenuButton = styled.button `
 function MyDropDownMenu() {
     return (
         <DropdownMenu
-            trigger={({ triggerRef, isSelected, testId, ...providedProps }) => (
+            trigger={({triggerRef, isSelected, testId, ...providedProps}) => (
                 <MenuButton
                     style={{fontSize: '3rem'}}
                     type="button"
                     {...providedProps}
                     ref={triggerRef as Ref<HTMLButtonElement>}
                 >
-                    <FaBars />
+                    <FaBars/>
                 </MenuButton>
             )}
         >
-            <DropdownItemGroup >
+            <DropdownItemGroup>
                 <DropdownItem>
                     <SmallText>About us</SmallText>
                 </DropdownItem>
@@ -49,4 +49,5 @@ function MyDropDownMenu() {
         </DropdownMenu>
     )
 }
+
 export default MyDropDownMenu;
