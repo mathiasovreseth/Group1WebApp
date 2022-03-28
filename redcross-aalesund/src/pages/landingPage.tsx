@@ -11,12 +11,10 @@ import Courses from "../components/courses/courses";
 const LandingPage = () => {
     return (
         <>
-            <Header/>
             <HeroSection/>
             <OurWork/>
             <Courses/>
             <TrustedReviews/>
-            <Footer/>
         </>
     );
 }
