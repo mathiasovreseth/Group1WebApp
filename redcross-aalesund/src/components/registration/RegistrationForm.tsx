@@ -9,10 +9,6 @@ import {
 } from 'formik';
 import {
     FlexColumnContainer,
-    FlexContainer,
-    LargeText,
-    MediumText,
-    SmallText,
     XSmallText
 } from "../../styles/commonStyles";
 import styled from "styled-components";

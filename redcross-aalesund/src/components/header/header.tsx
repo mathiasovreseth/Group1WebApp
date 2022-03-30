@@ -11,7 +11,6 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 4rem;
-
   @media (max-width: 25em) {
     padding: 0 1.6rem;
   }
