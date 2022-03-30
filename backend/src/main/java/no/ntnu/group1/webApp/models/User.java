@@ -73,13 +73,22 @@ public class User {
         this.password = description;
     }
 
+    public Roles getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Roles userRole) {
+        this.userRole = userRole;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
                 ", firstName='" + username + '\'' +
-                ", lastName='" + email + '\'' +
-                ", description='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + userRole+ '\'' +
                 '}';
     }
 }
