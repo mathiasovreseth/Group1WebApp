@@ -78,6 +78,9 @@ function Header() {
                 <Link to={"/login"}>
                     <LogInButton>Log in</LogInButton>
                 </Link>
+                <Link to={"/registration"}>
+                    <LogInButton>Registration</LogInButton>
+                </Link>
             </RightSection>
 
 
