@@ -11,15 +11,13 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
-    public Optional<User> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+//    public Optional<User> findUserByEmail(String email) {
+//        return userRepository.findByEmail(email);
+//    }
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);

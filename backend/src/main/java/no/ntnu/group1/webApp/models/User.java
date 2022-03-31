@@ -15,15 +15,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+
 @Getter
 @ToString
 @Setter
-@Entity
+@Entity(name = "users")
 public class User {
-
-    private @Id
-    @GeneratedValue
-    Long id;
+    public enum Roles {
+        USER,
+        ADMIN
+    }
+    private @Id @GeneratedValue Long id;
     private String username;
     private String email;
     private String password;
@@ -53,7 +55,7 @@ public class User {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, username, email, password);
+        return Objects.hash(id, username);
     }
 
     public Roles getUserRole() {
@@ -63,10 +65,13 @@ public class User {
     public void setUserRole(Roles userRole) {
         this.userRole = userRole;
     }
+<<<<<<< HEAD
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
         return authorities;
     }
+=======
+>>>>>>> ea1564f17bddc06238c6df156e2d7e8e013e839c
 }
