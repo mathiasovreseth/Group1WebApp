@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @ToString
 @Setter
-@Entity
+@Entity(name="order")
 public class Order {
     private @Id @GeneratedValue
     Long id;

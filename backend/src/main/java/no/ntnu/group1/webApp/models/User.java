@@ -10,15 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Objects;
 
+
 @Getter
 @ToString
 @Setter
-@Entity
+@Entity(name = "users")
 public class User {
-
-    private @Id
-    @GeneratedValue
-    Long id;
+    public enum Roles {
+        USER,
+        ADMIN
+    }
+    private @Id @GeneratedValue Long id;
     private String username;
     private String email;
     private String password;
@@ -48,7 +50,7 @@ public class User {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, username, email, password);
+        return Objects.hash(id, username);
     }
 
     public Roles getUserRole() {

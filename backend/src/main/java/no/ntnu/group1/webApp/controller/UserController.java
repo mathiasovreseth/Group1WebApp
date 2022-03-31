@@ -25,15 +25,15 @@ public class UserController {
     return ResponseEntity.ok(userService.getAll());
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Optional<User>> getUserByEmail(@PathParam("email") @PathVariable("id") String email) {
-    return ResponseEntity.ok(userService.findUserByEmail(email));
-  }
+//  @GetMapping("/{id}")
+//  public ResponseEntity<Optional<User>> getUserByEmail(@PathParam("email") @PathVariable("id") String email) {
+//    return ResponseEntity.ok(userService.findUserByEmail(email));
+//  }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Optional<User>> getUserByUsername(@PathParam("username") @PathVariable("id") String username) {
-    return ResponseEntity.ok(userService.findByUsername(username));
-  }
+//  @GetMapping("/{id}")
+//  public ResponseEntity<Optional<User>> getUserByUsername(@PathParam("username") @PathVariable("id") String username) {
+//    return ResponseEntity.ok(userService.findByUsername(username));
+//  }
 
 
 }

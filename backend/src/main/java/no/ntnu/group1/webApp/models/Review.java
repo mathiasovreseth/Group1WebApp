@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Getter
 @ToString
 @Setter
-@Entity
+@Entity(name = "review")
 public class Review {
 
   @Id

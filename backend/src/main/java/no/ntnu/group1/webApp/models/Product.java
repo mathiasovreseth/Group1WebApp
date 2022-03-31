@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Getter
 @ToString
 @Setter
-@Entity
+@Entity(name = "product")
 public class Product {
     private @Id @GeneratedValue
     Long id;
