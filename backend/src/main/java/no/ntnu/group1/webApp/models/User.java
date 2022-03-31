@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Getter
+@ToString
 @Setter
 @ToString
 @Entity
@@ -57,4 +58,18 @@ public class User {
     }
     
 
+<<<<<<< HEAD
+=======
+//    @Override
+//    public String toString() {
+//        return "Employee{" +
+//                "id=" + id +
+//                ", firstName='" + username + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", role='" + userRole+ '\'' +
+//                '}';
+//    }
+
+>>>>>>> a30a3ff0d3c9092a661e452b1eaadfb1489cd34a
 }
