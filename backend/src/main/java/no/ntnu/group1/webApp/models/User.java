@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,7 +13,6 @@ import java.util.Objects;
 @Getter
 @ToString
 @Setter
-@ToString
 @Entity
 public class User {
 
@@ -56,20 +56,5 @@ public class User {
     public void setUserRole(Roles userRole) {
         this.userRole = userRole;
     }
-    
 
-<<<<<<< HEAD
-=======
-//    @Override
-//    public String toString() {
-//        return "Employee{" +
-//                "id=" + id +
-//                ", firstName='" + username + '\'' +
-//                ", email='" + email + '\'' +
-//                ", password='" + password + '\'' +
-//                ", role='" + userRole+ '\'' +
-//                '}';
-//    }
-
->>>>>>> a30a3ff0d3c9092a661e452b1eaadfb1489cd34a
 }
