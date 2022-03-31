@@ -1,10 +1,15 @@
 package no.ntnu.group1.webApp.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 public class User {
 
@@ -39,38 +44,6 @@ public class User {
     public int hashCode() {
 
         return Objects.hash(id, username, email, password);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return username;
-    }
-
-    public void setUserName(String firstName) {
-        this.username = firstName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String lastName) {
-        this.email = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String description) {
-        this.password = description;
     }
 
     public Roles getUserRole() {
