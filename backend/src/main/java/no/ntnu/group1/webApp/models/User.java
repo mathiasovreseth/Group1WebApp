@@ -3,11 +3,16 @@ package no.ntnu.group1.webApp.models;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -58,8 +63,10 @@ public class User {
     public void setUserRole(Roles userRole) {
         this.userRole = userRole;
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 7a8ddcc86612dccf09963497a630828afe1f0cb7
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
+        return authorities;
+    }
 }

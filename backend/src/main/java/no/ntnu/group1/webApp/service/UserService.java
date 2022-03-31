@@ -28,6 +28,9 @@ public class UserService {
     public List<User> getAll() {
         return (List<User>) userRepository.findAll();
     }
+    public Optional<User> findByToken(String token) {
+        return userRepository.findByToken(token);
+    }
 
     public void addUser(User user) {
         userRepository.save(user);
@@ -35,6 +38,5 @@ public class UserService {
     public void removeUser(User user){
         userRepository.delete(user);
     }
-
 
 }
