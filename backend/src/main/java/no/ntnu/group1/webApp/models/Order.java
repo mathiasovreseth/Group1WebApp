@@ -1,9 +1,15 @@
 package no.ntnu.group1.webApp.models;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@ToString
+@Setter
 @Entity
 public class Order {
     private @Id @GeneratedValue
