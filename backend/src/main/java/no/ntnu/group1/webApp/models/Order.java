@@ -17,13 +17,12 @@ public class Order {
     @ManyToOne
     private User costumer;
     @OneToMany(targetEntity = Product.class)
-    private List product;
+    private List<Product> product;
     private Date orderDate;
 
     public Order(){}
 
-    public Order(Long id, User costumer, List product, Date orderDate) {
-        this.id = id;
+    public Order(User costumer, List product, Date orderDate) {
         this.costumer = costumer;
         this.product = product;
         this.orderDate = orderDate;

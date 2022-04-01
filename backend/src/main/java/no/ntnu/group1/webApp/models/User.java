@@ -65,13 +65,10 @@ public class User {
     public void setUserRole(Roles userRole) {
         this.userRole = userRole;
     }
-<<<<<<< HEAD
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
         return authorities;
     }
-=======
->>>>>>> ea1564f17bddc06238c6df156e2d7e8e013e839c
 }
