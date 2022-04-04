@@ -3,17 +3,16 @@ package no.ntnu.group1.webApp.models;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @Getter
@@ -21,6 +20,11 @@ import java.util.Objects;
 @Setter
 @Entity(name = "users")
 public class User {
+
+
+    public User() {
+    }
+
     public enum Roles {
         USER,
         ADMIN
@@ -31,8 +35,6 @@ public class User {
     private String password;
     private Roles userRole;
 
-    public User() {
-    }
 
     public User(String userName, String email, String password, Roles userRole) {
         this.username = userName;
@@ -65,13 +67,21 @@ public class User {
     public void setUserRole(Roles userRole) {
         this.userRole = userRole;
     }
-<<<<<<< HEAD
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
         return authorities;
     }
-=======
->>>>>>> ea1564f17bddc06238c6df156e2d7e8e013e839c
+
+    public static User fromJSONObject(JSONObject jsonObject) throws JSONException{
+        String username = jsonObject.getString("username");
+        String email = jsonObject.getString("email");
+        String password = jsonObject.getString("password");
+        Roles userRole = Roles.valueOf(jsonObject.getString(Arrays.toString(Roles.values())));
+
+        return new User(username, email, password, userRole);
+
+    }
+
 }
