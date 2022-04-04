@@ -33,6 +33,7 @@ const Paragraph = styled.p`
 `;
 
 const ImageLeft = styled.img`
+  flex-shrink: 0; 
   height: 200px;
   width: 300px;
   vertical-align: middle;
@@ -42,6 +43,7 @@ const ImageLeft = styled.img`
   } ;
 `;
 const ImageRight = styled.img`
+  flex-shrink: 0;
   height: 200px;
   width: 300px;
   vertical-align: middle;
@@ -51,7 +53,6 @@ const ImageRight = styled.img`
   } ;
 `;
 const Container = styled.div`
-  width: 100%;
   display: flex;
   align-items: center;
   padding-left: 5%;
