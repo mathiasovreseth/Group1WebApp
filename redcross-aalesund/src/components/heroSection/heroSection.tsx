@@ -15,7 +15,7 @@ const HeroContainer = styled.div`
 
 const H1 = styled.h1`
   color: white;
-  background-color: transparent;
+  background-color: rgba(0,0,0,0.4);;
   font-size: ${props => `${props.theme.fontSizes.xLarge}`};
   font-weight: normal;
   margin: 10% 8rem;
@@ -47,6 +47,7 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `;
+
 
 
 function HeroSection() {
