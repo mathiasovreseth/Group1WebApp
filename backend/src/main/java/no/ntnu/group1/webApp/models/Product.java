@@ -7,6 +7,8 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Getter
 @ToString
@@ -16,11 +18,16 @@ public class Product {
     private @Id @GeneratedValue
     Long id;
     String description;
+    @OneToMany(targetEntity = Review.class)
+    List<Review> reviews;
 
     public Product(){}
 
-    public Product(Long id, String description) {
-        this.id = id;
+    public Product(String description) {
         this.description = description;
+    }
+
+    public void addReview(Review reviewToBeAdded) {
+        this.reviews.add(reviewToBeAdded);
     }
 }
