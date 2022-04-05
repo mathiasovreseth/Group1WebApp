@@ -34,6 +34,9 @@ public class User {
     private String email;
     private String password;
     private Roles userRole;
+    private String token;
+    private boolean enabled;
+    private Date accountCreated;
 
 
     public User(String userName, String email, String password, Roles userRole) {
@@ -41,6 +44,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.userRole = userRole;
+        this.enabled = false;
+        this.accountCreated = new Date();
     }
 
     @Override
@@ -83,5 +88,23 @@ public class User {
         return new User(username, email, password, userRole);
 
     }
+
+//    public boolean isEnabled(){
+//        return enabled;
+//    }
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return enabled;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return enabled;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return enabled;
+//    }
 
 }
