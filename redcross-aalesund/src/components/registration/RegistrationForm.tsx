@@ -8,7 +8,7 @@ import {
     FieldProps, FormikErrors, withFormik,
 } from 'formik';
 import {
-    FlexColumnContainer,
+    FlexColumnContainer, Input,
     XSmallText
 } from "../../styles/commonStyles";
 import styled from "styled-components";
@@ -26,13 +26,7 @@ const Button = styled.button`
   width: 26rem;
 `;
 
-const Input = styled.input`
-  height: 3rem;
-  width: 30rem;
-  margin-bottom: .8rem;
-  font-size: ${props => `${props.theme.fontSizes.small}`};;
 
-`
 const Label = styled.label`
   font-size: ${props => `${props.theme.fontSizes.medium}`};;
 `
@@ -51,9 +45,6 @@ interface FormValues {
 }
 
 
-
-// Aside: You may see InjectedFormikProps<OtherProps, FormValues> instead of what comes below in older code..
-// InjectedFormikProps was artifact of when Formik only exported a HoC. It is also less flexible as it MUST wrap all props (it passes them through)
 const InnerForm = (props: FormikProps<FormValues>) => {
     const {touched, errors, isSubmitting} = props;
     return (

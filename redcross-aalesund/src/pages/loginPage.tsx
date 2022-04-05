@@ -1,4 +1,4 @@
-import {FlexColumnContainer, FlexContainer, LargeText, MediumText, SmallText} from "../styles/commonStyles";
+import {FlexColumnContainer, FlexContainer, Input, LargeText, MediumText, SmallText} from "../styles/commonStyles";
 import React, {useEffect} from "react";
 import styled, {css} from "styled-components";
 import img from "../assets/rosemarkering.jpg"
@@ -39,13 +39,7 @@ const Button = styled.button`
   overflow-y: hidden;
 `;
 
-const Input = styled.input`
-  border-radius: ${props => `${props.theme.borderRadius}`};
-  width: 26rem;
-  height: 4rem;
-  padding: .25rem .25rem;
-  font-size: ${props => `${props.theme.fontSizes.medium}`};;
-`;
+
 
 const OuterContainer = styled(FlexColumnContainer)`
   align-items: center;
