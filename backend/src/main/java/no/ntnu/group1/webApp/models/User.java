@@ -12,6 +12,7 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.*;
 
 
@@ -37,6 +38,8 @@ public class User {
     private String token;
     private boolean enabled;
     private Date accountCreated;
+    @OneToMany(targetEntity = Review.class)
+    List<Review> reviews;
 
 
     public User(String userName, String email, String password, Roles userRole) {
