@@ -29,7 +29,7 @@ public class User {
         ADMIN
     }
     private @Id @GeneratedValue Long id;
-    private String username;
+    private String name;
     private String email;
     private String password;
     private Roles userRole;
@@ -40,8 +40,8 @@ public class User {
     List<Review> reviews;
 
 
-    public User(String userName, String email, String password, Roles userRole) {
-        this.username = userName;
+    public User(String name, String email, String password, Roles userRole) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
@@ -60,7 +60,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User employee = (User) o;
         return Objects.equals(id, employee.id) &&
-                Objects.equals(username, employee.username) &&
+                Objects.equals(name, employee.name) &&
                 Objects.equals(email, employee.email) &&
                 Objects.equals(password, employee.password);
     }
@@ -68,7 +68,7 @@ public class User {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, username);
+        return Objects.hash(id, name);
     }
 
     public Roles getUserRole() {
