@@ -14,8 +14,10 @@ const HeroContainer = styled.div`
 `;
 
 const H1 = styled.h1`
+  padding: 1rem;
   color: white;
-  background-color: transparent;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: ${props => `${props.theme.borderRadius}`};
   font-size: ${props => `${props.theme.fontSizes.xLarge}`};
   font-weight: normal;
   margin: 10% 8rem;
@@ -47,6 +49,7 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `;
+
 
 
 function HeroSection() {
