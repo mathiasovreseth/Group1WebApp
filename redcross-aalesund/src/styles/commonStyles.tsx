@@ -35,6 +35,7 @@ export const Input = styled.input`
   border-radius: ${props => `${props.theme.borderRadius}`};
   width: 26rem;
   height: 4rem;
+  margin-bottom: 0.8rem;
   padding: .25rem .25rem;
   font-size: ${props => `${props.theme.fontSizes.medium}`};;
 `;

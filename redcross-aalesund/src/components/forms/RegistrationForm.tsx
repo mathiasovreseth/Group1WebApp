@@ -1,17 +1,16 @@
 import * as React from 'react';
 import {
-    Formik,
-    FormikHelpers,
     FormikProps,
     Form,
     Field,
-    FieldProps, FormikErrors, withFormik,
+    FormikErrors, withFormik,
 } from 'formik';
 import {
-    FlexColumnContainer, Input,
+    FlexColumnContainer, Input, LargeText, SmallText,
     XSmallText
 } from "../../styles/commonStyles";
 import styled from "styled-components";
+import {isValidEmail, isValidPassword, isValidUsername} from '../../utils/FormValidation';
 
 const Button = styled.button`
   border: 0;
@@ -29,12 +28,19 @@ const Button = styled.button`
 
 const Label = styled.label`
   font-size: ${props => `${props.theme.fontSizes.medium}`};;
+  margin-bottom: 0.8rem;
 `
-
+const FormContainer = styled(FlexColumnContainer)`
+  background-color: ${props => `${props.theme.palette.primary.background}`};
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  box-shadow: 0 0 2rem 0 rgba(90, 90, 90);
+  padding: 0 4.4rem 6.6rem 4.4rem;
+`;
 const Container = styled(FlexColumnContainer)`
   justify-content: center;
   align-items: center;
   width: 100vw;
+  height: 90vh;
 
 `
 
@@ -50,7 +56,8 @@ const InnerForm = (props: FormikProps<FormValues>) => {
     return (
         <Form>
             <Container>
-                <FlexColumnContainer>
+                <FormContainer>
+                    <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Register</LargeText>
                     <Label>Username</Label>
                 <Field render={() => {
                     return <Input onChange={(e)=> props.values.username = e.target.value} type="text" name="username"/>
@@ -66,11 +73,12 @@ const InnerForm = (props: FormikProps<FormValues>) => {
                     return <Input onChange={(e)=> props.values.password = e.target.value} type="password" name="password"/>
                 }}/>
                 {touched.password && errors.password && <XSmallText style={{color: "red"}}>{errors.password}</XSmallText>}
-            </FlexColumnContainer>
+                    <Button type="submit" disabled={isSubmitting}>
+                        Submit
+                    </Button>
+            </FormContainer>
 
-            <Button type="submit" disabled={isSubmitting}>
-                Submit
-            </Button>
+
             </Container>
         </Form>
     );
@@ -81,16 +89,7 @@ interface FormProps {
     initialEmail?: string;
 }
 
-function isValidUsername(username: string): boolean {
-    return  /^[a-z]+$/.test(username);
-}
 
-function isValidEmail(email: string): boolean {
-    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-}
-function isValidPassword(password: string): boolean {
-    return password.length > 6;
-}
 
 const RegistrationForm = withFormik<FormProps, FormValues>({
     // Transform outer props into form values
@@ -102,7 +101,7 @@ const RegistrationForm = withFormik<FormProps, FormValues>({
         };
     },
 
-    // Add a custom validation function (this can be async too!)
+    // custom validation function
     validate: (values: FormValues) => {
         let errors: FormikErrors<FormValues> = {};
         if (!values.username) {
