@@ -67,7 +67,7 @@ public class AuthController {
      * @param entity HttpEntity of request
      * @return ResponseEntity
      */
-    @PostMapping("/auth/register")
+    @PostMapping("/api/auth/register")
     public ResponseEntity<String> registerUser(HttpEntity<String> entity) {
         try {
             JSONObject json = new JSONObject(entity.getBody());
@@ -94,7 +94,7 @@ public class AuthController {
      * @param entity the email of the user to confirm
      * @return ResponseEntity the response ok or not
      */
-    @PostMapping("/auth/confirmUser")
+    @PostMapping("/api/auth/confirmUser")
     public ResponseEntity<String> confirmUser(HttpEntity<String> entity) {
         try {
             JSONObject json = new JSONObject(entity.getBody());
