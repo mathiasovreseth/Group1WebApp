@@ -46,7 +46,7 @@ public class LoginService {
             // Checking if password given by client matches password for user.
             if (passwordEncoder.matches(password, user.getPassword())) {
                 // Creates new token for user on successful login.
-                String token = buildJWT(user.getId(), user.getEmail(), user.getUsername());
+                String token = buildJWT(user.getId(), user.getEmail(), user.getName());
                 user.setToken(token);
                 userRepository.save(user);
                 return Optional.of(user);
