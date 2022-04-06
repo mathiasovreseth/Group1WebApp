@@ -3,3 +3,20 @@
 *.iws
 /node_modules
 
+
+.DS_Store
+
+backend/HELP.md
+
+backend/mvnw
+
+backend/mvnw.cmd
+
+redcross-aalesund/src/components/header/header.tsx
+
+redcross-aalesund/src/components/ourWork/ourWork.tsx
+
+backend/src/main/resources/application.properties
+
+backend/target/
+
