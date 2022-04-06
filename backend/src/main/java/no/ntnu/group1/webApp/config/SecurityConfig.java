@@ -29,10 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //permit logins and registrations
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/addUser").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/getAll").permitAll()
-                .antMatchers(HttpMethod.GET, "/orders/getAll").permitAll()
-                .antMatchers(HttpMethod.GET, "/products/getAll").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users/getAll").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/orders/getAll").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/products/getAll").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic();
     }
