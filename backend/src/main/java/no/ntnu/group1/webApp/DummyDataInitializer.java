@@ -8,15 +8,13 @@ import no.ntnu.group1.webApp.repositories.OrderRepository;
 import no.ntnu.group1.webApp.repositories.ProductRepository;
 import no.ntnu.group1.webApp.repositories.ReviewRepository;
 import no.ntnu.group1.webApp.repositories.UserRepository;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.logging.Logger;
+
 
 public class DummyDataInitializer implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -29,18 +27,16 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
     @Autowired
     private OrderRepository orderRepository;
 
-    private final Logger logger = (Logger) LoggerFactory.getLogger("DummyInit");
 
 
 
-    @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if(isDataImported()) {
-            logger.info("Data already exists.");
+            System.out.println("Data already exists.");
             return;
         }
 
-        logger.info("Importing test data...");
+        System.out.println("Importing test data...");
         User sjur = new User("Sjur","sjur@mail.com","superpass", User.Roles.ADMIN);
         User notAdmin = new User("Bob", "bob@mail.com", "passpass", User.Roles.USER);
         userRepository.save(sjur);
@@ -55,11 +51,26 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
         itemWithReview.addReview(review1);
         productRepository.save(itemWithReview);
 
-        //todo må ha handlekurv klasse om vi skal ha list med produkter i order
-        Order order1 = new Order(notAdmin, new ArrayList((Collection) sjur), new Date());
-        orderRepository.save(order1);
+        ArrayList<Product> items = new ArrayList<>();
+        items.add(item1);
 
-        logger.info("Done importing data");
+
+
+//        String date_string = "26-09-1989";
+//        //Instantiating the SimpleDateFormat class
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+//        //Parsing the given String to Date object
+//        Date date = null;
+//        try {
+//            date = formatter.parse(date_string);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        //todo må ha handlekurv klasse om vi skal ha list med produkter i order
+//        Order order1 = new Order(notAdmin,items, date);
+//        orderRepository.save(order1);
+//
+//        logger.info("Done importing data");
 
 
     }

@@ -34,11 +34,14 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserByEmail(email));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> getUserByUsername(@PathParam("username")
-                                                            @PathVariable("id") String username) {
-        return ResponseEntity.ok(userService.findByUsername(username));
-    }
+
+//todo funker ikke
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Optional<User>> getUserByUsername(@PathParam("username")
+//                                                            @PathVariable("id") String username) {
+//        return ResponseEntity.ok(userService.findByUsername(username));
+//    }
 
 
     @PostMapping("addUser")

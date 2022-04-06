@@ -9,17 +9,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.*;
 
 
 @Getter
 @ToString
 @Setter
-@Entity(name = "users")
+@Entity
+@Table(name = "users")
 public class User {
 
 
@@ -50,6 +48,11 @@ public class User {
         this.enabled = false;
         this.accountCreated = new Date();
     }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
 
     @Override
     public boolean equals(Object o) {

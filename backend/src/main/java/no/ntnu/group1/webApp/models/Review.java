@@ -7,17 +7,20 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @ToString
 @Setter
-@Entity(name = "review")
+@Entity
+@Table(name = "reviews")
 public class Review {
 
   @Id
   @GeneratedValue
   private Long id;
   private String comment;
+
 
   public Review() {}
 
