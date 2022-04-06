@@ -16,20 +16,28 @@ export const Li = styled.link`
   color: red;
 `;
 
-export const XSmallText = styled.text`
+export const XSmallText = styled.p`
     font-size: ${props => `${props.theme.fontSizes.xSmall}`};
 `;
-export const SmallText = styled.text`
+export const SmallText = styled.p`
     font-size: ${props => `${props.theme.fontSizes.small}`};
 `;
-export const MediumText = styled.text`
+export const MediumText = styled.p`
     font-size: ${props => `${props.theme.fontSizes.medium}`};
 `;
-export const LargeText = styled.text`
+export const LargeText = styled.p`
     font-size: ${props => `${props.theme.fontSizes.large}`};
 `;
-export const xLargeText = styled.text`
+export const xLargeText = styled.p`
     font-size: ${props => `${props.theme.fontSizes.xLarge}`};
+`;
+export const Input = styled.input`
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  width: 26rem;
+  height: 4rem;
+  margin-bottom: 0.8rem;
+  padding: .25rem .25rem;
+  font-size: ${props => `${props.theme.fontSizes.medium}`};;
 `;
 
 

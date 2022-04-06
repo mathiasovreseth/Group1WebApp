@@ -1,9 +1,9 @@
 import {createGlobalStyle} from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  html {
-    margin: 2rem;
-  }
+  //html {
+  //  margin: 2rem;
+  //}
 
   // removes default styling from link tags
   a:-webkit-any-link {

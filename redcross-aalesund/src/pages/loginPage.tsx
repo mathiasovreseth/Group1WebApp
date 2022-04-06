@@ -1,10 +1,14 @@
-import {LargeText} from "../styles/commonStyles";
 import React from "react";
 
-const LoginPage = () => {
-    return (
-        <LargeText>Login page coming soon</LargeText>
-    );
+import LoginForm from "../components/forms/LoginForm";
+
+
+
+
+// do http requests here
+function LoginPage(props:any) {
+
+    return <LoginForm />
 }
 
-export default LoginPage;
+export default LoginPage
