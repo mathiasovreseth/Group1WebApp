@@ -2,7 +2,7 @@ import React, {Ref} from 'react';
 import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-menu";
 import styled from "styled-components";
 import {FaBars} from 'react-icons/fa';
-import {SmallText} from "../../styles/commonStyles";
+import {SmallText} from "../../styles/CommonStyles";
 
 
 const MenuButton = styled.button`

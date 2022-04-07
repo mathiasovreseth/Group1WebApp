@@ -12,9 +12,9 @@ backend/mvnw
 
 backend/mvnw.cmd
 
-redcross-aalesund/src/components/header/header.tsx
+redcross-aalesund/src/components/header/Header.tsx
 
-redcross-aalesund/src/components/ourWork/ourWork.tsx
+redcross-aalesund/src/components/ourWork/OurWork.tsx
 
 backend/src/main/resources/application.properties
 
