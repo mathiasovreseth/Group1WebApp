@@ -6,7 +6,7 @@ import {
     MediumText,
     SmallText,
     XSmallText
-} from "../../styles/commonStyles";
+} from "../../styles/CommonStyles";
 import React from "react";
 import styled from "styled-components";
 import {Field, Form, FormikErrors, FormikProps, withFormik} from "formik";

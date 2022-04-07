@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import styled, {DefaultTheme, ThemeContext, ThemeProps, ThemeProvider} from "styled-components";
-import MyDropDownMenu from "../buttons/dropdownMenu";
-import {LargeText, Li, MediumText} from "../../styles/commonStyles";
+import MyDropDownMenu from "../buttons/DropdownMenu";
+import {LargeText, Li, MediumText} from "../../styles/CommonStyles";
 import redCrossImage from "../../assets/red-cross-image.png";
 import {Link} from "react-router-dom";
-import {defaultTheme} from "../../styles/theme";
+import {defaultTheme} from "../../styles/Theme";
 
 const HeaderContainer = styled.div`
   display: flex;

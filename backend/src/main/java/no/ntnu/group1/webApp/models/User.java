@@ -9,16 +9,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.*;
 
 
 @Getter
 @ToString
 @Setter
-@Entity(name = "users")
+@Entity
+@Table(name = "users")
 public class User {
 
 
@@ -30,23 +29,30 @@ public class User {
         ADMIN
     }
     private @Id @GeneratedValue Long id;
-    private String username;
+    private String name;
     private String email;
     private String password;
-    private Roles userRole;
+    private String userRole;
     private String token;
     private boolean enabled;
     private Date accountCreated;
+    @OneToMany(targetEntity = Review.class)
+    List<Review> reviews;
 
 
-    public User(String userName, String email, String password, Roles userRole) {
-        this.username = userName;
+    public User(String name, String email, String password, String userRole) {
+        this.name = name;
         this.email = email;
         this.password = password;
-        this.userRole = userRole;
+        this.userRole = "ADMIN";
         this.enabled = false;
         this.accountCreated = new Date();
     }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -54,7 +60,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User employee = (User) o;
         return Objects.equals(id, employee.id) &&
-                Objects.equals(username, employee.username) &&
+                Objects.equals(name, employee.name) &&
                 Objects.equals(email, employee.email) &&
                 Objects.equals(password, employee.password);
     }
@@ -62,14 +68,14 @@ public class User {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, username);
+        return Objects.hash(id, name);
     }
 
-    public Roles getUserRole() {
+    public String getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(Roles userRole) {
+    public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
 
@@ -80,10 +86,11 @@ public class User {
     }
 
     public static User fromJSONObject(JSONObject jsonObject) throws JSONException{
+
         String username = jsonObject.getString("username");
         String email = jsonObject.getString("email");
         String password = jsonObject.getString("password");
-        Roles userRole = Roles.valueOf(jsonObject.getString(Arrays.toString(Roles.values())));
+        String userRole = jsonObject.getString("role");
 
         return new User(username, email, password, userRole);
 

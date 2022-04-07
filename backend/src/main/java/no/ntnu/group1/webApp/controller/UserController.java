@@ -1,5 +1,5 @@
 package no.ntnu.group1.webApp.controller;
-
+import lombok.extern.slf4j.Slf4j;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.service.UserService;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -12,8 +12,9 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -34,19 +35,26 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserByEmail(email));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> getUserByUsername(@PathParam("username")
-                                                            @PathVariable("id") String username) {
-        return ResponseEntity.ok(userService.findByUsername(username));
-    }
+
+//todo funker ikke
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Optional<User>> getUserByName(@PathParam("name")
+//                                                            @PathVariable("id") String name) {
+//        return ResponseEntity.ok(userService.findByName(name));
+//    }
 
 
     @PostMapping("addUser")
     public ResponseEntity<User> addNewUser(HttpEntity<String> entity){
+        System.out.println("------------------------------------------");
+        log.error("Heisann testing heradasd-----------");
         try{
+            System.out.println(entity);
             saveUserFromJsonObject(new JSONObject(entity.getBody()));
             return ResponseEntity.ok().build();
         }catch (JSONException e){
+            System.out.println("------------------------------------------");
             return ResponseEntity.badRequest().build();
         }
     }

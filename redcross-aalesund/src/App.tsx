@@ -1,14 +1,14 @@
 import React from 'react';
-import GlobalStyles from "./styles/globalStyles";
+import GlobalStyles from "./styles/GlobalStyles";
 import { ThemeProvider } from 'styled-components';
-import {defaultTheme} from "./styles/theme";
-import LandingPage from "./pages/landingPage";
+import {defaultTheme} from "./styles/Theme";
+import LandingPage from "./pages/LandingPage";
 import {Route, Routes } from 'react-router-dom';
-import AboutPage from "./pages/aboutPage";
-import LoginPage from "./pages/loginPage";
-import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
-import RegistrationPage from "./pages/registrationPage";
+import AboutPage from "./pages/AboutPage";
+import LoginPage from "./pages/LoginPage";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
+import RegistrationPage from "./pages/RegistrationPage";
 
 export default function App() {
     return (

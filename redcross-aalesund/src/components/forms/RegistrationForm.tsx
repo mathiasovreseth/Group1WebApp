@@ -8,7 +8,7 @@ import {
 import {
     FlexColumnContainer, Input, LargeText, SmallText,
     XSmallText
-} from "../../styles/commonStyles";
+} from "../../styles/CommonStyles";
 import styled from "styled-components";
 import {isValidEmail, isValidPassword, isValidUsername} from '../../utils/FormValidation';
 

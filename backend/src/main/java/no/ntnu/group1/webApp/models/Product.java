@@ -4,16 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @ToString
 @Setter
-@Entity(name = "product")
+@Entity
+@Table(name = "products")
 public class Product {
     private @Id @GeneratedValue
     Long id;
