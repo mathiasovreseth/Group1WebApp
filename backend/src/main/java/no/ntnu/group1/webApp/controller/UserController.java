@@ -38,9 +38,9 @@ public class UserController {
 //todo funker ikke
 
 //    @GetMapping("/{id}")
-//    public ResponseEntity<Optional<User>> getUserByUsername(@PathParam("username")
-//                                                            @PathVariable("id") String username) {
-//        return ResponseEntity.ok(userService.findByUsername(username));
+//    public ResponseEntity<Optional<User>> getUserByName(@PathParam("name")
+//                                                            @PathVariable("id") String name) {
+//        return ResponseEntity.ok(userService.findByName(name));
 //    }
 
 
