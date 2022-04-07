@@ -80,7 +80,7 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
 
-            User user = new User(name, email, passwordEncoder.encode(password), User.Roles.USER);
+            User user = new User(name, email, passwordEncoder.encode(password), "ADMIN");
             userService.addUser(user);
 
             return ResponseEntity.ok("User successfully registered.");

@@ -32,7 +32,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private Roles userRole;
+    private String userRole;
     private String token;
     private boolean enabled;
     private Date accountCreated;
@@ -40,11 +40,11 @@ public class User {
     List<Review> reviews;
 
 
-    public User(String name, String email, String password, Roles userRole) {
+    public User(String name, String email, String password, String userRole) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.userRole = userRole;
+        this.userRole = "ADMIN";
         this.enabled = false;
         this.accountCreated = new Date();
     }
@@ -71,11 +71,11 @@ public class User {
         return Objects.hash(id, name);
     }
 
-    public Roles getUserRole() {
+    public String getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(Roles userRole) {
+    public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
 
@@ -86,10 +86,11 @@ public class User {
     }
 
     public static User fromJSONObject(JSONObject jsonObject) throws JSONException{
+
         String username = jsonObject.getString("username");
         String email = jsonObject.getString("email");
         String password = jsonObject.getString("password");
-        Roles userRole = Roles.valueOf(jsonObject.getString(Arrays.toString(Roles.values())));
+        String userRole = jsonObject.getString("role");
 
         return new User(username, email, password, userRole);
 

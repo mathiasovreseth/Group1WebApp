@@ -1,5 +1,5 @@
 package no.ntnu.group1.webApp.controller;
-
+import lombok.extern.slf4j.Slf4j;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.service.UserService;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -12,6 +12,7 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -46,10 +47,14 @@ public class UserController {
 
     @PostMapping("addUser")
     public ResponseEntity<User> addNewUser(HttpEntity<String> entity){
+        System.out.println("------------------------------------------");
+        log.error("Heisann testing heradasd-----------");
         try{
+            System.out.println(entity);
             saveUserFromJsonObject(new JSONObject(entity.getBody()));
             return ResponseEntity.ok().build();
         }catch (JSONException e){
+            System.out.println("------------------------------------------");
             return ResponseEntity.badRequest().build();
         }
     }

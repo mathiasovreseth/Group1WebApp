@@ -37,8 +37,8 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
         }
 
         System.out.println("Importing test data...");
-        User sjur = new User("Sjur","sjur@mail.com","superpass", User.Roles.ADMIN);
-        User notAdmin = new User("Bob", "bob@mail.com", "passpass", User.Roles.USER);
+        User sjur = new User("Sjur","sjur@mail.com","superpass", "ADMIN");
+        User notAdmin = new User("Bob", "bob@mail.com", "passpass", "ADMIN");
         userRepository.save(sjur);
         userRepository.save(notAdmin);
 
