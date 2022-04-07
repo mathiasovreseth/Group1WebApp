@@ -54,10 +54,12 @@ const DropDownMenuContainer = styled.div`
 function Header() {
     return (
         <HeaderContainer>
-            <LeftSection>
-                <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
+            <Link to={'/'}>
+                <LeftSection>
+                    <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
                 <LargeText>Røde kors</LargeText>
             </LeftSection>
+            </Link>
             <Center>
                 <Link to='/about'>
                     <MediumText>About us</MediumText>

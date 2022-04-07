@@ -1,16 +1,16 @@
 import {
     FlexColumnContainer,
-    FlexContainer,
+
     Input,
     LargeText,
-    MediumText,
-    SmallText,
+
     XSmallText
 } from "../../styles/CommonStyles";
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import {Field, Form, FormikErrors, FormikProps, withFormik} from "formik";
 import {isValidEmail, isValidPassword, isValidUsername} from "../../utils/FormValidation";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useAuth} from "../../auth/Auth";
 
 const FormContainer = styled(FlexColumnContainer)`
   background-color: ${props => `${props.theme.palette.primary.background}`};
@@ -51,101 +51,85 @@ const OuterContainer = styled(FlexColumnContainer)`
   position: relative;
   
 `
+/** Login Form.
+ * Didn't figure out how to use the auth hook here. So had to rewrite the loginForm.
+ * That is why it is so different stuctured than registration form
+ */
+function LoginForm() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [emailErr, setEmailErr] = useState('');
+    const [passErr, setPassErr] = useState('');
+    let navigate = useNavigate();
+    let location = useLocation();
+    let auth = useAuth();
 
 
-interface FormValues {
-    email: string;
-    password: string;
-}
+    function handleSubmit() {
+        setIsSubmitting(true);
+        // @ts-ignore
+        let from = location?.state?.from?.pathname ?? "/";
+        auth.signin('email', () => {
+            // Send them back to the page they tried to visit when they were
+            // redirected to the login page. Use { replace: true } so we don't create
+            // another entry in the history stack for the login page.  This means that
+            // when they get to the protected page and click the back button, they
+            // won't end up back on the login page, which is also really nice for the
+            // user experience.
+            navigate(from, { replace: true });
+        });
+    }
+    function validateForm() {
+        let isValid = true;
+        if (email.length === 0) {
+            setEmailErr('Required');
+            isValid = false;
 
+        } else if (!isValidEmail(email)) {
+            setEmailErr('Invalid email address');
+            isValid = false;
+        }
+        if(password.length === 0) {
+            setPassErr('Required');
+            isValid = false;
 
-const InnerForm = (props: FormikProps<FormValues>) => {
-    const {touched, errors, isSubmitting} = props;
+        } else if(!isValidPassword(password)) {
+            setPassErr('Password must be 6 characters or more');
+            isValid = false;
+        }
+        return isValid;
+    }
     return (
-        <Form>
+        <form  onSubmit={(e)=> {
+            if(validateForm()) {
+                setEmailErr('');
+                setPassErr('');
+                handleSubmit();
+            }
+            e.preventDefault();
+        }}>
             <OuterContainer>
                 <FormContainer>
                     <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Login</LargeText>
                     <Label>E-mail</Label>
-                    <Field  render={() => {
-                        return <Input onChange={(e)=> props.values.email = e.target.value}  type="email" name="email"/>
-                    }}/>
-                    {touched.email && errors.email && <XSmallText style={{color: "red"}}>{errors.email}</XSmallText>}
+                    <Input onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
+                    {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
                     <Label>Password</Label>
-                    <Field render={() => {
-                        return <Input onChange={(e)=> props.values.password = e.target.value} type="password" name="password"/>
-                    }}/>
-                    {touched.password && errors.password && <XSmallText style={{color: "red"}}>{errors.password}</XSmallText>}
+                    <Input onChange={(e)=> setPassword(e.target.value)} type="password" name="password"/>
+                    {passErr && <XSmallText style={{color: "red"}}>{passErr}</XSmallText>}
                     <Button type="submit" disabled={isSubmitting}>
-                        Submit
+                        {isSubmitting  ? 'Submitting': 'Submit'}
                     </Button>
                 </FormContainer>
 
 
             </OuterContainer>
-        </Form>
-    );
-};
-interface FormProps {
-    initialEmail?: string;
+        </form>
+    )
 }
 
 
-
-const LoginForm = withFormik<FormProps, FormValues>({
-    // Transform outer props into form values
-
-    mapPropsToValues: props => {
-        return {
-            email: props?.initialEmail ?? '',
-            password: '',
-        };
-    },
-
-    // custom validation function
-    validate: (values: FormValues) => {
-        let errors: FormikErrors<FormValues> = {};
-        if (!values.email) {
-            errors.email = 'Required';
-        } else if (!isValidEmail(values.email)) {
-            errors.email = 'Invalid email address';
-        }
-        if(!values.password) {
-            errors.password = 'Required';
-        } else if(!isValidPassword(values.password)) {
-            errors.password = 'Password must be 6 characters or more';
-        }
-        return errors;
-    },
-    // set is submitting also
-    handleSubmit: values => {
-        let errors: FormikErrors<FormValues> = {};
-        const request = new Request("http://localhost:8080/auth/login", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                email: values.email,
-                password: values.password,
-            }),
-        });
-        fetch(request).then(response => {
-            if (response.status === 401 || response.status === 403) {
-                errors.password = "Failed to autorize";
-
-            }
-            return response.json();
-        }).then((data) => {
-            // set token in localstorage
-            localStorage.setItem('token', data.access_token);
-            localStorage.setItem('role', data.roles[0]);
-
-        }).catch((error) => {
-            errors.password = "Invalid credentials";
-        });
-    },
-})(InnerForm);
 
 export default LoginForm;
 
