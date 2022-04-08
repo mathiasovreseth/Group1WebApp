@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtProperties jwtProperties;
 
+    @Override
     protected void configure(HttpSecurity security) throws Exception{
         security.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -33,12 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(),userService, jwtProperties))
                 .authorizeHttpRequests()
                 //permit logins and registrations
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/addUser").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/getAll").authenticated()
                 .antMatchers(HttpMethod.GET, "/orders/getAll").permitAll()
-                .antMatchers(HttpMethod.GET, "/products/getAll").authenticated()
+                .antMatchers(HttpMethod.GET, "/products/getAll").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
                 .and().httpBasic();
     }
 
@@ -48,16 +51,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
 }
