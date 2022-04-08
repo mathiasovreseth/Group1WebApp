@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {FlexContainer} from "../../styles/commonStyles";
+import {FlexContainer} from "../../styles/CommonStyles";
 import mathiasL from "../../assets/mathiasL.jpeg";
 import mathiasJ from "../../assets/mathiasj.jpeg";
 import sjur from "../../assets/sjur.jpeg";
@@ -99,7 +99,7 @@ function Footer() {
                 <ImageElement src={sjur} alt={"Sjur Gustavsen. Developer of website"}/>
                 <ImageElement src={michal} alt={"Michal Åsebø. Developer of website"}/>
             </ImageContainer>
-            <CopyRightText>© Red cross Ålesund. 2022.</CopyRightText>
+            <CopyRightText>© Student Project NTNU - Red cross Ålesund website. 2022.</CopyRightText>
         </FooterContainer>
     );
 }

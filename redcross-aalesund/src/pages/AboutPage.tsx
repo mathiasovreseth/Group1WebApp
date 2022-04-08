@@ -1,6 +1,6 @@
 
 import React from "react";
-import {FlexColumnContainer, FlexContainer, LargeText, MediumText, xLargeText} from "../styles/commonStyles";
+import {FlexColumnContainer, FlexContainer, LargeText, MediumText, xLargeText} from "../styles/CommonStyles";
 import styled from "styled-components";
 import { FaSquare} from "react-icons/fa";
 import groupImg from '../assets/gruppebilde2.jpg';
