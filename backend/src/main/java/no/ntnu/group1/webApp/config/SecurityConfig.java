@@ -32,15 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(),userService, jwtProperties))
                 .authorizeHttpRequests()
-
                 //permit logins and registrations
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/addUser").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/getAll").permitAll()
+                .antMatchers(HttpMethod.GET, "/users/getAll").authenticated()
                 .antMatchers(HttpMethod.GET, "/orders/getAll").permitAll()
-                .antMatchers(HttpMethod.GET, "/products/getAll").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.GET, "/products/getAll").authenticated()
                 .and().httpBasic();
     }
 

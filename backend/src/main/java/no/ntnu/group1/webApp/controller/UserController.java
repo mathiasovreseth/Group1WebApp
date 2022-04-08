@@ -3,8 +3,10 @@ import lombok.extern.slf4j.Slf4j;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.service.UserService;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.json.JSONObject;
 
@@ -18,7 +20,8 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -47,21 +50,21 @@ public class UserController {
 
     @PostMapping("addUser")
     public ResponseEntity<User> addNewUser(HttpEntity<String> entity){
-        System.out.println("------------------------------------------");
-        log.error("Heisann testing heradasd-----------");
         try{
             System.out.println(entity);
             saveUserFromJsonObject(new JSONObject(entity.getBody()));
             return ResponseEntity.ok().build();
         }catch (JSONException e){
-            System.out.println("------------------------------------------");
             return ResponseEntity.badRequest().build();
         }
     }
 
-    private void saveUserFromJsonObject(JSONObject jsonObject) throws JSONException{
+    private User saveUserFromJsonObject(JSONObject jsonObject) throws JSONException{
         User user = User.fromJSONObject(jsonObject);
+        String encodedPass = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPass);
         userService.addUser(user);
+        return user;
     }
 
 
