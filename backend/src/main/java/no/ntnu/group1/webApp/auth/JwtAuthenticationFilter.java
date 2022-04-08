@@ -3,6 +3,7 @@ package no.ntnu.group1.webApp.auth;
 import no.ntnu.group1.webApp.config.JwtProperties;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.service.UserService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,7 +22,6 @@ import com.auth0.jwt.JWT;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
-
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     private final UserService userService;
@@ -35,6 +35,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         this.jwtProperties = jwtProperties;
     }
 
+    @Bean
     protected void filterInputInterval(HttpServletRequest request,
                                        HttpServletResponse response,
                                        FilterChain filter) throws IOException, ServletException {

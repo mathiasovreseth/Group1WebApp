@@ -2,11 +2,11 @@ package no.ntnu.group1.webApp.controller;
 import lombok.extern.slf4j.Slf4j;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.service.UserService;
-import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.json.JSONException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONObject;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
