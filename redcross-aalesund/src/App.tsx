@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import RegistrationPage from "./pages/RegistrationPage";
+import ProductPage from './pages/ProductPage';
 
 export default function App() {
     return (
@@ -20,6 +21,7 @@ export default function App() {
                 <Route path={"/about"} element={<AboutPage/>}/>
                 <Route path={"/login"} element={<LoginPage/>}/>
                 <Route path={"/registration"} element={<RegistrationPage />}/>
+                <Route path={"/product_page"} element={<ProductPage/>}/>
             </Routes>
             <Footer/>
         </ThemeProvider>

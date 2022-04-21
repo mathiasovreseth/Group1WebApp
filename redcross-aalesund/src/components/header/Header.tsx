@@ -50,14 +50,21 @@ const DropDownMenuContainer = styled.div`
   }
 `;
 
+const linkStyle = {
+  margin: "0rem",
+  textDecoration: "none",
+  color: 'black'
+};
 
 function Header() {
     return (
         <HeaderContainer>
-            <LeftSection>
-                <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
-                <LargeText>Røde kors</LargeText>
-            </LeftSection>
+            <Link to = "/" style={linkStyle}>
+              <LeftSection>
+                    <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
+                    <LargeText>Røde kors</LargeText>
+              </LeftSection>
+            </Link>
             <Center>
                 <Link to='/about'>
                     <MediumText>About us</MediumText>

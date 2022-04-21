@@ -21,6 +21,7 @@ const CoursesContainer = styled.div`
   flex-wrap: wrap;
   padding-left: 10%;
   padding-right: 10%;
+  cursor: pointer;
   @media  (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}){
     flex-direction: column;
   }
@@ -73,7 +74,7 @@ const BulletPoints = styled.ul`
   padding-top:20%;
   max-width: 25rem;
   font-size: ${props => `${props.theme.fontSizes.xSmall}`};
-  margin:1rem 0 1rem 0;
+  margin:1rem 0 4rem 0;
 `;
 
 const LI = styled.li`
@@ -81,7 +82,8 @@ const LI = styled.li`
   margin: 0.3rem 0 0 0;
 `;
 
-function Courses() {
+
+function CoursesNoButton() {
     return (
       <div>
         <H1>Our Courses</H1>
@@ -93,9 +95,6 @@ function Courses() {
                   <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
                   <LI><FaSquare style={{marginRight: ".8rem"}}/> Something else random stuff that doesnt mattter but is nice to have!</LI>
                 </BulletPoints>
-                <Link to='/product_page'>
-                  <SelectButton>Select</SelectButton>
-                </Link>);
                 
             </Section>
             <Section>
@@ -105,9 +104,6 @@ function Courses() {
                 <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
                 <LI><FaSquare style={{marginRight: ".8rem"}}/> Something else random stuff that doesnt mattter but is nice to have!</LI>
                 </BulletPoints>
-                <Link to='/product_page'>
-                  <SelectButton>Select</SelectButton>
-                </Link>   
             </Section>
             <Section>
                 <Box>Short Conciliation</Box>
@@ -115,14 +111,11 @@ function Courses() {
                 <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
                 <LI><FaSquare style={{marginRight: ".8rem"}}/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a iaculis nulla.</LI>
                 <LI><FaSquare style={{marginRight: ".8rem"}}/> Something else random stuff that doesnt mattter but is nice to have!</LI>
-                </BulletPoints>
-                <Link to='/product_page'>
-                  <SelectButton>Select</SelectButton>
-                </Link>            
+                </BulletPoints>         
                 </Section>
         </CoursesContainer>
         </div>
     );
 }
 
-export default Courses;
+export default CoursesNoButton;
