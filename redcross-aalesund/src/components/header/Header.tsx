@@ -1,10 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import styled, {DefaultTheme, ThemeContext, ThemeProps, ThemeProvider} from "styled-components";
 import MyDropDownMenu from "../buttons/DropdownMenu";
 import {LargeText, Li, MediumText} from "../../styles/CommonStyles";
 import redCrossImage from "../../assets/red-cross-image.png";
 import {Link} from "react-router-dom";
 import {defaultTheme} from "../../styles/Theme";
+import {useAuth} from "../../auth/Auth";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -52,12 +53,15 @@ const DropDownMenuContainer = styled.div`
 
 
 function Header() {
+    const auth = useAuth();
     return (
         <HeaderContainer>
-            <LeftSection>
-                <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
-                <LargeText>Røde kors</LargeText>
-            </LeftSection>
+            <Link to='/'>
+                <LeftSection>
+                    <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
+                    <LargeText>Røde kors</LargeText>
+                </LeftSection>
+            </Link>
             <Center>
                 <Link to='/about'>
                     <MediumText>About us</MediumText>
@@ -74,9 +78,13 @@ function Header() {
                 <DropDownMenuContainer>
                     <MyDropDownMenu/>
                 </DropDownMenuContainer>
-                <Link to={"/login"}>
-                    <LogInButton>Log in</LogInButton>
-                </Link>
+                {auth.isValidToken ?
+                    <button onClick={()=> auth.signOut()}>Sign out</button> :
+                    <Link to={"/login"}>
+                        <LogInButton>Log in</LogInButton>
+                    </Link>
+                }
+
                 <Link to={"/registration"}>
                     <LogInButton>Registration</LogInButton>
                 </Link>

@@ -1,35 +1,40 @@
 import {Navigate} from "react-router-dom";
 import React from "react";
+import {User} from "../models/UserModel";
 
-const authProvider = {
-    signIn: (email: string, password:  string) =>  {
-        const token = localStorage.getItem('token');
-        const req = new Request("http://localhost:8080/api/users/login", {
-            method: 'POST',
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-                Pragma: 'no-cache',
-            }),
+
+
+export const authProvider = {
+    signIn:  (user: User) => {
+        return new Promise((resolve, reject)=> {
+            const t = true;
+            if(t) {
+                localStorage.setItem('token', "bnlasdasdkjadskljadjwanj");
+                resolve("Sucess");
+            } else {
+                reject("failed");
+            }
+            // const token = localStorage.getItem('token');
+            // const req = new Request("http://localhost:8080/api/users/login", {
+            //     method: 'POST',
+            //     body: JSON.stringify({
+            //         email: user.email,
+            //         password: user.password,
+            //     }),
+            //     headers: new Headers({
+            //         'Content-Type': 'application/json',
+            //         Authorization: `Bearer ${token}`,
+            //         Pragma: 'no-cache',
+            //     }),
+            // });
+            // return fetch(req).then(response => {
+            //         localStorage.setItem('token', JSON.stringify(response.json()));
+            //         resolve("Sucess");
+            //     }).catch((error) => {
+            //         authProvider.checkError(error);
+            //     });
         });
-        return fetch(req)
-            .then(response => {
-                if (response.status < 200 || response.status >= 300) {
-                    throw new Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then(auth => {
-                localStorage.setItem('auth', JSON.stringify(auth));
-            })
-            .catch(() => {
-                throw new Error('Network error')
-            });
-    },
+        },
     checkError: (error: any) => {
         const status = error.status;
         if (status === 401 || status === 403) {
@@ -44,13 +49,15 @@ const authProvider = {
         return <Navigate to={'/login'}/>
     },
     checkAuth: () => {
-        // Required for the authentication to work
-        return Promise.resolve();
+        const token = localStorage.getItem('token');
+        // returns true if token exists
+        return token != null;
     },
     getPermissions: () => {
         // Required for the authentication to work
-        return Promise.resolve();
+        return localStorage.getItem('role');
     },
+
     // ...
 };
 

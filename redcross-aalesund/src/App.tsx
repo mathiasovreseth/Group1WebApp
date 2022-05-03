@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import GlobalStyles from "./styles/GlobalStyles";
 import {ThemeProvider} from 'styled-components';
 import {defaultTheme} from "./styles/Theme";
@@ -9,7 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import RegistrationPage from "./pages/RegistrationPage";
-import {AuthProvider, RequireAuth} from "./auth/Auth";
+import {AuthProvider, RequireAuth, useAuth} from "./auth/Auth";
 
 export default function App() {
     return (
