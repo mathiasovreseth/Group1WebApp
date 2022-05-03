@@ -123,7 +123,33 @@ const RegistrationForm = withFormik<FormProps, FormValues>({
     },
 
     handleSubmit: values => {
-        console.error(values);
+        let errors: FormikErrors<FormValues> = {};
+        const request = new Request("http://localhost:8080/api/users/register", {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                username: values.username,
+                email: values.email,
+                password: values.password,
+                userRole: "ADMIN",
+            }),
+        });
+        fetch(request).then(response => {
+            if (response.status === 401 || response.status === 403) {
+                errors.password = "Failed to autorize";
+
+            }
+            return response.json();
+        }).then((data) => {
+            // sets token in localstorage, probaly not secure
+            localStorage.setItem('token', data['jwt-token']);
+            // localStorage.setItem('role', data.roles[0]);
+
+        }).catch((error) => {
+            errors.password = "Invalid credentials";
+        });
     },
 })(InnerForm);
 
