@@ -6,6 +6,6 @@ import {User} from "./UserModel";
 export interface AuthContextType {
     signIn: (user: User) => Promise<string>;
     signOut: () => void;
-    checkAuth: () => void;
+    getAuthUser: () => void;
     isValidToken: boolean;
 }

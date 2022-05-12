@@ -15,13 +15,14 @@ let AuthContext = React.createContext<AuthContextType>(null!);
 
 export function AuthProvider({children}: { children: React.ReactNode }) {
     let [isValidToken, setIsValidToken] = useState<any>(false);
+    let [user, setUser] = useState<any>(null);
     useEffect(()=> {
-      checkAuth();
+        getAuthUser();
     },[]);
 
-    let signIn = (userFromLogin: User) => {
+    let signIn = (userFromLogin: User, ) => {
         return new Promise<string>((resolve, reject) => {
-            authProvider.signIn(userFromLogin).then(res => {
+            authProvider.signIn(userFromLogin, ).then(res => {
                 resolve("");
                 setIsValidToken(true);
             }).catch(err => {
@@ -34,15 +35,18 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
         setIsValidToken(false);
         return authProvider.signout();
     };
-    let checkAuth = () => {
-        if(authProvider.checkAuth()) {
+    let getAuthUser = () => {
+        authProvider.getAuthUser().then(data => {
+            // return
+            setUser(data);
             setIsValidToken(true);
-        } else {
+        }).catch(err => {
             setIsValidToken(false);
-        }
+            // DO something
+        });
     }
 
-    let value = {isValidToken, signIn, checkAuth, signOut};
+    let value = {isValidToken, signIn, getAuthUser, signOut};
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -2,14 +2,14 @@ import {
     FlexColumnContainer,
 
     Input,
-    LargeText,
+    LargeText, SmallText,
 
     XSmallText
 } from "../../styles/CommonStyles";
 import React, {useState} from "react";
 import styled from "styled-components";
 import {isValidEmail, isValidPassword, isValidUsername} from "../../utils/FormValidation";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {User} from "../../models/UserModel";
 import {useAuth} from "../../auth/Auth";
 
@@ -124,6 +124,15 @@ function LoginForm() {
                     <Button type="submit" disabled={isSubmitting}>
                         {isSubmitting  ? 'Submitting': 'Submit'}
                     </Button>
+
+                    <SmallText style={{ display: "flex", marginTop: "2rem"}}>
+                        <SmallText style={{opacity: 0.7, marginRight: "0.4rem"}}>
+                            New to Ålesund redcross?
+                        </SmallText>
+                        <Link to={"/registration"}>
+                            <SmallText>Register</SmallText>
+                        </Link>
+                    </SmallText>
                 </FormContainer>
 
 

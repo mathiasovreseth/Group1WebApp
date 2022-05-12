@@ -10,6 +10,8 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import RegistrationPage from "./pages/RegistrationPage";
 import {AuthProvider, RequireAuth, useAuth} from "./auth/Auth";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 
 export default function App() {
     return (
@@ -27,6 +29,8 @@ export default function App() {
                             </RequireAuth>
                         }
                     />
+                    <Route path={"/terms-of-service"} element={<TermsOfServicePage/>}/>
+                    <Route path={"/privacy-policy"} element={<PrivacyPolicyPage/>}/>
                     <Route path={"/login"} element={<LoginPage/>}/>
                     <Route path={"/registration"} element={<RegistrationPage/>}/>
                 </Routes>
