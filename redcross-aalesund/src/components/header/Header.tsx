@@ -6,6 +6,7 @@ import redCrossImage from "../../assets/red-cross-image.png";
 import {Link} from "react-router-dom";
 import {defaultTheme} from "../../styles/Theme";
 import {useAuth} from "../../auth/Auth";
+import TextButton from "../buttons/TextButton";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ const Center = styled.div`
   }
 `
 
-const LogInButton = styled(MediumText)`
+const LogInText = styled(MediumText)`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
   margin-left: 1.6rem;
 `
@@ -79,15 +80,11 @@ function Header() {
                     <MyDropDownMenu/>
                 </DropDownMenuContainer>
                 {auth.isValidToken ?
-                    <button onClick={()=> auth.signOut()}>Sign out</button> :
+                    <TextButton onClick={()=> auth.signOut()} label={"Sign out"}/> :
                     <Link to={"/login"}>
-                        <LogInButton>Log in</LogInButton>
+                        <LogInText>Log in</LogInText>
                     </Link>
                 }
-
-                <Link to={"/registration"}>
-                    <LogInButton>Registration</LogInButton>
-                </Link>
             </RightSection>
 
 

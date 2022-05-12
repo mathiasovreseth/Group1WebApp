@@ -11,6 +11,8 @@ import {
 } from "../../styles/CommonStyles";
 import styled from "styled-components";
 import {isValidEmail, isValidPassword, isValidUsername} from '../../utils/FormValidation';
+import {Link} from "react-router-dom";
+import TextButton from "../buttons/TextButton";
 
 const Button = styled.button`
   border: 0;
@@ -22,7 +24,6 @@ const Button = styled.button`
   box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
   color: white;
   cursor: pointer;
-  width: 26rem;
 `;
 
 
@@ -35,6 +36,7 @@ const FormContainer = styled(FlexColumnContainer)`
   border-radius: ${props => `${props.theme.borderRadius}`};
   box-shadow: 0 0 2rem 0 rgba(90, 90, 90);
   padding: 0 4.4rem 6.6rem 4.4rem;
+  width: 40rem;
 `;
 const Container = styled(FlexColumnContainer)`
   justify-content: center;
@@ -76,6 +78,18 @@ const InnerForm = (props: FormikProps<FormValues>) => {
                     <Button type="submit" disabled={isSubmitting}>
                         Submit
                     </Button>
+                    <SmallText style={{ marginTop: "2rem", display:"flex", flexWrap: "wrap"}}>
+                        <SmallText style={{ opacity: 0.7}}>By creating an account yo agree to our </SmallText> <Link to={"/privacy-policy"} > <SmallText>Privacy Policy</SmallText></Link>
+                        <SmallText style={{ opacity: 0.7, margin: "0 .2rem"}}>and </SmallText> <Link to={"/terms-of-service"} > <SmallText>Terms of Service</SmallText></Link>
+                    </SmallText>
+                    <SmallText style={{ display: "flex", marginTop: "2rem"}}>
+                        <SmallText style={{opacity: 0.7, marginRight: "0.4rem"}}>
+                            Already have an account?
+                        </SmallText>
+                        <Link to={"/login"}>
+                            <SmallText>Log in</SmallText>
+                        </Link>
+                    </SmallText>
             </FormContainer>
 
 
@@ -110,12 +124,12 @@ const RegistrationForm = withFormik<FormProps, FormValues>({
             errors.username = 'Username must be lowercase and contain only letters';
         }
         if (!values.email) {
-            errors.email = 'Required';
+            errors.email = 'Email is required';
         } else if (!isValidEmail(values.email)) {
             errors.email = 'Invalid email address';
         }
         if(!values.password) {
-            errors.password = 'Required';
+            errors.password = 'Password is required';
         } else if(!isValidPassword(values.password)) {
             errors.password = 'Password must be 6 characters or more';
         }
