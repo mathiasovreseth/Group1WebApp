@@ -100,23 +100,4 @@ public class User {
         return new User(username, email, password);
 
     }
-
-//    public boolean isEnabled(){
-//        return enabled;
-//    }
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return enabled;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return enabled;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return enabled;
-//    }
-
 }

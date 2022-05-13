@@ -22,9 +22,9 @@ public class AuthController {
     final private PasswordEncoder passwordEncoder;
     final private LoginService loginService;
 
-    public AuthController (UserService userService,
-                           PasswordEncoder passwordEncoder,
-                           LoginService loginservice){
+    public AuthController(UserService userService,
+                          PasswordEncoder passwordEncoder,
+                          LoginService loginservice) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.loginService = loginservice;
@@ -45,7 +45,7 @@ public class AuthController {
             String password = json.getString("password");
 
             Optional<User> userOptional = loginService.login(email, password);
-            if(userOptional.isPresent()) {
+            if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 return ResponseEntity.ok(user.getToken());
             } else {
@@ -77,11 +77,11 @@ public class AuthController {
             String email = json.getString("email");
             String password = json.getString("password");
 
-            if(userService.findUserByEmail(email).isPresent()) {
+            if (userService.findUserByEmail(email).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
 
-            User user = new User(name, email, passwordEncoder.encode(password), "ADMIN");
+            User user = new User(name, email, passwordEncoder.encode(password));
             userService.addUser(user);
 
             return ResponseEntity.ok("User successfully registered.");
@@ -92,6 +92,7 @@ public class AuthController {
 
     /**
      * Confirm a user so they can login
+     *
      * @param entity the email of the user to confirm
      * @return ResponseEntity the response ok or not
      */
@@ -102,7 +103,7 @@ public class AuthController {
 
             String email = json.getString("email");
             Optional<User> optionalUser = userService.findUserByEmail(email);
-            if(optionalUser.isPresent()) {
+            if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 user.setEnabled(true);
             } else {
