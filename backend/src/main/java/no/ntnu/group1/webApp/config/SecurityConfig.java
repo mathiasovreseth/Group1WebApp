@@ -41,12 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         security.cors().and().csrf().disable()
                 .authorizeRequests()
                 //permit logins and registrations
-                .antMatchers(HttpMethod.POST, "/users/addUser").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/getAll").permitAll()
-                .antMatchers(HttpMethod.GET, "/orders/getAll").permitAll()
-                .antMatchers(HttpMethod.GET, "/products/getAll").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users/getAll").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/orders/getAll").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/products/getAll").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
