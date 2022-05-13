@@ -24,15 +24,19 @@ public class User {
     public User() {
     }
 
+    //TODO: Remove enum when admin privileges is implemented
     public enum Roles {
         USER,
         ADMIN
     }
-    private @Id @GeneratedValue Long id;
+
+    private @Id
+    @GeneratedValue
+    Long id;
     private String name;
     private String email;
     private String password;
-    private String userRole;
+    private boolean isAdmin;
     private String token;
     private boolean enabled;
     private Date accountCreated;
@@ -40,13 +44,18 @@ public class User {
     List<Review> reviews;
 
 
-    public User(String name, String email, String password, String userRole) {
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.userRole = userRole;
         this.enabled = false;
         this.accountCreated = new Date();
+
+        if (this.name.equalsIgnoreCase("admin")) {
+            this.isAdmin = true;
+        } else {
+            this.isAdmin = false;
+        }
     }
 
     public void addReview(Review review) {
@@ -71,28 +80,24 @@ public class User {
         return Objects.hash(id, name);
     }
 
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
+    public boolean getUserRole() {
+        return this.isAdmin;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.isAdmin));
         return authorities;
     }
 
-    public static User fromJSONObject(JSONObject jsonObject) throws JSONException{
+    public static User fromJSONObject(JSONObject jsonObject) throws JSONException {
 
         String username = jsonObject.getString("username");
         String email = jsonObject.getString("email");
         String password = jsonObject.getString("password");
-        String userRole = jsonObject.getString("role");
 
-        return new User(username, email, password, userRole);
+
+        return new User(username, email, password);
 
     }
 
