@@ -36,7 +36,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private boolean isAdmin;
+    private String role;
     private String token;
     private boolean enabled;
     private Date accountCreated;
@@ -52,9 +52,9 @@ public class User {
         this.accountCreated = new Date();
 
         if (this.name.equalsIgnoreCase("admin")) {
-            this.isAdmin = true;
+            this.role = "ADMIN";
         } else {
-            this.isAdmin = false;
+            this.role = "USER";
         }
     }
 
@@ -80,13 +80,13 @@ public class User {
         return Objects.hash(id, name);
     }
 
-    public boolean getUserRole() {
-        return this.isAdmin;
+    public String getUserRole() {
+        return this.role;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.isAdmin));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + getUserRole()));
         return authorities;
     }
 
