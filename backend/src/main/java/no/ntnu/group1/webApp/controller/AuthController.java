@@ -1,10 +1,12 @@
 package no.ntnu.group1.webApp.controller;
 
 import no.ntnu.group1.webApp.models.User;
+import no.ntnu.group1.webApp.security.JwtUtil;
 import no.ntnu.group1.webApp.service.LoginService;
 import no.ntnu.group1.webApp.service.UserService;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,7 @@ public class AuthController {
      * @param http HttpEntity of request.
      * @return ResponseEntity containing user's token, or empty 404 status on incorrect login/missing user.
      */
-    @PostMapping("/login")
+    @PostMapping("/api/auth/login")
     ResponseEntity<String> login(HttpEntity<String> http) {
         try {
             JSONObject json = new JSONObject(http.getBody());
@@ -45,7 +47,6 @@ public class AuthController {
             Optional<User> userOptional = loginService.login(email, password);
             if(userOptional.isPresent()) {
                 User user = userOptional.get();
-
                 return ResponseEntity.ok(user.getToken());
             } else {
                 return ResponseEntity.notFound().build();
