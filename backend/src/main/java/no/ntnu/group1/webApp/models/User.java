@@ -44,7 +44,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.userRole = "ADMIN";
+        this.userRole = userRole;
         this.enabled = false;
         this.accountCreated = new Date();
     }
