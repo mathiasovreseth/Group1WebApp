@@ -48,7 +48,6 @@ public class UserController {
     @PostMapping("addUser")
     public ResponseEntity<User> addNewUser(HttpEntity<String> entity){
         System.out.println("------------------------------------------");
-        log.error("Heisann testing heradasd-----------");
         try{
             System.out.println(entity);
             saveUserFromJsonObject(new JSONObject(entity.getBody()));
