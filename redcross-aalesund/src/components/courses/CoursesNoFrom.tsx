@@ -60,7 +60,7 @@ const SelectedCourseDiv = styled.div`
   
 `;
 
-class MyComponent extends React.Component {
+class CourseNoForm extends React.Component {
   state = {
     info: "",
     card1Selected: false,
@@ -99,7 +99,6 @@ class MyComponent extends React.Component {
   
   render () {
     let info: string = this.state.info;
-    const { card1Selected, card2Selected, card3Selected } = this.state; 
     return (
       <>
       <Container>
@@ -115,10 +114,6 @@ class MyComponent extends React.Component {
             <Course title="Right" info={info} hasButton={true} />
           </Section>
         </CoursesContainer>
-
-        {card1Selected && <CourseForm title="Left" info={info}/>} 
-        {card2Selected && <CourseForm title="Middle" info={info}/>} 
-        {card3Selected && <CourseForm title="Right" info={info}/>} 
       </Container>
       </>
     );
@@ -126,4 +121,4 @@ class MyComponent extends React.Component {
 }
 
 
-export {MyComponent};
+export {CourseNoForm};

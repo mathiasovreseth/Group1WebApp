@@ -72,7 +72,6 @@ const InfoText = styled.div`
 
 
 
-// must take props form Courses so right information is shown
 // must send value for course selected
 export function CourseForm(props: {title: string; info: string;}) {
     const title = props.title
