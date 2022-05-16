@@ -1,11 +1,13 @@
 import React from 'react';
-import {User} from "./UserModel";
+import {User, UserAuthResponse, UserRegistrationFormValues} from "./UserModel";
 
 
 
 export interface AuthContextType {
     signIn: (user: User) => Promise<string>;
+    signUp: (user: UserRegistrationFormValues) => Promise<string>;
     signOut: () => void;
-    getAuthUser: () => void;
-    isValidToken: boolean;
+    initializeAuth: () => any;
+    user: UserAuthResponse;
+    isAuthenticated: boolean;
 }

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styled, {DefaultTheme, ThemeContext, ThemeProps, ThemeProvider} from "styled-components";
 import MyDropDownMenu from "../buttons/DropdownMenu";
 import {LargeText, Li, MediumText} from "../../styles/CommonStyles";
@@ -79,7 +79,7 @@ function Header() {
                 <DropDownMenuContainer>
                     <MyDropDownMenu/>
                 </DropDownMenuContainer>
-                {auth.isValidToken ?
+                {auth.isAuthenticated ?
                     <TextButton onClick={()=> auth.signOut()} label={"Sign out"}/> :
                     <Link to={"/login"}>
                         <LogInText>Log in</LogInText>

@@ -1,18 +1,17 @@
 import * as React from 'react';
-import {
-    FormikProps,
-    Form,
-    Field,
-    FormikErrors, withFormik,
-} from 'formik';
+
 import {
     FlexColumnContainer, Input, LargeText, SmallText,
     XSmallText
 } from "../../styles/CommonStyles";
 import styled from "styled-components";
 import {isValidEmail, isValidPassword, isValidUsername} from '../../utils/FormValidation';
-import {Link} from "react-router-dom";
-import TextButton from "../buttons/TextButton";
+import { ToastContainer, toast } from 'react-toastify';
+import {Link, useNavigate} from "react-router-dom";
+import {useState} from "react";
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../auth/Auth';
+import {UserRegistrationFormValues} from "../../models/UserModel";
 
 const Button = styled.button`
   border: 0;
@@ -44,40 +43,128 @@ const Container = styled(FlexColumnContainer)`
   width: 100vw;
   height: 90vh;
 
+`;
+const OuterContainer = styled(FlexColumnContainer)`
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 90vh;
+  position: relative;
+  
 `
 
 interface FormValues {
-    username: string;
+    name: string;
     email: string;
     password: string;
 }
 
 
-const InnerForm = (props: FormikProps<FormValues>) => {
-    const {touched, errors, isSubmitting} = props;
+function RegistrationForm() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [nameErr, setNameErr] = useState('');
+    const [emailErr, setEmailErr] = useState('');
+    const [passErr, setPassErr] = useState('');
+    const navigate = useNavigate();
+    const auth = useAuth();
+
+
+    function handleSubmit() {
+        setIsSubmitting(true);
+        const formValues: UserRegistrationFormValues = {
+            name: name,
+            email: email,
+            password: password,
+        }
+        auth.signUp(formValues).then(res => {
+            setIsSubmitting(false);
+            toast.success('Account created!', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                bodyStyle:{fontSize: "3.2rem"},
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                onClose: () => navigate("/login")
+            });
+        }).catch(err => {
+            setIsSubmitting(false);
+            setPassErr(err);
+        });
+
+    }
+    function validateForm() {
+        let isValid = true;
+        if (name.length === 0) {
+            setNameErr('Name is required');
+            isValid = false;
+
+        } else if(!isValidUsername(name)) {
+            setNameErr("name must be lowercase and contain only letters");
+        }
+        if (email.length === 0) {
+            setEmailErr('Email is required');
+            isValid = false;
+
+        } else if (!isValidEmail(email)) {
+            setEmailErr('Invalid email address');
+            isValid = false;
+        }
+        if(password.length === 0) {
+            setPassErr('Password is required');
+            isValid = false;
+
+        } else if(!isValidPassword(password)) {
+            setPassErr('Password must be 6 characters or more');
+            isValid = false;
+        }
+        return isValid;
+    }
     return (
-        <Form>
-            <Container>
+        <form  onSubmit={(e)=> {
+            if(validateForm()) {
+                setEmailErr('');
+                setNameErr('');
+                setPassErr('');
+                handleSubmit();
+            }
+            e.preventDefault();
+        }}>
+
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                style={{overflowY: "hidden"}}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            <OuterContainer>
+
                 <FormContainer>
                     <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Register</LargeText>
-                    <Label>Username</Label>
-                <Field render={() => {
-                    return <Input onChange={(e)=> props.values.username = e.target.value} type="text" name="username"/>
-                }}/>
-                {touched.username && errors.username && <XSmallText style={{color: "red"}}>{errors.username}</XSmallText>}
+                    <Label>Name</Label>
+                    <Input onChange={(e)=> setName(e.target.value)}  type="text" name="name"/>
+                    {emailErr && <XSmallText style={{color: "red"}}>{nameErr}</XSmallText>}
                     <Label>E-mail</Label>
-                    <Field  render={() => {
-                    return <Input onChange={(e)=> props.values.email = e.target.value}  type="email" name="email"/>
-                }}/>
-                {touched.email && errors.email && <XSmallText style={{color: "red"}}>{errors.email}</XSmallText>}
+                    <Input onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
+                    {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
                     <Label>Password</Label>
-                <Field render={() => {
-                    return <Input onChange={(e)=> props.values.password = e.target.value} type="password" name="password"/>
-                }}/>
-                {touched.password && errors.password && <XSmallText style={{color: "red"}}>{errors.password}</XSmallText>}
+                    <Input onChange={(e)=> setPassword(e.target.value)} type="password" name="password"/>
+                    {passErr && <XSmallText style={{color: "red"}}>{passErr}</XSmallText>}
                     <Button type="submit" disabled={isSubmitting}>
-                        Submit
+                        {isSubmitting  ? 'Submitting': 'Submit'}
                     </Button>
+
                     <SmallText style={{ marginTop: "2rem", display:"flex", flexWrap: "wrap"}}>
                         <SmallText style={{ opacity: 0.7}}>By creating an account yo agree to our </SmallText> <Link to={"/privacy-policy"} > <SmallText>Privacy Policy</SmallText></Link>
                         <SmallText style={{ opacity: 0.7, margin: "0 .2rem"}}>and </SmallText> <Link to={"/terms-of-service"} > <SmallText>Terms of Service</SmallText></Link>
@@ -90,82 +177,80 @@ const InnerForm = (props: FormikProps<FormValues>) => {
                             <SmallText>Log in</SmallText>
                         </Link>
                     </SmallText>
-            </FormContainer>
+                </FormContainer>
 
 
-            </Container>
-        </Form>
-    );
-};
-
-interface FormProps {
-    initialUsername?: string;
-    initialEmail?: string;
+            </OuterContainer>
+        </form>
+    )
 }
+// interface FormProps {
+//     initialName?: string;
+//     initialEmail?: string;
+// }
 
 
+// const notify = () => {
+//
+//     return toast("Wow so easy!");
+// };
 
-const RegistrationForm = withFormik<FormProps, FormValues>({
-    // Transform outer props into form values
-    mapPropsToValues: props => {
-        return {
-            username: props?.initialUsername ?? '',
-            email: props?.initialEmail ?? '',
-            password: '',
-        };
-    },
-
-    // custom validation function
-    validate: (values: FormValues) => {
-        let errors: FormikErrors<FormValues> = {};
-        if (!values.username) {
-            errors.username = 'Username is required';
-        } else if (!isValidUsername(values.username)) {
-            errors.username = 'Username must be lowercase and contain only letters';
-        }
-        if (!values.email) {
-            errors.email = 'Email is required';
-        } else if (!isValidEmail(values.email)) {
-            errors.email = 'Invalid email address';
-        }
-        if(!values.password) {
-            errors.password = 'Password is required';
-        } else if(!isValidPassword(values.password)) {
-            errors.password = 'Password must be 6 characters or more';
-        }
-        return errors;
-    },
-
-    handleSubmit: values => {
-        let errors: FormikErrors<FormValues> = {};
-        const request = new Request("http://localhost:8080/api/users/register", {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                username: values.username,
-                email: values.email,
-                password: values.password,
-                userRole: "ADMIN",
-            }),
-        });
-        fetch(request).then(response => {
-            if (response.status === 401 || response.status === 403) {
-                errors.password = "Failed to autorize";
-
-            }
-            return response.json();
-        }).then((data) => {
-            // sets token in localstorage, probaly not secure
-            localStorage.setItem('token', data['jwt-token']);
-            // localStorage.setItem('role', data.roles[0]);
-
-        }).catch((error) => {
-            errors.password = "Invalid credentials";
-        });
-    },
-})(InnerForm);
+// const RegistrationForm = withFormik<FormProps, FormValues>({
+//
+//     // Transform outer props into form values
+//     mapPropsToValues: props => {
+//         return {
+//             name: props?.initialName ?? '',
+//             email: props?.initialEmail ?? '',
+//             password: '',
+//         };
+//     },
+//
+//     // custom validation function
+//     validate: (values: FormValues) => {
+//         let errors: FormikErrors<FormValues> = {};
+//         if (!values.name) {
+//             errors.name = 'name is required';
+//         } else if (!isValidUsername(values.name)) {
+//             errors.name = 'name must be lowercase and contain only letters';
+//         }
+//         if (!values.email) {
+//             errors.email = 'Email is required';
+//         } else if (!isValidEmail(values.email)) {
+//             errors.email = 'Invalid email address';
+//         }
+//         if(!values.password) {
+//             errors.password = 'Password is required';
+//         } else if(!isValidPassword(values.password)) {
+//             errors.password = 'Password must be 6 characters or more';
+//         }
+//         return errors;
+//     },
+//
+//     handleSubmit: values => {
+//         let errors: FormikErrors<any> = {};
+//         const valuesFromForm :UserRegistrationFormValues = {
+//             name: values.name,
+//             email: values.email,
+//             password: values.password,
+//
+//         }
+//         notify();
+//         // history.pushState("","","/login");
+//         // window.location.reload();
+//         // sendApiRequest(
+//         //     "POST", "/auth/register",
+//         //     function (jwtResponse: any) {
+//         //         return <Navigate to={"/login"}/>
+//         //     },
+//         //     valuesFromForm,
+//         //     function (responseText: string) {
+//         //         errors.password = "heisann";
+//         //     }
+//         // )
+//     },
+// })(InnerForm);
 
 export default RegistrationForm;
+
 
