@@ -1,4 +1,5 @@
-import React from "react";
+import React,{ useState, useEffect }  from "react";
+
 import { FaSquare } from "react-icons/fa";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
@@ -27,21 +28,48 @@ const CoursesContainer = styled.div`
   }
 `;
 
-const CardLeft = ["Info1", "info2", "Info3"];
-const CardMiddle = ["Info1", "info2", "Info3"];
-const CardRight= ["Info1", "info2", "Info3"];
 
-function Courses() {
+class MyComponent extends React.Component {
+  state = {
+    info: ""
+  }
+
+  componentDidMount () {
+    fetch('https://catfact.ninja/fact')
+      .then(response => response.json())
+      .then(response => this.setState({        
+        info: response.fact
+      }))
+      
+  }
+  
+  render () {
+    let {info} = this.state;
     return (
       <div>
         <H1>Our Courses</H1>
         <CoursesContainer>
-            <Course title="Left" info={CardLeft} hasButton={true} /> 
-            <Course title="Middle" info={CardMiddle} hasButton={true}/>
-            <Course title="Right" info={CardRight} hasButton={true}/>
+            <Course title="Left" info={info} hasButton={true} selected={false}/> 
+            <Course title="Middle" info={info} hasButton={true} selected={false}/>
+            <Course title="Right" info={info} hasButton={true} selected={false}/>
         </CoursesContainer>
       </div>
     );
+  }
 }
 
-export default Courses;
+
+  // render(): React.ReactNode {
+  //   return (
+  //     <div>
+  //       <H1>Our Courses</H1>
+  //       <CoursesContainer>
+  //           <Course title="Left" info={CardLeft} hasButton={true} /> 
+  //           <Course title="Middle" info={CardMiddle} hasButton={true}/>
+  //           <Course title="Right" info={CardRight} hasButton={true}/>
+  //       </CoursesContainer>
+  //     </div>
+  //   );
+  // }
+
+export {MyComponent};

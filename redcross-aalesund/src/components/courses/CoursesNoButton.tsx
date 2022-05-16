@@ -43,9 +43,9 @@ function CoursesNoButton() {
     <>
     <H1>Our Courses</H1>
     <CoursesContainer>
-        <Course title="Left" info={CardLeft} hasButton={false}/> 
-        <Course title="Middle" info={CardMiddle} hasButton={false}/>
-        <Course title="Right" info={CardRight} hasButton={false}/>
+        <Course title="Left" info={CardLeft} hasButton={false} selected={false}/> 
+        <Course title="Middle" info={CardMiddle} hasButton={false} selected={false}/>
+        <Course title="Right" info={CardRight} hasButton={false} selected={false}/>
     </CoursesContainer>
     
     </>

@@ -67,16 +67,26 @@ const LI = styled.li`
 
 
 
-export function Course(props: { title: any; info: any; hasButton: boolean; }) {
+export function Course(props: { title: any; info: any; hasButton: boolean; selected: boolean }) {
     const title = props.title
     const info = props.info
-    const hasButton = props.hasButton    
+    const hasButton = props.hasButton
+    let selected = props.selected
+
+    function setSelected() {
+      if(!selected){
+        selected = true
+      }else {
+        selected = false
+      }
+    }
+     
 
     function createButton() {
       if(hasButton) {
         return(
           <Link to='/product_page'>
-            <SelectButton>Select</SelectButton>
+            <SelectButton onClick={setSelected}>Select</SelectButton>
           </Link>);
       }
     }
@@ -88,9 +98,10 @@ export function Course(props: { title: any; info: any; hasButton: boolean; }) {
         <Section>
             <Box>{title}</Box>
             <BulletPoints>
-            {info.map((text: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined) =>
+            {/* {info.map((text: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined) =>
             <LI><FaSquare style={{marginRight: ".8rem"}}/>{text}</LI>)
-            }
+            } */}
+            {info}
             </BulletPoints>
             {createButton()}
   
