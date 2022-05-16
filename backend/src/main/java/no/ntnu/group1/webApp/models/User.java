@@ -86,7 +86,7 @@ public class User {
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + getUserRole()));
+        authorities.add(new SimpleGrantedAuthority(getUserRole()));
         return authorities;
     }
 

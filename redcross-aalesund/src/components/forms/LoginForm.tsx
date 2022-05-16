@@ -52,13 +52,9 @@ const OuterContainer = styled(FlexColumnContainer)`
   position: relative;
   
 `
-/** Login Form.
- * Didn't figure out how to use the auth hook here. So had to rewrite the loginForm.
- * That is why it is so different stuctured than registration form
- */
 function LoginForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('test@test.no');
+    const [password, setPassword] = useState('testing');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [emailErr, setEmailErr] = useState('');
     const [passErr, setPassErr] = useState('');
@@ -78,9 +74,11 @@ function LoginForm() {
         auth.signIn(user).then(res => {
             // navigate to page the user previously was on
             navigate(from, { replace: true });
+            setIsSubmitting(false);
         }).catch(err => {
             // display error message if login failed
             setPassErr(err);
+            setIsSubmitting(false);
         });
     }
     function validateForm() {
