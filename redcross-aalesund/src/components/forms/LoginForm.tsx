@@ -53,8 +53,8 @@ const OuterContainer = styled(FlexColumnContainer)`
   
 `
 function LoginForm() {
-    const [email, setEmail] = useState('test@test.no');
-    const [password, setPassword] = useState('testing');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [emailErr, setEmailErr] = useState('');
     const [passErr, setPassErr] = useState('');

@@ -19,7 +19,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
  * to the function: HTTP response code and response body (as text)
  * @param shouldParseJsonResponse true if json response from should be parsed
  */
-export function sendApiRequest(method: any, url: string, requestBody: any, shouldParseJsonResponse: boolean) {
+export function sendApiRequest(method: any, url: string, requestBody: any, shouldParseJsonResponse: boolean): any {
     return new Promise((resolve, reject) => {
         const request = new XMLHttpRequest();
         request.onreadystatechange = function () {
@@ -28,7 +28,6 @@ export function sendApiRequest(method: any, url: string, requestBody: any, shoul
                     let responseJson = "";
                     if (request.responseText && shouldParseJsonResponse) {
                         responseJson = JSON.parse(request.responseText);
-                        console.log(responseJson);
                     }
                     resolve(responseJson);
                 } else if(request.status === 404) {

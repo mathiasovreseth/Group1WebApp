@@ -80,7 +80,7 @@ function Header() {
                     <MyDropDownMenu/>
                 </DropDownMenuContainer>
                 {auth.isAuthenticated ?
-                    <TextButton onClick={()=> auth.signOut()} label={"Sign out"}/> :
+                    <TextButton style={{marginLeft:"1.6rem" }} onClick={()=> auth.signOut()} label={"Sign out"}/> :
                     <Link to={"/login"}>
                         <LogInText>Log in</LogInText>
                     </Link>

@@ -40,7 +40,8 @@ public class User {
     private String token;
     private boolean enabled;
     private Date accountCreated;
-    @OneToMany(targetEntity = Review.class)
+    // fetchType.eager fixed Lazyinititilization exeption
+    @OneToMany(targetEntity = Review.class, fetch = FetchType.EAGER)
     List<Review> reviews;
 
 

@@ -9,9 +9,10 @@ import LoginPage from "./pages/LoginPage";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import RegistrationPage from "./pages/RegistrationPage";
-import {RequireAuth, useAuth} from "./auth/Auth";
+import {RequireAdminAuth, RequireAuth, useAuth} from "./auth/Auth";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import AdminPage from "./pages/AdminPage";
 
 export default function App() {
    const auth = useAuth();
@@ -29,9 +30,9 @@ export default function App() {
                         <Route
                             path="/admin"
                             element={
-                                <RequireAuth>
-                                    <AboutPage/>
-                                </RequireAuth>
+                                <RequireAdminAuth>
+                                    <AdminPage/>
+                                </RequireAdminAuth>
                             }
                         />
                         <Route path={"/terms-of-service"} element={<TermsOfServicePage/>}/>

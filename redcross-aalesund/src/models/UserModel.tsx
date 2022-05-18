@@ -19,3 +19,14 @@ export interface User {
     password: string,
     role?: UserRole
 }
+export interface getUserApiResponse {
+    name: string,
+    email: string;
+    id: number,
+    enabled: boolean;
+    reviews: Array<any>;
+    userRole: string;
+    token: string;
+    accountCreated: string
+}
+
