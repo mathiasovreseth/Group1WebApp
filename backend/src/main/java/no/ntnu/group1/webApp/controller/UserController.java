@@ -75,6 +75,7 @@ public class UserController {
         try {
             JSONObject json = new JSONObject(http.getBody());
             String oldEmail = json.getString("oldEmail");
+            String id = json.getString("id");
             String email = json.getString("email");
             String name = json.getString("name");
             String password = json.getString("password");
@@ -82,8 +83,7 @@ public class UserController {
             Optional<User> userToEdit = userService.findUserByEmail(oldEmail);
             if(userToEdit.isPresent()) {
                 User user = userToEdit.get();
-                user.setEmail(email);
-                user.setName(name);
+                userService.updateUser(id,email, password);
                 if(!password.isEmpty()) {
                     user.setPassword(password);
                 }

@@ -43,6 +43,7 @@ const Label = styled.label`
 `
 
 export interface editedUserFields {
+    id?: number,
     oldEmail: string,
     name: string,
     email: string,
@@ -65,6 +66,7 @@ function EditUserForm(props: EditUserFormProps) {
 
     function handleSubmit() {
         const editedUserValues: editedUserFields = {
+            id: props.user?.id,
             oldEmail: props.user?.email ?? "",
             name: name,
             email: email,
