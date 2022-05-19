@@ -26,7 +26,6 @@ const Button = styled.button`
   border-radius: ${props => `${props.theme.borderRadius}`};
   font-size: ${props => `${props.theme.fontSizes.large}`};
   padding: 1rem 0;
-  margin-top: 2rem;
   background-color: ${props => `${props.theme.palette.primary.accentColor}`};
   box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
   color: white;
@@ -58,7 +57,6 @@ interface EditUserFormProps {
 function EditUserForm(props: EditUserFormProps) {
     const [name, setName] = useState(props.user?.name ?? "");
     const [email, setEmail] = useState(props.user?.email ?? "");
-    const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [nameErr, setNameErr] = useState('');
     const [emailErr, setEmailErr] = useState('');
@@ -70,7 +68,7 @@ function EditUserForm(props: EditUserFormProps) {
             oldEmail: props.user?.email ?? "",
             name: name,
             email: email,
-            password: password,
+            password: '',
         }
         props.onSubmit(editedUserValues);
     }
@@ -110,9 +108,8 @@ function EditUserForm(props: EditUserFormProps) {
                 <Label>E-mail</Label>
                 <Input defaultValue={props?.user?.email ?? ""}  onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
                 {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
-                <Label>Password</Label>
-                <Input onChange={(e)=> setPassword(e.target.value)} type="password" name="password"/>
-                <FlexContainer style={{ justifyContent: "space-between"}}>
+
+                <FlexContainer style={{ justifyContent: "space-between", marginTop: "2rem"}}>
                     <Button type="submit" disabled={isSubmitting}>
                         {isSubmitting  ? 'Submitting': 'Submit'}
                     </Button>

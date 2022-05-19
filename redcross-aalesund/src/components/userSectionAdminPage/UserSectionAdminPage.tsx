@@ -57,6 +57,13 @@ function UserSectionAdminPage() {
         setIsPopupOpen(true);
     }
     function handleEditUser(editedUser: editedUserFields) {
+        const userToEdit = users.filter((t) => t.id == editedUser.id);
+        const newUserList = users.filter((t) => t.id != editedUser.id);
+        userToEdit[0].name = editedUser.name;
+        userToEdit[0].email = editedUser.email;
+        newUserList.push(userToEdit[0]);
+        setUsers(newUserList);
+
         sendApiRequest("POST", "/users/update", editedUser, false);
         setIsPopupOpen(false);
 
@@ -81,7 +88,7 @@ function UserSectionAdminPage() {
                     <FlexContainer style={{width: "10rem", justifyContent: "center"}}>
                         <MediumText>Enabled</MediumText>
                     </FlexContainer>
-                    <Popup  defaultOpen={false} open={isPopupOpen}>
+                    <Popup   defaultOpen={false} open={isPopupOpen}>
                         <EditUserForm user={userToEdit} onCancel={()=> setIsPopupOpen(false)} onSubmit={(user)=> handleEditUser(user)} />
                     </Popup>
                 </FlexContainer>

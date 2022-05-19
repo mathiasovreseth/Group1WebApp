@@ -30,12 +30,11 @@ public class UserService {
   }
 
   @Transactional
-  public void updateUser(String id, String name, String email, String password) {
+  public boolean updateUser(String id, String name, String email) {
     String sql = "update users set email='" + email + "',name= '" + name + "'  where id=" + id;
-
-    System.out.println(sql);
     entityManager.joinTransaction();
-    entityManager.createNativeQuery(sql).executeUpdate();
+    int nrOfUpdatedTables = entityManager.createNativeQuery(sql).executeUpdate();
+    return nrOfUpdatedTables == 1;
   }
 
   /**

@@ -74,22 +74,14 @@ public class UserController {
     public ResponseEntity<?> updateUser(HttpEntity<String> http)  {
         try {
             JSONObject json = new JSONObject(http.getBody());
-            String oldEmail = json.getString("oldEmail");
             String id = json.getString("id");
             String email = json.getString("email");
             String name = json.getString("name");
-            String password = json.getString("password");
-
-            Optional<User> userToEdit = userService.findUserByEmail(oldEmail);
-            if(userToEdit.isPresent()) {
-                User user = userToEdit.get();
-                userService.updateUser(id,name,email, password);
-                if(!password.isEmpty()) {
-                    user.setPassword(password);
-                }
-                return ResponseEntity.ok("User edited");
+            if(userService.updateUser(id,name,email)) {
+                return ResponseEntity.ok("User updated");
             } else {
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.internalServerError().build();
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
