@@ -24,12 +24,6 @@ public class User {
     public User() {
     }
 
-    //TODO: Remove enum when admin privileges is implemented
-    public enum Roles {
-        USER,
-        ADMIN
-    }
-
     private @Id
     @GeneratedValue
     Long id;
