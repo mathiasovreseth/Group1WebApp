@@ -1,28 +1,33 @@
 package no.ntnu.group1.webApp.controller;
 
 import no.ntnu.group1.webApp.models.User;
+import no.ntnu.group1.webApp.security.AuthenticationResponse;
+import no.ntnu.group1.webApp.security.JwtUtil;
 import no.ntnu.group1.webApp.service.LoginService;
 import no.ntnu.group1.webApp.service.UserService;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class AuthController {
     final private UserService userService;
     final private PasswordEncoder passwordEncoder;
     final private LoginService loginService;
 
-    public AuthController (UserService userService,
-                           PasswordEncoder passwordEncoder,
-                           LoginService loginservice){
+    public AuthController(UserService userService,
+                          PasswordEncoder passwordEncoder,
+                          LoginService loginservice) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.loginService = loginservice;
@@ -34,8 +39,9 @@ public class AuthController {
      * @param http HttpEntity of request.
      * @return ResponseEntity containing user's token, or empty 404 status on incorrect login/missing user.
      */
-    @PostMapping("/login")
-    ResponseEntity<String> login(HttpEntity<String> http) {
+    @CrossOrigin
+    @PostMapping("/api/auth/login")
+    ResponseEntity<?> login(HttpEntity<String> http) {
         try {
             JSONObject json = new JSONObject(http.getBody());
 
@@ -43,10 +49,9 @@ public class AuthController {
             String password = json.getString("password");
 
             Optional<User> userOptional = loginService.login(email, password);
-            if(userOptional.isPresent()) {
+            if (userOptional.isPresent()) {
                 User user = userOptional.get();
-
-                return ResponseEntity.ok(user.getToken());
+                return  ResponseEntity.ok(new AuthenticationResponse(user.getToken()));
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -67,6 +72,8 @@ public class AuthController {
      * @param entity HttpEntity of request
      * @return ResponseEntity
      */
+
+    @CrossOrigin
     @PostMapping("/api/auth/register")
     public ResponseEntity<String> registerUser(HttpEntity<String> entity) {
         try {
@@ -76,12 +83,14 @@ public class AuthController {
             String email = json.getString("email");
             String password = json.getString("password");
 
-            if(userService.findUserByEmail(email).isPresent()) {
+            if (userService.findUserByEmail(email).isPresent()) {
+
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
-
-            User user = new User(name, email, passwordEncoder.encode(password), "ADMIN");
+            User user = new User(name, email, passwordEncoder.encode(password));
+            System.out.println(user.getUserRole());
             userService.addUser(user);
+
 
             return ResponseEntity.ok("User successfully registered.");
         } catch (JSONException e) {
@@ -91,6 +100,7 @@ public class AuthController {
 
     /**
      * Confirm a user so they can login
+     *
      * @param entity the email of the user to confirm
      * @return ResponseEntity the response ok or not
      */
@@ -101,7 +111,7 @@ public class AuthController {
 
             String email = json.getString("email");
             Optional<User> optionalUser = userService.findUserByEmail(email);
-            if(optionalUser.isPresent()) {
+            if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 user.setEnabled(true);
             } else {
