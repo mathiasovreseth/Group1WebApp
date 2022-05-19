@@ -1,12 +1,12 @@
 import {FlexColumnContainer, FlexContainer, MediumText} from "../../styles/CommonStyles";
 import {getUserApiResponse} from "../../models/UserModel";
-import UserCard from "../userCard/UserCard";
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {sendApiRequest} from "../../utils/requests";
 import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
 import EditUserForm, {editedUserFields} from "../forms/EditUserForm";
+import UserCardAdminPage from "./UserCardAdminPage";
 
 
 const InnerContainer = styled(FlexContainer)`
@@ -93,7 +93,7 @@ function UserSectionAdminPage() {
                     </Popup>
                 </FlexContainer>
                 {users && users.map((data: getUserApiResponse)=> {
-                    return <UserCard key={data.id} user={data} onDeleteClick={handleDeleteUser} onEditClick={openPopup}/>
+                    return <UserCardAdminPage key={data.id} user={data} onDeleteClick={handleDeleteUser} onEditClick={openPopup}/>
                 })}
             </FlexColumnContainer>
         </InnerContainer>

@@ -5,6 +5,7 @@ import {FlexColumnContainer, FlexContainer, LargeText, MediumText } from '../sty
 import TextButton from '../components/buttons/TextButton';
 import UserSectionAdminPage from "../components/userSectionAdminPage/UserSectionAdminPage";
 import {FaBars} from 'react-icons/fa';
+import ProductSectionAdminPage from "../components/productSectionAdminPage/ProductSectionAdminPage";
 
 
 const OuterContainer = styled.div`
@@ -31,6 +32,9 @@ function AdminPage() {
             </TextButtonsContainer>
             {index == 0 &&
                 <UserSectionAdminPage/>
+            }
+            {index == 1 &&
+                <ProductSectionAdminPage/>
             }
         </OuterContainer>
     );

@@ -3,8 +3,9 @@ import styled from "styled-components";
 import {getUserApiResponse} from "../../models/UserModel";
 import {FlexContainer, MediumText} from '../../styles/CommonStyles';
 import {FaPen, FaPenAlt, FaTrash} from 'react-icons/fa';
+import {productsApiResponse} from "../../models/ProductsModel";
 
-const UserCardContainer = styled.div`
+const ProductCardContainer = styled.div`
   height: 6rem;
   display: flex;
   align-items: center;
@@ -23,37 +24,31 @@ const IconContainer = styled.div`
 `
 
 interface UserCardProps {
-    user: getUserApiResponse;
-    onDeleteClick: (user: getUserApiResponse) => void;
-    onEditClick: (user: getUserApiResponse) => void;
+    product: productsApiResponse;
+    onDeleteClick: (product: productsApiResponse) => void;
+    onEditClick: (product: productsApiResponse) => void;
 }
 
-function UserCard(props: UserCardProps) {
+function ProductsAdminPageCard(props: UserCardProps) {
     return (
-        <UserCardContainer>
+        <ProductCardContainer>
             <FlexContainer style={{width: "2rem", justifyContent: "center"}}>
-                <MediumText >{props.user.id.toString()}</MediumText>
+                <MediumText >{props.product.id.toString()}</MediumText>
             </FlexContainer>
             <FlexContainer style={{width: "20rem", justifyContent: "center"}}>
-                <MediumText>{props.user.name}</MediumText>
+                <MediumText>{props.product.title}</MediumText>
             </FlexContainer>
             <FlexContainer style={{width: "30rem", justifyContent: "center"}}>
-                <MediumText>{props.user.email}</MediumText>
-            </FlexContainer>
-            <FlexContainer style={{width: "10rem", justifyContent: "center"}}>
-                <MediumText>{props.user.userRole}</MediumText>
-            </FlexContainer>
-            <FlexContainer style={{width: "10rem", justifyContent: "center"}}>
-                <MediumText>{props.user.enabled.toString()}</MediumText>
+                <MediumText>{props.product.description}</MediumText>
             </FlexContainer>
             <IconContainer style={{marginLeft: "1.2rem"}}>
-                <FaPen onClick={() => props.onEditClick(props.user)} color={"grey"} style={{width: "2rem", height: "2rem"}}/>
+                <FaPen onClick={() => props.onEditClick(props.product)} color={"grey"} style={{width: "2rem", height: "2rem"}}/>
             </IconContainer>
             <IconContainer style={{marginLeft: "1.2rem"}}>
-                <FaTrash onClick={() => props.onDeleteClick(props.user)} color={"red"} style={{width: "2rem", height: "2rem"}}/>
+                <FaTrash onClick={() => props.onDeleteClick(props.product)} color={"red"} style={{width: "2rem", height: "2rem"}}/>
             </IconContainer>
-        </UserCardContainer>
+        </ProductCardContainer>
     );
 }
 
-export default UserCard;
+export default ProductsAdminPageCard;
