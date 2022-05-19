@@ -1,5 +1,5 @@
 import React from "react";
-import {MyComponent} from "../components/courses/Courses";
+import {MyComponent} from "./Courses";
 
 
 function ProductPage() {

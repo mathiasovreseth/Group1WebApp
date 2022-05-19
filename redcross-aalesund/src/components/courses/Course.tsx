@@ -45,7 +45,7 @@ const LI = styled.li`
 
 
 
-export function Course(props: { title: string; info: any; hasButton: boolean;}) {
+export function Course(props: { title: string; info: string; hasButton: boolean;}) {
     const title = props.title
     const info = props.info
     const hasButton = props.hasButton

@@ -3,8 +3,9 @@ import { useLocation } from 'react-router-dom'
 import { FaSquare } from "react-icons/fa";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import {Course} from "./Course";
-import {CourseForm} from "./CourseForm";
+import {Course} from "../components/courses/Course";
+import {CourseForm} from "../components/courses/CourseForm";
+import { CommentSection } from "./CommentSection";
 
 const H1 = styled.h1`
   color: #d52d27;
@@ -120,6 +121,7 @@ class MyComponent extends React.Component {
         {card2Selected && <CourseForm title="Middle" info={info}/>} 
         {card3Selected && <CourseForm title="Right" info={info}/>} 
       </Container>
+        <CommentSection/>
       </>
     );
   }
