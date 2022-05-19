@@ -41,7 +41,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
                     // notify caller of error
                     reject("no user data")
                 }
-            }).catch(err => {
+            }).catch((err: any) => {
                 // notify caller of error
                 reject(err);
             })
@@ -54,10 +54,10 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
                 "email": userFromRegistration.email,
                 "password": userFromRegistration.password
             };
-            sendApiRequest("POST", "/auth/register", postData,  false).then(data => {
+            sendApiRequest("POST", "/auth/register", postData,  false).then((data: any) => {
                 // notify caller of success;
                 resolve("");
-            }).catch(err => {
+            }).catch((err: any) => {
                 // notify caller of error;
                 reject(err);
             });
@@ -101,6 +101,15 @@ export function RequireAuth({children}: { children: JSX.Element }) {
     let auth = useAuth();
     let location = useLocation();
     if (!auth.isAuthenticated) {
+        return <Navigate to="/login" state={{from: location}} replace/>;
+    }
+
+    return children;
+}
+export function RequireAdminAuth({children}: { children: JSX.Element }) {
+    let auth = useAuth();
+    let location = useLocation();
+    if (auth.user.role !== "ADMIN") {
         return <Navigate to="/login" state={{from: location}} replace/>;
     }
 

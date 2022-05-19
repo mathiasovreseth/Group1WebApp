@@ -24,7 +24,7 @@ public class UserController {
         this.userService = userService;
     }
 
-
+    @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAll());
@@ -46,6 +46,53 @@ public class UserController {
             return ResponseEntity.ok().build();
         } catch (JSONException e) {
             System.out.println("------------------------------------------");
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @CrossOrigin
+    @PostMapping("delete")
+    public ResponseEntity<?> deleteUser(HttpEntity<String> http)  {
+        try {
+            JSONObject json = new JSONObject(http.getBody());
+            String email = json.getString("email");
+            Optional<User> userToRemove = userService.findUserByEmail(email);
+            if(userToRemove.isPresent()) {
+                User user = userToRemove.get();
+                userService.removeUser(user);
+                return ResponseEntity.ok("User removed");
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @CrossOrigin
+    @PostMapping("update")
+    public ResponseEntity<?> updateUser(HttpEntity<String> http)  {
+        try {
+            JSONObject json = new JSONObject(http.getBody());
+            String oldEmail = json.getString("oldEmail");
+            String email = json.getString("email");
+            String name = json.getString("name");
+            String password = json.getString("password");
+
+            Optional<User> userToEdit = userService.findUserByEmail(oldEmail);
+            if(userToEdit.isPresent()) {
+                User user = userToEdit.get();
+                user.setEmail(email);
+                user.setName(name);
+                if(!password.isEmpty()) {
+                    user.setPassword(password);
+                }
+                return ResponseEntity.ok("User edited");
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }
