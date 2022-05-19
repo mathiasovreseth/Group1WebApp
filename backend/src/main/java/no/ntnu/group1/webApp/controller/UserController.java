@@ -54,8 +54,8 @@ public class UserController {
     public ResponseEntity<?> deleteUser(HttpEntity<String> http)  {
         try {
             JSONObject json = new JSONObject(http.getBody());
-            String email = json.getString("email");
-            Optional<User> userToRemove = userService.findUserByEmail(email);
+            String id = json.getString("id");
+            Optional<User> userToRemove = userService.findById(new Long(id));
             if(userToRemove.isPresent()) {
                 User user = userToRemove.get();
                 userService.removeUser(user);
@@ -83,7 +83,7 @@ public class UserController {
             Optional<User> userToEdit = userService.findUserByEmail(oldEmail);
             if(userToEdit.isPresent()) {
                 User user = userToEdit.get();
-                userService.updateUser(id,email, password);
+                userService.updateUser(id,name,email, password);
                 if(!password.isEmpty()) {
                     user.setPassword(password);
                 }

@@ -1,12 +1,11 @@
 package no.ntnu.group1.webApp.service;
 
-import no.ntnu.group1.webApp.models.Order;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,16 +29,13 @@ public class UserService {
     return userRepository.findById(id);
   }
 
-  @Modifying
-  public void updateUser(String id, String email, String password) {
+  @Transactional
+  public void updateUser(String id, String name, String email, String password) {
+    String sql = "update users set email='" + email + "',name= '" + name + "'  where id=" + id;
 
-    String query = "ALTER TABLE `" + "users" + "` SET `" + "email = heisann" + "` " +
-        " WHERE `" + "id = 1" + "`";
-
-    System.out.println(query);
-    entityManager.createNativeQuery(query).executeUpdate();
-
-
+    System.out.println(sql);
+    entityManager.joinTransaction();
+    entityManager.createNativeQuery(sql).executeUpdate();
   }
 
   /**

@@ -46,8 +46,7 @@ function UserSectionAdminPage() {
             const newUserList = users.filter((t) =>t.id != user.id);
             setUsers(newUserList);
             const postData = {
-                email: user.email,
-                id: user.email,
+                id: user.id,
             };
             sendApiRequest("POST", "/users/delete",postData, false);
         }
