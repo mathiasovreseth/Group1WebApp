@@ -13,6 +13,7 @@ import {RequireAdminAuth, RequireAuth, useAuth} from "./auth/Auth";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AdminPage from "./pages/AdminPage";
+import ProductPage from './pages/ProductPage';
 
 export default function App() {
    const auth = useAuth();
@@ -40,6 +41,7 @@ export default function App() {
                         <Route path={"/privacy-policy"} element={<PrivacyPolicyPage/>}/>
                         <Route path={"/login"} element={<LoginPage/>}/>
                         <Route path={"/registration"} element={<RegistrationPage/>}/>
+                        <Route path={"/product_page"} element={<ProductPage/>}/>
                     </Routes>
                     <Footer/>
 

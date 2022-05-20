@@ -6,7 +6,7 @@ import {
 
     XSmallText
 } from "../../styles/CommonStyles";
-import React, {useState} from "react";
+import React, {CSSProperties, useState} from "react";
 import styled from "styled-components";
 import {isValidEmail, isValidPassword, isValidUsername} from "../../utils/FormValidation";
 import {Link, useLocation, useNavigate} from "react-router-dom";
@@ -18,8 +18,9 @@ const FormContainer = styled(FlexColumnContainer)`
   border-radius: ${props => `${props.theme.borderRadius}`};
   box-shadow: 0 0 2rem 0 rgba(90, 90, 90);
   padding: 0 4.4rem 6.6rem 4.4rem;
-  position: absolute;
+  //position: absolute;
   top: 30%;
+  
 `;
 
 
@@ -43,16 +44,13 @@ const Label = styled.label`
   font-size: ${props => `${props.theme.fontSizes.medium}`};;
   margin-bottom: 0.8rem;
 `
+interface LoginFromProps{
+    style?: CSSProperties;
+    
+}
 
-const OuterContainer = styled(FlexColumnContainer)`
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 90vh;
-  position: relative;
-  
-`
-function LoginForm() {
+
+function LoginForm(props: LoginFromProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -110,8 +108,8 @@ function LoginForm() {
             }
             e.preventDefault();
         }}>
-            <OuterContainer>
-                <FormContainer>
+
+                <FormContainer style={props.style}>
                     <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Login</LargeText>
                     <Label>E-mail</Label>
                     <Input onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
@@ -134,7 +132,6 @@ function LoginForm() {
                 </FormContainer>
 
 
-            </OuterContainer>
         </form>
     )
 }

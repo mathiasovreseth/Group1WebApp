@@ -2,6 +2,7 @@ import React from "react";
 import { FaSquare } from "react-icons/fa";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import { getCoursesApiResponse } from "../../models/CourseModel";
 
 
 
@@ -43,45 +44,25 @@ const LI = styled.li`
   margin: 0.3rem 0 0 0;
 `;
 
-
-
-export function Course(props: { title: string; info: string; hasButton: boolean;}) {
-    const title = props.title
-    const info = props.info
-    const hasButton = props.hasButton
-    let selected: boolean = false
+interface CourseCardProps {
+  product: getCoursesApiResponse;
+  onSubmit: (product: getCoursesApiResponse) => void;
   
+}
 
-    function clickSelected() {
-      if (!selected) {
-        selected = true;
-      } else {
-        selected = false;
-      }
-    }
-     
 
-    function createButton() {
-      if(hasButton) {
-        return(
-          <Link to='/product_page'>
-            <SelectButton onClick={clickSelected}>Select</SelectButton>
-          </Link>);
-      }
-    }
 
-    
-
-    return (
+export function Course(props: CourseCardProps) {
+      return (
       <>
-        <Box>{title}</Box>
+        <Box>{props.product.title}</Box>
         <BulletPoints>
-        {/* {info.map((text: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined) =>
-        <LI><FaSquare style={{marginRight: ".8rem"}}/>{text}</LI>)
-        } */}
-        {info}
+    
+        {props.product.description}
         </BulletPoints>
-        {createButton()}
+      <Link to='/product_page'>
+            <SelectButton onClick={() => props.onSubmit(props.product)}>Select</SelectButton>
+          </Link>
       </>
     );
 }

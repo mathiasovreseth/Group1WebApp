@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import heroImage from "../../assets/forstehjelp.jpg"
 
@@ -55,7 +56,10 @@ const Button = styled.button`
 function HeroSection() {
     return <HeroContainer>
         <H1>We value every live. <br/> Serving anyone without exceptions is our goal. <br/> We care for people.</H1>
-        <Button>Book your training</Button>
+        <Link to={"/product_page"}>
+          <Button>Book your training</Button>
+        </Link>
+        
     </HeroContainer>;
 }
 

@@ -5,6 +5,8 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import {Course} from "./Course";
 import {CourseForm} from "./CourseForm";
+import { sendApiRequest } from "../../utils/requests";
+import { getCoursesApiResponse } from "../../models/CourseModel";
 
 const H1 = styled.h1`
   color: #d52d27;
@@ -60,64 +62,40 @@ const SelectedCourseDiv = styled.div`
   
 `;
 
-class CourseNoForm extends React.Component {
-  state = {
-    info: "",
-    card1Selected: false,
-    card2Selected: false,
-    card3Selected: false
-  }
+function CourseNoForm() {
+  let [product, setProduct] = useState<Array<getCoursesApiResponse>>([]);
+  let [selectedProduct, setSelectedProduct] = useState<getCoursesApiResponse>();
 
-  hideComponent(name:string) {  
-    switch (name) {  
-        case "card1":  
-            this.setState({ card1Selected: !this.state.card1Selected });
-            this.setState({ card2Selected: false, card3Selected: false});
-            break;  
-        case "card2":  
-            this.setState({ card2Selected: !this.state.card2Selected });
-            this.setState({ card1Selected: false, card3Selected: false});  
-            break;  
-        case "card3":
-            this.setState({ card3Selected: !this.state.card3Selected });  
-            this.setState({ card1Selected: false, card2Selected: false});
-            break; 
-        default:  
-            null;  
-    }  
-  }
+  useEffect(()=> {
+      sendApiRequest("GET","/products/getAll",null, true).then((data: any) => {
+          const productTemp: any = [];
+          data.forEach((product: getCoursesApiResponse)=> {
+              productTemp.push({
+                  id: product.id,
+                  title: product.title,
+                  description: product.description,
+                  reviews: product.reviews
+              });
+          });
+          setProduct(productTemp);
+          console.log(productTemp);
+      }).catch((err: any) => {
+          console.log(err);
+      });
+  }, []);
 
-  componentDidMount () {
-    fetch('https://catfact.ninja/fact')
-      .then(response => response.json())
-      .then(response => this.setState({        
-        info: response.fact
-      }))
-      
-  }
-  
-  
-  render () {
-    let info: string = this.state.info;
-    return (
-      <>
+  return(
+    <div>
       <Container>
-        <H1>Our Courses</H1>
+        <H1> Our courses</H1>
         <CoursesContainer>
-          <Section id="card1" onClick={() => this.hideComponent("card1")}>
-            <Course title="Left" info={info} hasButton={true}/> 
-          </Section>
-          <Section id="card2" onClick={() => this.hideComponent("card2")}>
-            <Course title="Middle" info={info} hasButton={true} />
-          </Section>
-          <Section id="card3" onClick={() => this.hideComponent("card3")}>
-            <Course title="Right" info={info} hasButton={true} />
-          </Section>
+          {product && product.map((data: getCoursesApiResponse) => {
+          return <Section> <Course key={data.id} product={data} onSubmit={setSelectedProduct}/> </Section>
+        })}
         </CoursesContainer>
       </Container>
-      </>
-    );
-  }
+    </div>
+  )
 }
 
 

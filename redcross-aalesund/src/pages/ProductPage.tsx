@@ -1,11 +1,11 @@
 import React from "react";
-import {MyComponent} from "./Courses";
+import {LoadCourses} from "./Courses";
 
 
 function ProductPage() {
     return(
         <div>
-            <MyComponent/>
+            <LoadCourses/>
         </div>
     );
 }

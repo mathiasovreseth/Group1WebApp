@@ -6,6 +6,13 @@ import {Link} from "react-router-dom";
 import {Course} from "../components/courses/Course";
 import {CourseForm} from "../components/courses/CourseForm";
 import { CommentSection } from "./CommentSection";
+import {sendApiRequest} from "../../src/utils/requests"
+import { getCoursesApiResponse } from "../models/CourseModel";
+import Popup from "reactjs-popup";
+import LoginForm from "../components/forms/LoginForm";
+import authHelper from "../auth/AuthProvider";
+import { useAuth } from "../auth/Auth";
+import { FlexColumnContainer } from "../styles/CommonStyles";
 
 const H1 = styled.h1`
   color: #d52d27;
@@ -61,71 +68,69 @@ const SelectedCourseDiv = styled.div`
   
 `;
 
-class MyComponent extends React.Component {
-  state = {
-    info: "",
-    card1Selected: false,
-    card2Selected: false,
-    card3Selected: false
-  }
 
-  hideComponent(name:string) {  
-    switch (name) {  
-        case "card1":  
-            this.setState({ card1Selected: !this.state.card1Selected });
-            this.setState({ card2Selected: false, card3Selected: false});
-            break;  
-        case "card2":  
-            this.setState({ card2Selected: !this.state.card2Selected });
-            this.setState({ card1Selected: false, card3Selected: false});  
-            break;  
-        case "card3":
-            this.setState({ card3Selected: !this.state.card3Selected });  
-            this.setState({ card1Selected: false, card2Selected: false});
-            break; 
-        default:  
-            null;  
-    }  
-  }
 
-  componentDidMount () {
-    fetch('https://catfact.ninja/fact')
-      .then(response => response.json())
-      .then(response => this.setState({        
-        info: response.fact
-      }))
-      
-  }
+function LoadCourses() {
+  const [product, setProduct] = useState<Array<getCoursesApiResponse>>([]);
+  const [selectedProduct, setSelectedProduct] = useState<getCoursesApiResponse>();
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const auth = useAuth();
+
+  useEffect(()=> {
+      sendApiRequest("GET","/products/getAll",null, true).then((data: any) => {
+          const productTemp: any = [];
+          data.forEach((product: getCoursesApiResponse)=> {
+              productTemp.push({
+                  id: product.id,
+                  title: product.title,
+                  description: product.description,
+                  reviews: product.reviews
+              });
+          });
+          setProduct(productTemp);
+          console.log(productTemp);
+      }).catch((err: any) => {
+          console.log(err);
+      });
+  }, []);
+
+
+  function openPopup() {
+    if(!auth.isAuthenticated){
+      setIsPopupOpen(true);
+    }
+    
+}
+  console.log(selectedProduct);
   
-  
-  render () {
-    let info: string = this.state.info;
-    const { card1Selected, card2Selected, card3Selected } = this.state; 
-    return (
-      <>
+  return(
+    <div>
       <Container>
-        <H1>Our Courses</H1>
+        <H1> Our courses</H1>
         <CoursesContainer>
-          <Section id="card1" onClick={() => this.hideComponent("card1")}>
-            <Course title="Left" info={info} hasButton={true}/> 
-          </Section>
-          <Section id="card2" onClick={() => this.hideComponent("card2")}>
-            <Course title="Middle" info={info} hasButton={true} />
-          </Section>
-          <Section id="card3" onClick={() => this.hideComponent("card3")}>
-            <Course title="Right" info={info} hasButton={true} />
-          </Section>
+          {product && product.map((data: getCoursesApiResponse) => {
+          return <Section  > <Course key={data.id} product={data} onSubmit={(data) => {
+            openPopup(); setSelectedProduct(data);
+          }}/> </Section>
+        })}
         </CoursesContainer>
-
-        {card1Selected && <CourseForm title="Left" info={info}/>} 
-        {card2Selected && <CourseForm title="Middle" info={info}/>} 
-        {card3Selected && <CourseForm title="Right" info={info}/>} 
+        <Popup  overlayStyle={{}} contentStyle={{height: '100%', width: '100%', overflow: 'hidden', backgroundColor: 'inherit',  border: 'none'}} defaultOpen={false} open={isPopupOpen}>
+          <LoginForm style={{position: 'absolute',left: '40%'}} />
+        </Popup>
+        {selectedProduct&&
+         <Section> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title??""} info={selectedProduct?.description??""}/></Section>
+        }
+         
       </Container>
-        <CommentSection/>
-      </>
-    );
-  }
+    </div>
+
+  )
 }
 
 
-export {MyComponent};
+
+
+
+export {LoadCourses}
+
+
