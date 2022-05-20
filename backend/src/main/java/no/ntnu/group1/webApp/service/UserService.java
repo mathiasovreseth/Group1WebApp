@@ -30,8 +30,8 @@ public class UserService {
   }
 
   @Transactional
-  public boolean updateUser(String id, String name, String email) {
-    String sql = "update users set email='" + email + "',name= '" + name + "'  where id=" + id;
+  public boolean updateUser(String id, String name, String email, String role) {
+    String sql = "update users set email='" + email + "',name= '" + name + "',role='" + role + "' where id=" + id;
     entityManager.joinTransaction();
     int nrOfUpdatedTables = entityManager.createNativeQuery(sql).executeUpdate();
     return nrOfUpdatedTables == 1;

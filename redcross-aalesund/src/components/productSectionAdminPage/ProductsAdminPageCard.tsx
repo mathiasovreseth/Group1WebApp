@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import styled from "styled-components";
 import {getUserApiResponse} from "../../models/UserModel";
 import {FlexContainer, MediumText} from '../../styles/CommonStyles';
@@ -6,10 +6,10 @@ import {FaPen, FaPenAlt, FaTrash} from 'react-icons/fa';
 import {productsApiResponse} from "../../models/ProductsModel";
 
 const ProductCardContainer = styled.div`
-  height: 6rem;
+  height: 20rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0 2rem;
   width: 90rem;
   margin-bottom: 2rem;
@@ -30,6 +30,7 @@ interface UserCardProps {
 }
 
 function ProductsAdminPageCard(props: UserCardProps) {
+    console.log(props.product.title);
     return (
         <ProductCardContainer>
             <FlexContainer style={{width: "2rem", justifyContent: "center"}}>

@@ -39,9 +39,7 @@ public class UserController {
 
     @PostMapping("addUser")
     public ResponseEntity<User> addNewUser(HttpEntity<String> entity) {
-        System.out.println("------------------------------------------");
         try {
-            System.out.println(entity);
             saveUserFromJsonObject(new JSONObject(entity.getBody()));
             return ResponseEntity.ok().build();
         } catch (JSONException e) {
@@ -49,6 +47,8 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
     @CrossOrigin
     @PostMapping("delete")
     public ResponseEntity<?> deleteUser(HttpEntity<String> http)  {
@@ -75,9 +75,10 @@ public class UserController {
         try {
             JSONObject json = new JSONObject(http.getBody());
             String id = json.getString("id");
+            String role = json.getString("userRole");
             String email = json.getString("email");
             String name = json.getString("name");
-            if(userService.updateUser(id,name,email)) {
+            if(userService.updateUser(id,name,email,role)) {
                 return ResponseEntity.ok("User updated");
             } else {
                 return ResponseEntity.internalServerError().build();

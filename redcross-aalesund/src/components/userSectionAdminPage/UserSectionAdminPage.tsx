@@ -18,8 +18,8 @@ const InnerContainer = styled(FlexContainer)`
 
 
 function UserSectionAdminPage() {
-    let [users, setUsers] = useState<Array<getUserApiResponse>>([]);
-    let [userToEdit, setUserToEdit] = useState<getUserApiResponse>();
+    const [users, setUsers] = useState<Array<getUserApiResponse>>([]);
+    const [userToEdit, setUserToEdit] = useState<getUserApiResponse>();
 
     let [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     useEffect(()=> {
@@ -68,6 +68,7 @@ function UserSectionAdminPage() {
         setIsPopupOpen(false);
 
     }
+
 
     return (
         <InnerContainer>

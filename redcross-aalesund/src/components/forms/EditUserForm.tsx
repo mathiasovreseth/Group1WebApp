@@ -4,7 +4,7 @@ import {
     FlexContainer,
 
     Input,
-    LargeText, SmallText,
+    LargeText, MediumText, SmallText,
 
     XSmallText
 } from "../../styles/CommonStyles";
@@ -47,6 +47,7 @@ export interface editedUserFields {
     name: string,
     email: string,
     password: string,
+    userRole: string,
 }
 
 interface EditUserFormProps {
@@ -57,6 +58,7 @@ interface EditUserFormProps {
 function EditUserForm(props: EditUserFormProps) {
     const [name, setName] = useState(props.user?.name ?? "");
     const [email, setEmail] = useState(props.user?.email ?? "");
+    const [role, setRole] = useState(props.user?.userRole ?? "USER");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [nameErr, setNameErr] = useState('');
     const [emailErr, setEmailErr] = useState('');
@@ -68,6 +70,7 @@ function EditUserForm(props: EditUserFormProps) {
             oldEmail: props.user?.email ?? "",
             name: name,
             email: email,
+            userRole: role,
             password: '',
         }
         props.onSubmit(editedUserValues);
@@ -92,6 +95,7 @@ function EditUserForm(props: EditUserFormProps) {
 
         return isValid;
     }
+
     return (
         <form  onSubmit={(e)=> {
             if(validateForm()) {
@@ -108,6 +112,16 @@ function EditUserForm(props: EditUserFormProps) {
                 <Label>E-mail</Label>
                 <Input defaultValue={props?.user?.email ?? ""}  onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
                 {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
+                <MediumText style={{marginBottom: "1.2rem"}}>Role</MediumText>
+                <FlexContainer style={{alignItems: "center"}}>
+                    <input checked={role === "USER"} onClick={()=> setRole("USER")} type="checkbox" id="user" name="user" value="User"/>
+                    <SmallText style={{marginLeft: ".8rem"}}>User</SmallText>
+
+                </FlexContainer>
+                <FlexContainer style={{alignItems: "center"}}>
+                    <input checked={role === "ADMIN"} onClick={()=> setRole("ADMIN")}  type="checkbox" id="admin" name="admin" value="Admin"/>
+                    <SmallText style={{marginLeft: ".8rem"}}>Admin</SmallText>
+                </FlexContainer>
 
                 <FlexContainer style={{ justifyContent: "space-between", marginTop: "2rem"}}>
                     <Button type="submit" disabled={isSubmitting}>
@@ -117,11 +131,6 @@ function EditUserForm(props: EditUserFormProps) {
                         Cancel
                     </Button>
                 </FlexContainer>
-
-
-
-
-
             </FormContainer>
         </form>
     )
