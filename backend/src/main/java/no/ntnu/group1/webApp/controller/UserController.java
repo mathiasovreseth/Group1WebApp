@@ -39,9 +39,7 @@ public class UserController {
 
     @PostMapping("addUser")
     public ResponseEntity<User> addNewUser(HttpEntity<String> entity) {
-        System.out.println("------------------------------------------");
         try {
-            System.out.println(entity);
             saveUserFromJsonObject(new JSONObject(entity.getBody()));
             return ResponseEntity.ok().build();
         } catch (JSONException e) {
@@ -49,13 +47,15 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
     @CrossOrigin
     @PostMapping("delete")
     public ResponseEntity<?> deleteUser(HttpEntity<String> http)  {
         try {
             JSONObject json = new JSONObject(http.getBody());
-            String email = json.getString("email");
-            Optional<User> userToRemove = userService.findUserByEmail(email);
+            String id = json.getString("id");
+            Optional<User> userToRemove = userService.findById(new Long(id));
             if(userToRemove.isPresent()) {
                 User user = userToRemove.get();
                 userService.removeUser(user);
@@ -74,22 +74,15 @@ public class UserController {
     public ResponseEntity<?> updateUser(HttpEntity<String> http)  {
         try {
             JSONObject json = new JSONObject(http.getBody());
-            String oldEmail = json.getString("oldEmail");
+            String id = json.getString("id");
+            String role = json.getString("userRole");
             String email = json.getString("email");
             String name = json.getString("name");
-            String password = json.getString("password");
-
-            Optional<User> userToEdit = userService.findUserByEmail(oldEmail);
-            if(userToEdit.isPresent()) {
-                User user = userToEdit.get();
-                user.setEmail(email);
-                user.setName(name);
-                if(!password.isEmpty()) {
-                    user.setPassword(password);
-                }
-                return ResponseEntity.ok("User edited");
+            if(userService.updateUser(id,name,email,role)) {
+                return ResponseEntity.ok("User updated");
             } else {
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.internalServerError().build();
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

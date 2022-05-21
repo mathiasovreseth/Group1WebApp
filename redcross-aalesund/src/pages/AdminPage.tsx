@@ -3,8 +3,10 @@ import styled, {ThemeProvider} from "styled-components";
 import {FlexColumnContainer, FlexContainer, LargeText, MediumText } from '../styles/CommonStyles';
 
 import TextButton from '../components/buttons/TextButton';
-import UserSectionAdminPage from "../components/userSectionAdminPage/UserSectionAdminPage";
+import UserSectionAdminPage from "../components/AdminSections/userSectionAdminPage/UserSectionAdminPage";
 import {FaBars} from 'react-icons/fa';
+import ProductSectionAdminPage from "../components/AdminSections/productSectionAdminPage/ProductSectionAdminPage";
+import OrderSectionAdminPage from "../components/AdminSections/orderSectionAdminpage/OrderSectionAdminPage";
 
 
 const OuterContainer = styled.div`
@@ -31,6 +33,12 @@ function AdminPage() {
             </TextButtonsContainer>
             {index == 0 &&
                 <UserSectionAdminPage/>
+            }
+            {index == 1 &&
+                <ProductSectionAdminPage/>
+            }
+            {index == 2 &&
+                <OrderSectionAdminPage/>
             }
         </OuterContainer>
     );
