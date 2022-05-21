@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import {getUserApiResponse} from "../../models/UserModel";
-import {FlexContainer, MediumText} from '../../styles/CommonStyles';
+import {getUserApiResponse} from "../../../models/UserModel";
+import {FlexContainer, MediumText} from '../../../styles/CommonStyles';
 import {FaPen, FaPenAlt, FaTrash} from 'react-icons/fa';
 
 const UserCardContainer = styled.div`

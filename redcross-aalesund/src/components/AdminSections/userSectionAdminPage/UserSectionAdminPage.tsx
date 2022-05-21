@@ -1,11 +1,11 @@
-import {FlexColumnContainer, FlexContainer, MediumText} from "../../styles/CommonStyles";
-import {getUserApiResponse} from "../../models/UserModel";
+import {FlexColumnContainer, FlexContainer, MediumText} from "../../../styles/CommonStyles";
+import {getUserApiResponse} from "../../../models/UserModel";
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {sendApiRequest} from "../../utils/requests";
+import {sendApiRequest} from "../../../utils/requests";
 import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
-import EditUserForm, {editedUserFields} from "../forms/EditUserForm";
+import EditUserForm, {editedUserFields} from "./EditUserForm";
 import UserCardAdminPage from "./UserCardAdminPage";
 
 

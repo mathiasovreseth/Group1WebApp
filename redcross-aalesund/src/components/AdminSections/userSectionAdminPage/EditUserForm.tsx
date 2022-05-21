@@ -7,11 +7,11 @@ import {
     LargeText, MediumText, SmallText,
 
     XSmallText
-} from "../../styles/CommonStyles";
+} from "../../../styles/CommonStyles";
 import React, {useState} from "react";
 import styled from "styled-components";
-import {isValidEmail, isValidPassword, isValidUsername} from "../../utils/FormValidation";
-import {getUserApiResponse} from "../../models/UserModel";
+import {isValidEmail, isValidPassword, isValidUsername} from "../../../utils/FormValidation";
+import {getUserApiResponse} from "../../../models/UserModel";
 
 const FormContainer = styled(FlexColumnContainer)`
   background-color: ${props => `${props.theme.palette.primary.background}`};

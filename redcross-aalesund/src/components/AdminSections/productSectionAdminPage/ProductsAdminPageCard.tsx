@@ -1,15 +1,15 @@
 import React, {CSSProperties} from 'react';
 import styled from "styled-components";
-import {getUserApiResponse} from "../../models/UserModel";
-import {FlexContainer, MediumText} from '../../styles/CommonStyles';
+import {getUserApiResponse} from "../../../models/UserModel";
+import {FlexContainer, MediumText} from '../../../styles/CommonStyles';
 import {FaPen, FaPenAlt, FaTrash} from 'react-icons/fa';
-import {productsApiResponse} from "../../models/ProductsModel";
+import {productsApiResponse} from "../../../models/ProductsModel";
 
 const ProductCardContainer = styled.div`
   height: 20rem;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0 2rem;
   width: 90rem;
   margin-bottom: 2rem;
@@ -30,16 +30,19 @@ interface UserCardProps {
 }
 
 function ProductsAdminPageCard(props: UserCardProps) {
-    console.log(props.product.title);
     return (
         <ProductCardContainer>
-            <FlexContainer style={{width: "2rem", justifyContent: "center"}}>
+            <FlexContainer>
+                <FlexContainer style={{width: "22rem",justifyContent: "flex-start"}}>
                 <MediumText >{props.product.id.toString()}</MediumText>
             </FlexContainer>
-            <FlexContainer style={{width: "20rem", justifyContent: "center"}}>
+            <FlexContainer style={{width: "20rem", justifyContent: "flex-start"}}>
                 <MediumText>{props.product.title}</MediumText>
             </FlexContainer>
-            <FlexContainer style={{width: "30rem", justifyContent: "center"}}>
+            </FlexContainer>
+            <FlexContainer style={{alignItems: "center"}}>
+
+            <FlexContainer style={{width: "30rem", justifyContent: "flex-start"}}>
                 <MediumText>{props.product.description}</MediumText>
             </FlexContainer>
             <IconContainer style={{marginLeft: "1.2rem"}}>
@@ -48,6 +51,7 @@ function ProductsAdminPageCard(props: UserCardProps) {
             <IconContainer style={{marginLeft: "1.2rem"}}>
                 <FaTrash onClick={() => props.onDeleteClick(props.product)} color={"red"} style={{width: "2rem", height: "2rem"}}/>
             </IconContainer>
+            </FlexContainer>
         </ProductCardContainer>
     );
 }

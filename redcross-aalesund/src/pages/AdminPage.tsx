@@ -3,9 +3,9 @@ import styled, {ThemeProvider} from "styled-components";
 import {FlexColumnContainer, FlexContainer, LargeText, MediumText } from '../styles/CommonStyles';
 
 import TextButton from '../components/buttons/TextButton';
-import UserSectionAdminPage from "../components/userSectionAdminPage/UserSectionAdminPage";
+import UserSectionAdminPage from "../components/AdminSections/userSectionAdminPage/UserSectionAdminPage";
 import {FaBars} from 'react-icons/fa';
-import ProductSectionAdminPage from "../components/productSectionAdminPage/ProductSectionAdminPage";
+import ProductSectionAdminPage from "../components/AdminSections/productSectionAdminPage/ProductSectionAdminPage";
 
 
 const OuterContainer = styled.div`
