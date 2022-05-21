@@ -6,6 +6,7 @@ import TextButton from '../components/buttons/TextButton';
 import UserSectionAdminPage from "../components/AdminSections/userSectionAdminPage/UserSectionAdminPage";
 import {FaBars} from 'react-icons/fa';
 import ProductSectionAdminPage from "../components/AdminSections/productSectionAdminPage/ProductSectionAdminPage";
+import OrderSectionAdminPage from "../components/AdminSections/orderSectionAdminpage/OrderSectionAdminPage";
 
 
 const OuterContainer = styled.div`
@@ -35,6 +36,9 @@ function AdminPage() {
             }
             {index == 1 &&
                 <ProductSectionAdminPage/>
+            }
+            {index == 2 &&
+                <OrderSectionAdminPage/>
             }
         </OuterContainer>
     );
