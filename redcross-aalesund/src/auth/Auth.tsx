@@ -85,6 +85,9 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
             setUser(userAuth as UserAuthResponse);
             setIsAuthenticated(true);
         } else {
+            deleteCookie("jwt");
+            deleteCookie("current_email");
+            deleteCookie("current_user_role");
             setIsAuthenticated(false);
             setUser(null);
         }
