@@ -52,6 +52,11 @@ const DropDownMenuContainer = styled.div`
   }
 `;
 
+const linkStyle = {
+  margin: "0rem",
+  textDecoration: "none",
+  color: 'black'
+};
 
 function Header() {
     const auth = useAuth();

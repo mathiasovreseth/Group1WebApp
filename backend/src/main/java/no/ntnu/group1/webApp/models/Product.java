@@ -15,13 +15,15 @@ import java.util.List;
 public class Product {
     private @Id @GeneratedValue
     Long id;
+    String title;
     String description;
     @OneToMany(targetEntity = Review.class)
     List<Review> reviews;
 
     public Product(){}
 
-    public Product(String description) {
+    public Product(String title, String description) {
+        this.title = title;
         this.description = description;
     }
 
