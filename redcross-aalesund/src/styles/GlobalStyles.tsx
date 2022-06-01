@@ -14,9 +14,8 @@ const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
-    font-size: 62.5%;
-    font-family: myriad-pro, sans-serif;
-    font-weight: 700;
+    font-size: 70%;
+    font-family: 'Lato', sans-serif;
     box-sizing: border-box;
     font-style: normal;
     overflow-x: hidden;

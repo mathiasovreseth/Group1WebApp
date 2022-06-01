@@ -7,17 +7,10 @@ import {Course} from "./Course";
 import {CourseForm} from "./CourseForm";
 import { sendApiRequest } from "../../utils/requests";
 import { getCoursesApiResponse } from "../../models/CourseModel";
+import { H1 } from "../../styles/CommonStyles";
 
-const H1 = styled.h1`
-  color: #d52d27;
-  font-size: 4.8rem;
-  font-weight: normal;
-  margin: 2rem;
-  @media screen and (max-width: 800px) {
-    font-size: 3rem;
-  }
-  text-align: center;
-`;
+
+
 const CoursesContainer = styled.div`
   width: 100%;
   display: flex;
@@ -58,9 +51,6 @@ const Section = styled.div`
   }
 `;
 
-const SelectedCourseDiv = styled.div`
-  
-`;
 
 function CourseNoForm() {
   let [product, setProduct] = useState<Array<getCoursesApiResponse>>([]);
