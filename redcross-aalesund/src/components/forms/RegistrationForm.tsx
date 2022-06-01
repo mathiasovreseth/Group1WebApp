@@ -53,13 +53,6 @@ const OuterContainer = styled(FlexColumnContainer)`
 
 `
 
-interface FormValues {
-    name: string;
-    email: string;
-    password: string;
-}
-
-
 function RegistrationForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -187,72 +180,6 @@ function RegistrationForm() {
     )
 }
 
-// interface FormProps {
-//     initialName?: string;
-//     initialEmail?: string;
-// }
-
-
-// const notify = () => {
-//
-//     return toast("Wow so easy!");
-// };
-
-// const RegistrationForm = withFormik<FormProps, FormValues>({
-//
-//     // Transform outer props into form values
-//     mapPropsToValues: props => {
-//         return {
-//             name: props?.initialName ?? '',
-//             email: props?.initialEmail ?? '',
-//             password: '',
-//         };
-//     },
-//
-//     // custom validation function
-//     validate: (values: FormValues) => {
-//         let errors: FormikErrors<FormValues> = {};
-//         if (!values.name) {
-//             errors.name = 'name is required';
-//         } else if (!isValidUsername(values.name)) {
-//             errors.name = 'name must be lowercase and contain only letters';
-//         }
-//         if (!values.email) {
-//             errors.email = 'Email is required';
-//         } else if (!isValidEmail(values.email)) {
-//             errors.email = 'Invalid email address';
-//         }
-//         if(!values.password) {
-//             errors.password = 'Password is required';
-//         } else if(!isValidPassword(values.password)) {
-//             errors.password = 'Password must be 6 characters or more';
-//         }
-//         return errors;
-//     },
-//
-//     handleSubmit: values => {
-//         let errors: FormikErrors<any> = {};
-//         const valuesFromForm :UserRegistrationFormValues = {
-//             name: values.name,
-//             email: values.email,
-//             password: values.password,
-//
-//         }
-//         notify();
-//         // history.pushState("","","/login");
-//         // window.location.reload();
-//         // sendApiRequest(
-//         //     "POST", "/auth/register",
-//         //     function (jwtResponse: any) {
-//         //         return <Navigate to={"/login"}/>
-//         //     },
-//         //     valuesFromForm,
-//         //     function (responseText: string) {
-//         //         errors.password = "heisann";
-//         //     }
-//         // )
-//     },
-// })(InnerForm);
 
 export default RegistrationForm;
 
