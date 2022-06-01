@@ -168,7 +168,7 @@ function RegistrationForm() {
                     </Button>
 
                     <SmallText style={{marginTop: "2rem", display: "flex", flexWrap: "wrap"}}>
-                        <SmallText style={{opacity: 0.7}}>By creating an account yo agree to our </SmallText> <Link
+                        <SmallText style={{opacity: 0.7}}>By creating an account you agree to our </SmallText> <Link
                         to={"/privacy-policy"}> <SmallText>Privacy Policy</SmallText></Link>
                         <SmallText style={{opacity: 0.7, margin: "0 .2rem"}}>and </SmallText> <Link
                         to={"/terms-of-service"}> <SmallText>Terms of Service</SmallText></Link>
@@ -182,8 +182,6 @@ function RegistrationForm() {
                         </Link>
                     </SmallText>
                 </FormContainer>
-
-
             </OuterContainer>
         </form>
     )
