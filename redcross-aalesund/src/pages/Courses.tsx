@@ -38,7 +38,7 @@ const CoursesContainer = styled.div`
 `;
 
 const Container = styled.div`
-  padding-bottom: 2rem;
+  padding-bottom: 5rem;
 `;
 
 const Section = styled.div`
@@ -60,6 +60,7 @@ const Section = styled.div`
   }
   &:hover,
   &:focus {
+    cursor: pointer;
     transform: scale(1.02);
   }
 `;
@@ -104,7 +105,6 @@ function LoadCourses() {
   console.log(selectedProduct);
   
   return(
-    <div>
       <Container>
         <H1> Our courses</H1>
         <CoursesContainer>
@@ -122,7 +122,7 @@ function LoadCourses() {
         }
          
       </Container>
-    </div>
+  
 
   )
 }

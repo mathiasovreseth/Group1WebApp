@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
+import DatePicker from 'react-datepicker';
+import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-menu";
+import { SmallText } from '../../styles/CommonStyles';
+import "react-datepicker/dist/react-datepicker.css";
+import "../courses/datepicker.css"
 
 const Container = styled.div`
     width: 100%;
@@ -64,6 +69,15 @@ const Submit = styled.input.attrs({ type: 'submit' })`
     cursor: pointer;
 `;
 
+const Radio = styled.input.attrs({type: 'radio'})`
+  width: 10%;
+`;
+
+
+const Label = styled.label`
+font-size: ${props => `${props.theme.fontSizes.xSmall}`};
+`;
+
 const InfoText = styled.div`
     padding-top: 2rem;
     background-color: #ededed;  
@@ -72,8 +86,16 @@ const InfoText = styled.div`
 
 
 
+
 // must send value for course selected
 export function CourseForm(props: {title: string; info: string;}) {
+    const[courseBooking, setCourseBooking] = useState([]);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [date, setDate] = useState(new Date());
+    const [attendees, setAttendees] = useState("");
+    const [language, setLanguage] = useState("");
+    const [selectedStartTime, setSelectedStartTime] = useState(1);
     const title = props.title
     const info = props.info
    
@@ -88,11 +110,35 @@ export function CourseForm(props: {title: string; info: string;}) {
             <FormRow>
                 <H3>Book {title} now</H3>
                 <BookingForm action="" method="post">
-                    <Input name='Name' placeholder='Name'/>
-                    <Input name='Email' placeholder='Email'/>
-                    <Input name='Date' placeholder='Date'/>
-                    <Input name='Message' placeholder='Message'/>
-                    <Submit type="submit" value="Book course"/>
+                    <Input name='Name' onInput={() => setName(Input)} placeholder='Name'/>
+                    <Input name='Email' onInput={() => setEmail(Input)}  placeholder='Email'/>
+                    <DatePicker
+                        className='date-picker'
+                        placeholderText="Click to select a date"
+                        selected={date}
+                        onChange={(date:Date) => setDate(date)}
+                        dateFormat={"yyyy-MM-dd"}
+                        />
+                    <Input name='Course-attendees' onInput={() => setAttendees(Input)} placeholder='Course Attendees'/>
+                    <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
+                    <Label> <Radio name='language' onClick={() => setLanguage("Norwegian")} id='norwegian' /> Norwegian</Label>
+                    <br />
+                    <Label>Choose start time</Label>
+                    <DropdownMenu>
+                        <DropdownItemGroup>
+                            <DropdownItem onClick={() => setSelectedStartTime(1)}>
+                                <SmallText >10:00 - 14:00</SmallText>
+                            </DropdownItem>
+                            <DropdownItem onClick={() => setSelectedStartTime(2)}>
+                                <SmallText>17:00 - 21:00</SmallText>
+                            </DropdownItem>
+                        </DropdownItemGroup>
+                    </DropdownMenu>
+
+                    <Submit type="submit" 
+                    //onSubmit={() => 
+                   // setCourseBooking.push(name, email, date, attendees, language, selectedStartTime)} 
+                    value="Book course"/>
                 </BookingForm>
             </FormRow>
         
