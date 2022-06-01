@@ -30,8 +30,16 @@ public class UserService {
   }
 
   @Transactional
-  public boolean updateUser(String id, String name, String email, String role) {
-    String sql = "update users set email='" + email + "',name= '" + name + "',role='" + role + "' where id=" + id;
+  public boolean updateUser(String id, String name, String email, String role, Boolean enabled) {
+    String sql = "update users set email='" + email + "',name= '" + name + "',role='" + role + "',enabled='" + enabled + "' where id=" + id;
+    entityManager.joinTransaction();
+    int nrOfUpdatedTables = entityManager.createNativeQuery(sql).executeUpdate();
+    return nrOfUpdatedTables == 1;
+  }
+
+  @Transactional
+  public boolean disableUser(String id, Boolean enabled) {
+    String sql = "update users set enabled=" + enabled + " where id=" + id;
     entityManager.joinTransaction();
     int nrOfUpdatedTables = entityManager.createNativeQuery(sql).executeUpdate();
     return nrOfUpdatedTables == 1;
