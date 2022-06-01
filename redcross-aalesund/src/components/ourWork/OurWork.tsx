@@ -5,7 +5,6 @@ import Frivillig from "../../assets/Frivillig.jpg";
 import { H1 } from "../../styles/CommonStyles";
 
 
-
 const H2 = styled.h2`
   font-size: ${props => `${props.theme.fontSizes.large}`};
   font-weight: bold;
@@ -22,6 +21,7 @@ const Paragraph = styled.p`
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     font-size: ${props => `${props.theme.fontSizes.small}`};
   }
+  
 `;
 
 const Image = styled.img`
@@ -31,8 +31,10 @@ const Image = styled.img`
   vertical-align: middle;
   margin: 2rem;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {  
-    height: 15rem;
     width: 22.5rem;
+    height: 15rem;
+  } ;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
   } ;
 `;
 
@@ -41,6 +43,15 @@ const Container = styled.div`
   align-items: center;
   padding-left: 5%;
   padding-right: 5%;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+    flex-wrap: wrap;
+  } ;
+`;
+
+const ContainerReverse = styled(Container)`
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+      flex-wrap: wrap-reverse;
+    } ;
 `;
 
 const TextContainer = styled.div`
@@ -63,7 +74,7 @@ function OurWork() {
           </Paragraph>
         </TextContainer>
       </Container>
-      <Container>
+      <ContainerReverse>
         <TextContainer>
           <H2>Vårt arbeid internasjonalt</H2>
           <Paragraph>
@@ -77,7 +88,7 @@ function OurWork() {
           </Paragraph>
         </TextContainer>
         <Image src={FieldDuty} alt="image" />
-      </Container>
+      </ContainerReverse>
     </>
   );
 }

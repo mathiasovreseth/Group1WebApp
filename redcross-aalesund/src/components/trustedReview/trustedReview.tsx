@@ -11,11 +11,14 @@ const TrustedComment = styled.section`
   padding-left: 5%;
   padding-right: 5%;
   grid-template-columns: 12rem auto;
-  grid-template-rows: 12rem auto;
+  grid-template-rows: 12rem fit-content;
   grid-gap: 50px;
-  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {    grid-template-columns: 8rem auto;
-    grid-template-rows: 8rem auto;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {  
+    grid-template-columns: 8rem auto;
+    grid-template-rows: 8rem fit-content;
+    margin-bottom: 2rem;
   }
+  
 `;
 
 const CommentPicture = styled.div`
@@ -23,9 +26,9 @@ const CommentPicture = styled.div`
 `;
 
 const Comment = styled.div`
-  font-size: 3rem;
   align-self: center;
-  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {    font-size: 2rem;
+  height:auto;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {    
   }
 `;
 
@@ -53,7 +56,7 @@ const Paragraph = styled.p`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
   padding-top: 0.5rem;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
-    font-size: ${props => `${props.theme.fontSizes.small}`};
+    font-size: ${props => `${props.theme.fontSizes.xSmall}`};
   }
 `;
 
