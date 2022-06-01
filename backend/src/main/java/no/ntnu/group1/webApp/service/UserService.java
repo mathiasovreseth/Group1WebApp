@@ -37,26 +37,15 @@ public class UserService {
     return nrOfUpdatedTables == 1;
   }
 
-  /**
-   * public Optional<User> findByName(String name) {
-   * return userRepository.findByName(name);
-   * }
-   */
 
   public List<User> getAll() {
     return (List<User>) userRepository.findAll();
   }
 
-  public Optional<User> findByToken(String token) {
-    return userRepository.findByToken(token);
-  }
 
   public void addUser(User user) {
     userRepository.save(user);
   }
 
-  public void removeUser(User user) {
-    userRepository.delete(user);
-  }
 
 }

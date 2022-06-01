@@ -13,14 +13,16 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {User} from "../../models/UserModel";
 import {useAuth} from "../../auth/Auth";
 
+const Form = styled.form`
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  box-shadow: 0 0 1.5rem 0 rgba(90, 90, 90);
+`;
+
 const FormContainer = styled(FlexColumnContainer)`
   background-color: ${props => `${props.theme.palette.primary.background}`};
-  border-radius: ${props => `${props.theme.borderRadius}`};
-  box-shadow: 0 0 2rem 0 rgba(90, 90, 90);
+  box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
   padding: 0 4.4rem 6.6rem 4.4rem;
   //position: absolute;
-  top: 30%;
-  
 `;
 
 
@@ -31,7 +33,7 @@ const Button = styled.button`
   padding: 1rem 0;
   margin-top: 2rem;
   background-color: ${props => `${props.theme.palette.primary.accentColor}`};
-  box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
+  box-shadow: 0 0 2rem 0 rgba(90, 90, 90);
   color: white;
   cursor: pointer;
   width: 26rem;
@@ -44,9 +46,10 @@ const Label = styled.label`
   font-size: ${props => `${props.theme.fontSizes.medium}`};;
   margin-bottom: 0.8rem;
 `
-interface LoginFromProps{
+
+interface LoginFromProps {
     style?: CSSProperties;
-    
+
 }
 
 
@@ -71,7 +74,7 @@ function LoginForm(props: LoginFromProps) {
         };
         auth.signIn(user).then(res => {
             // navigate to page the user previously was on
-            navigate(from, { replace: true });
+            navigate(from, {replace: true});
             setIsSubmitting(false);
         }).catch(err => {
             // display error message if login failed
@@ -79,6 +82,7 @@ function LoginForm(props: LoginFromProps) {
             setIsSubmitting(false);
         });
     }
+
     function validateForm() {
         let isValid = true;
         if (email.length === 0) {
@@ -89,19 +93,20 @@ function LoginForm(props: LoginFromProps) {
             setEmailErr('Invalid email address');
             isValid = false;
         }
-        if(password.length === 0) {
+        if (password.length === 0) {
             setPassErr('Required');
             isValid = false;
 
-        } else if(!isValidPassword(password)) {
+        } else if (!isValidPassword(password)) {
             setPassErr('Password must be 6 characters or more');
             isValid = false;
         }
         return isValid;
     }
+
     return (
-        <form  onSubmit={(e)=> {
-            if(validateForm()) {
+        <Form onSubmit={(e) => {
+            if (validateForm()) {
                 setEmailErr('');
                 setPassErr('');
                 handleSubmit();
@@ -109,33 +114,30 @@ function LoginForm(props: LoginFromProps) {
             e.preventDefault();
         }}>
 
-                <FormContainer style={props.style}>
-                    <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Login</LargeText>
-                    <Label>E-mail</Label>
-                    <Input onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
-                    {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
-                    <Label>Password</Label>
-                    <Input onChange={(e)=> setPassword(e.target.value)} type="password" name="password"/>
-                    {passErr && <XSmallText style={{color: "red"}}>{passErr}</XSmallText>}
-                    <Button type="submit" disabled={isSubmitting}>
-                        {isSubmitting  ? 'Submitting': 'Submit'}
-                    </Button>
+            <FormContainer style={props.style}>
+                <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Login</LargeText>
+                <Label>E-mail</Label>
+                <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email"/>
+                {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
+                <Label>Password</Label>
+                <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password"/>
+                {passErr && <XSmallText style={{color: "red"}}>{passErr}</XSmallText>}
+                <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Submitting' : 'Submit'}
+                </Button>
 
-                    <SmallText style={{ display: "flex", marginTop: "2rem"}}>
-                        <SmallText style={{opacity: 0.7, marginRight: "0.4rem"}}>
-                            New to Ålesund redcross?
-                        </SmallText>
-                        <Link to={"/registration"}>
-                            <SmallText>Register</SmallText>
-                        </Link>
+                <SmallText style={{display: "flex", marginTop: "2rem"}}>
+                    <SmallText style={{opacity: 0.7, marginRight: "0.4rem"}}>
+                        New to Ålesund redcross?
                     </SmallText>
-                </FormContainer>
-
-
-        </form>
+                    <Link to={"/registration"}>
+                        <SmallText>Register</SmallText>
+                    </Link>
+                </SmallText>
+            </FormContainer>
+        </Form>
     )
 }
-
 
 
 export default LoginForm;
