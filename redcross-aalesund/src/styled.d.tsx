@@ -16,6 +16,7 @@ declare module 'styled-components' {
           medium: string,
           large: string,
           xLarge: string,
+          header: string,
         },
         breakPoints: {
             phone: string,

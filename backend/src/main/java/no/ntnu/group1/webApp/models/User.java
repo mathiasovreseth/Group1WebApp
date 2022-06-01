@@ -24,29 +24,39 @@ public class User {
     public User() {
     }
 
+    //TODO: Remove enum when admin privileges is implemented
     public enum Roles {
         USER,
         ADMIN
     }
-    private @Id @GeneratedValue Long id;
+
+    private @Id
+    @GeneratedValue
+    Long id;
     private String name;
     private String email;
     private String password;
-    private String userRole;
+    private String role;
     private String token;
     private boolean enabled;
     private Date accountCreated;
-    @OneToMany(targetEntity = Review.class)
+    // fetchType.eager fixed Lazyinititilization exeption
+    @OneToMany(targetEntity = Review.class, fetch = FetchType.EAGER)
     List<Review> reviews;
 
 
-    public User(String name, String email, String password, String userRole) {
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.userRole = "ADMIN";
-        this.enabled = false;
+        this.enabled = true;
         this.accountCreated = new Date();
+
+        if (this.name.equalsIgnoreCase("admin")) {
+            this.role = "ADMIN";
+        } else {
+            this.role = "USER";
+        }
     }
 
     public void addReview(Review review) {
@@ -72,46 +82,23 @@ public class User {
     }
 
     public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
+        return this.role;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
+        authorities.add(new SimpleGrantedAuthority(getUserRole()));
         return authorities;
     }
 
-    public static User fromJSONObject(JSONObject jsonObject) throws JSONException{
+    public static User fromJSONObject(JSONObject jsonObject) throws JSONException {
 
         String username = jsonObject.getString("username");
         String email = jsonObject.getString("email");
         String password = jsonObject.getString("password");
-        String userRole = jsonObject.getString("role");
 
-        return new User(username, email, password, userRole);
+
+        return new User(username, email, password);
 
     }
-
-//    public boolean isEnabled(){
-//        return enabled;
-//    }
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return enabled;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return enabled;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return enabled;
-//    }
-
 }

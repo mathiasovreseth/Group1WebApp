@@ -14,6 +14,37 @@ public class OrderService {
     @Autowired
     private  OrderRepository orderRepository;
 
+    public boolean addNewOrder(Order order){
+        boolean added = false;
+        if(canBeAdded(order)){
+            orderRepository.save(order);
+            added = true;
+        }
+        return added;
+    }
+
+    public boolean removeOrder (Long orderId) {
+        boolean removed = false;
+        if(findById(orderId) != null){
+            orderRepository.deleteById(orderId);
+            removed = true;
+        }
+        return removed;
+    }
+
+    public boolean update(Order order){
+        try{
+            orderRepository.save(order);
+            return true;
+        }catch (IllegalArgumentException e){
+            return false;
+        }
+    }
+
+    private boolean canBeAdded(Order order) {
+        return order != null;
+    }
+
     public List<Order> getAll() {
         return (List<Order>) orderRepository.findAll();
     }

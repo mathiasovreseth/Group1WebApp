@@ -4,7 +4,7 @@ import HeroSection from "../components/heroSection/HeroSection";
 import OurWork from "../components/ourWork/OurWork";
 
 import TrustedReviews from "../components/trustedReview/trustedReview";
-import Courses from "../components/courses/Courses";
+import {CourseNoForm} from "../components/courses/CoursesNoFrom";
 
 
 const LandingPage = () => {
@@ -12,7 +12,7 @@ const LandingPage = () => {
         <>
             <HeroSection/>
             <OurWork/>
-            <Courses/>
+            <CourseNoForm/>
             <TrustedReviews/>
         </>
     );

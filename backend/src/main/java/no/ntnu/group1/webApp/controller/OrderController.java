@@ -2,10 +2,9 @@ package no.ntnu.group1.webApp.controller;
 
 import no.ntnu.group1.webApp.models.Order;
 import no.ntnu.group1.webApp.service.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
@@ -20,13 +19,36 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<String> addNewOrder(@RequestBody Order order) {
+        ResponseEntity<String> response;
+        if(orderService.addNewOrder(order)){
+            response = new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return response;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> removeOrder(@PathVariable Long id){
+        ResponseEntity<String> response;
+        if(orderService.removeOrder(id)){
+            response = new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return response;
+    }
+
+    @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<Order>> getAllOrders() {
         return  ResponseEntity.ok(orderService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Order>> getOrderById(@PathParam("id") Long id) {
+    public ResponseEntity<Optional<Order>> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
     }
 }
