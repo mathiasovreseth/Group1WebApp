@@ -41,6 +41,7 @@ public class OrderController {
         return response;
     }
 
+    @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<Order>> getAllOrders() {
         return  ResponseEntity.ok(orderService.getAll());

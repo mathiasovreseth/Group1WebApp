@@ -6,56 +6,67 @@ import heroImage from "../../assets/forstehjelp.jpg"
 const HeroContainer = styled.div`
   min-width: 100rem;
   height: 60vw;
-  background-size: 100%;
+  background-size: cover;
   min-height: 42rem;
   max-height: 60rem;
-  position: relative;
+  position: static;
   background-image: url(${heroImage});
   background-repeat: no-repeat;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
+    height: 40vw;
+  }
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
+    height: 40vw;
+    background-position: right 30rem bottom 1rem;
+  }
+
 `;
 
 const H1 = styled.h1`
   padding: 1rem;
   color: white;
+  margin-left: 8rem;
+  margin-top: 8rem;
+  margin-bottom: 4rem;
+  width: 50rem;
   background-color: rgba(0,0,0,0.4);
   border-radius: ${props => `${props.theme.borderRadius}`};
   font-size: ${props => `${props.theme.fontSizes.xLarge}`};
-  font-weight: normal;
-  margin: 10% 8rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  @media (max-width: 60em) {
+  position: static;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
+    width: 30rem;
     font-size: ${props => `${props.theme.fontSizes.large}`};
   }
-
-  @media (max-width: 47em) {
-    font-size: 2rem;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
+    margin-left: 4rem;
   }
+
 `;
 
 const Button = styled.button`
-  position: absolute;
+  position: static;
   margin-left: 8rem;
-  margin-top: 25%;
   border: 0;
   border-radius: ${props => `${props.theme.borderRadius}`};
   font-size: ${props => `${props.theme.fontSizes.large}`};
   padding: 1.5rem 2rem;
   background-color: ${props => `${props.theme.palette.primary.accentColor}`};
   box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
-  top: 0;
-  left: 0;
   color: white;
   cursor: pointer;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
+    margin-left: 4rem;
+  }
 `;
 
 
 
 function HeroSection() {
     return <HeroContainer>
-        <H1>We value every live. <br/> Serving anyone without exceptions is our goal. <br/> We care for people.</H1>
+        <H1>We value every live. <br/> 
+        Serving anyone without <br/> 
+        exceptions is our goal. <br/> 
+        We care for people.</H1>
         <Link to={"/product_page"}>
           <Button>Book your training</Button>
         </Link>

@@ -13,17 +13,8 @@ import LoginForm from "../components/forms/LoginForm";
 import authHelper from "../auth/AuthProvider";
 import { useAuth } from "../auth/Auth";
 import { FlexColumnContainer } from "../styles/CommonStyles";
+import { H1 } from "../styles/CommonStyles";
 
-const H1 = styled.h1`
-  color: #d52d27;
-  font-size: 4.8rem;
-  font-weight: normal;
-  margin: 2rem;
-  @media screen and (max-width: 800px) {
-    font-size: 3rem;
-  }
-  text-align: center;
-`;
 const CoursesContainer = styled.div`
   width: 100%;
   display: flex;

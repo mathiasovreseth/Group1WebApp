@@ -49,7 +49,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.enabled = false;
+        this.enabled = true;
         this.accountCreated = new Date();
 
         if (this.name.equalsIgnoreCase("admin")) {

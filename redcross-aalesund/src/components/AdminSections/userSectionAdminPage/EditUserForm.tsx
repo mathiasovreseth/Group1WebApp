@@ -4,14 +4,14 @@ import {
     FlexContainer,
 
     Input,
-    LargeText, SmallText,
+    LargeText, MediumText, SmallText,
 
     XSmallText
-} from "../../styles/CommonStyles";
+} from "../../../styles/CommonStyles";
 import React, {useState} from "react";
 import styled from "styled-components";
-import {isValidEmail, isValidPassword, isValidUsername} from "../../utils/FormValidation";
-import {getUserApiResponse} from "../../models/UserModel";
+import {isValidEmail, isValidPassword, isValidUsername} from "../../../utils/FormValidation";
+import {getUserApiResponse} from "../../../models/UserModel";
 
 const FormContainer = styled(FlexColumnContainer)`
   background-color: ${props => `${props.theme.palette.primary.background}`};
@@ -26,7 +26,6 @@ const Button = styled.button`
   border-radius: ${props => `${props.theme.borderRadius}`};
   font-size: ${props => `${props.theme.fontSizes.large}`};
   padding: 1rem 0;
-  margin-top: 2rem;
   background-color: ${props => `${props.theme.palette.primary.accentColor}`};
   box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
   color: white;
@@ -43,10 +42,12 @@ const Label = styled.label`
 `
 
 export interface editedUserFields {
+    id?: number,
     oldEmail: string,
     name: string,
     email: string,
     password: string,
+    userRole: string,
 }
 
 interface EditUserFormProps {
@@ -57,7 +58,7 @@ interface EditUserFormProps {
 function EditUserForm(props: EditUserFormProps) {
     const [name, setName] = useState(props.user?.name ?? "");
     const [email, setEmail] = useState(props.user?.email ?? "");
-    const [password, setPassword] = useState('');
+    const [role, setRole] = useState(props.user?.userRole ?? "USER");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [nameErr, setNameErr] = useState('');
     const [emailErr, setEmailErr] = useState('');
@@ -65,10 +66,12 @@ function EditUserForm(props: EditUserFormProps) {
 
     function handleSubmit() {
         const editedUserValues: editedUserFields = {
+            id: props.user?.id,
             oldEmail: props.user?.email ?? "",
             name: name,
             email: email,
-            password: password,
+            userRole: role,
+            password: '',
         }
         props.onSubmit(editedUserValues);
     }
@@ -92,6 +95,7 @@ function EditUserForm(props: EditUserFormProps) {
 
         return isValid;
     }
+
     return (
         <form  onSubmit={(e)=> {
             if(validateForm()) {
@@ -108,9 +112,18 @@ function EditUserForm(props: EditUserFormProps) {
                 <Label>E-mail</Label>
                 <Input defaultValue={props?.user?.email ?? ""}  onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
                 {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
-                <Label>Password</Label>
-                <Input onChange={(e)=> setPassword(e.target.value)} type="password" name="password"/>
-                <FlexContainer style={{ justifyContent: "space-between"}}>
+                <MediumText style={{marginBottom: "1.2rem"}}>Role</MediumText>
+                <FlexContainer style={{alignItems: "center"}}>
+                    <input checked={role === "USER"} onClick={()=> setRole("USER")} type="checkbox" id="user" name="user" value="User"/>
+                    <SmallText style={{marginLeft: ".8rem"}}>User</SmallText>
+
+                </FlexContainer>
+                <FlexContainer style={{alignItems: "center"}}>
+                    <input checked={role === "ADMIN"} onClick={()=> setRole("ADMIN")}  type="checkbox" id="admin" name="admin" value="Admin"/>
+                    <SmallText style={{marginLeft: ".8rem"}}>Admin</SmallText>
+                </FlexContainer>
+
+                <FlexContainer style={{ justifyContent: "space-between", marginTop: "2rem"}}>
                     <Button type="submit" disabled={isSubmitting}>
                         {isSubmitting  ? 'Submitting': 'Submit'}
                     </Button>
@@ -118,11 +131,6 @@ function EditUserForm(props: EditUserFormProps) {
                         Cancel
                     </Button>
                 </FlexContainer>
-
-
-
-
-
             </FormContainer>
         </form>
     )

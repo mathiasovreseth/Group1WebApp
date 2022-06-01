@@ -1,12 +1,12 @@
-import {FlexColumnContainer, FlexContainer, MediumText} from "../../styles/CommonStyles";
-import {getUserApiResponse} from "../../models/UserModel";
-import UserCard from "../userCard/UserCard";
+import {FlexColumnContainer, FlexContainer, MediumText} from "../../../styles/CommonStyles";
+import {getUserApiResponse} from "../../../models/UserModel";
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {sendApiRequest} from "../../utils/requests";
+import {sendApiRequest} from "../../../utils/requests";
 import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
-import EditUserForm, {editedUserFields} from "../forms/EditUserForm";
+import EditUserForm, {editedUserFields} from "./EditUserForm";
+import UserCardAdminPage from "./UserCardAdminPage";
 
 
 const InnerContainer = styled(FlexContainer)`
@@ -18,8 +18,8 @@ const InnerContainer = styled(FlexContainer)`
 
 
 function UserSectionAdminPage() {
-    let [users, setUsers] = useState<Array<getUserApiResponse>>([]);
-    let [userToEdit, setUserToEdit] = useState<getUserApiResponse>();
+    const [users, setUsers] = useState<Array<getUserApiResponse>>([]);
+    const [userToEdit, setUserToEdit] = useState<getUserApiResponse>();
 
     let [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     useEffect(()=> {
@@ -46,8 +46,7 @@ function UserSectionAdminPage() {
             const newUserList = users.filter((t) =>t.id != user.id);
             setUsers(newUserList);
             const postData = {
-                email: user.email,
-                id: user.email,
+                id: user.id,
             };
             sendApiRequest("POST", "/users/delete",postData, false);
         }
@@ -58,10 +57,18 @@ function UserSectionAdminPage() {
         setIsPopupOpen(true);
     }
     function handleEditUser(editedUser: editedUserFields) {
+        const userToEdit = users.filter((t) => t.id == editedUser.id);
+        const newUserList = users.filter((t) => t.id != editedUser.id);
+        userToEdit[0].name = editedUser.name;
+        userToEdit[0].email = editedUser.email;
+        newUserList.push(userToEdit[0]);
+        setUsers(newUserList);
+
         sendApiRequest("POST", "/users/update", editedUser, false);
         setIsPopupOpen(false);
 
     }
+
 
     return (
         <InnerContainer>
@@ -82,12 +89,12 @@ function UserSectionAdminPage() {
                     <FlexContainer style={{width: "10rem", justifyContent: "center"}}>
                         <MediumText>Enabled</MediumText>
                     </FlexContainer>
-                    <Popup  defaultOpen={false} open={isPopupOpen}>
+                    <Popup   defaultOpen={false} open={isPopupOpen}>
                         <EditUserForm user={userToEdit} onCancel={()=> setIsPopupOpen(false)} onSubmit={(user)=> handleEditUser(user)} />
                     </Popup>
                 </FlexContainer>
                 {users && users.map((data: getUserApiResponse)=> {
-                    return <UserCard key={data.id} user={data} onDeleteClick={handleDeleteUser} onEditClick={openPopup}/>
+                    return <UserCardAdminPage key={data.id} user={data} onDeleteClick={handleDeleteUser} onEditClick={openPopup}/>
                 })}
             </FlexColumnContainer>
         </InnerContainer>

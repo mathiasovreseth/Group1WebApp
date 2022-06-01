@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import {getUserApiResponse} from "../../models/UserModel";
-import {FlexContainer, MediumText} from '../../styles/CommonStyles';
+import {getUserApiResponse} from "../../../models/UserModel";
+import {FlexContainer, MediumText} from '../../../styles/CommonStyles';
 import {FaPen, FaPenAlt, FaTrash} from 'react-icons/fa';
 
 const UserCardContainer = styled.div`
@@ -28,7 +28,7 @@ interface UserCardProps {
     onEditClick: (user: getUserApiResponse) => void;
 }
 
-function UserCard(props: UserCardProps) {
+function UserCardAdminPage(props: UserCardProps) {
     return (
         <UserCardContainer>
             <FlexContainer style={{width: "2rem", justifyContent: "center"}}>
@@ -56,4 +56,4 @@ function UserCard(props: UserCardProps) {
     );
 }
 
-export default UserCard;
+export default UserCardAdminPage;
