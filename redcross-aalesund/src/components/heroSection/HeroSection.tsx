@@ -15,6 +15,11 @@ const HeroContainer = styled.div`
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     height: 40vw;
   }
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
+    height: 40vw;
+    background-position: right 30rem bottom 1rem;
+  }
+
 `;
 
 const H1 = styled.h1`
@@ -32,6 +37,9 @@ const H1 = styled.h1`
     width: 30rem;
     font-size: ${props => `${props.theme.fontSizes.large}`};
   }
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
+    margin-left: 4rem;
+  }
 
 `;
 
@@ -46,6 +54,9 @@ const Button = styled.button`
   box-shadow: 0 0 5rem 0 rgba(90, 90, 90);
   color: white;
   cursor: pointer;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
+    margin-left: 4rem;
+  }
 `;
 
 
