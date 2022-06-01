@@ -50,7 +50,7 @@ public class UserController {
 
 
     @CrossOrigin
-    @PostMapping("delete")
+    @PutMapping("delete")
     public ResponseEntity<?> deleteUser(HttpEntity<String> http)  {
         try {
             JSONObject json = new JSONObject(http.getBody());
@@ -58,7 +58,7 @@ public class UserController {
             Optional<User> userToRemove = userService.findById(new Long(id));
             if(userToRemove.isPresent()) {
                 User user = userToRemove.get();
-                userService.removeUser(user);
+                user.setEnabled(false);
                 return ResponseEntity.ok("User removed");
             } else {
                 return ResponseEntity.badRequest().build();
@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PostMapping("update")
+    @PutMapping("update")
     public ResponseEntity<?> updateUser(HttpEntity<String> http)  {
         try {
             JSONObject json = new JSONObject(http.getBody());
