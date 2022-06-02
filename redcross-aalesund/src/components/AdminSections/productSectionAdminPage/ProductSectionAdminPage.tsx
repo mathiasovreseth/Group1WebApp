@@ -113,7 +113,7 @@ function ProductSectionAdminPage() {
                     return <ProductsAdminPageCard key={data.id} product={data} onEditClick={(product)=> openPopup(product)}
                                                   onDeleteClick={(product)=> handleDeleteProduct(product)}/>
                 })}
-                <Button onClick={()=> setIsPopupOpen(true)} style={{width: "100%"}} disabled={false}>ADD product</Button>
+                <Button onClick={()=> setIsPopupOpen(true)} style={{width: "100%", boxShadow: "unset"}} disabled={false}>ADD product</Button>
             </FlexColumnContainer>
         </InnerContainer>
     )

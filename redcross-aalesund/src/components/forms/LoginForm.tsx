@@ -1,7 +1,7 @@
 import {
     FlexColumnContainer,
 
-    Input,
+    Input, Label,
     LargeText, SmallText,
 
     XSmallText
@@ -40,12 +40,6 @@ const Button = styled.button`
   height: 4.5rem;
   overflow-y: hidden;
 `;
-
-
-const Label = styled.label`
-  font-size: ${props => `${props.theme.fontSizes.medium}`};;
-  margin-bottom: 0.8rem;
-`
 
 interface LoginFromProps {
     style?: CSSProperties;
@@ -115,7 +109,7 @@ function LoginForm(props: LoginFromProps) {
         }}>
 
             <FormContainer style={props.style}>
-                <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Login</LargeText>
+                <LargeText style={{marginTop: "2rem", marginBottom: "4rem", fontWeight: 700}}>Login</LargeText>
                 <Label>E-mail</Label>
                 <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email"/>
                 {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
