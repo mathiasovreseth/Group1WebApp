@@ -31,6 +31,11 @@ export const LargeText = styled.p`
 export const xLargeText = styled.p`
     font-size: ${props => `${props.theme.fontSizes.xLarge}`};
 `;
+export const Label = styled(MediumText)`
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+`;
+
 export const Input = styled.input`
     border-radius: ${props => `${props.theme.borderRadius}`};
     height: 4rem;

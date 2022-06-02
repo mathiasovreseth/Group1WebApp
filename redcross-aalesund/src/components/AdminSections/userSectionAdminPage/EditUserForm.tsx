@@ -3,7 +3,7 @@ import {
 
     FlexContainer,
 
-    Input,
+    Input, Label,
     LargeText, MediumText, SmallText,
 
     XSmallText
@@ -36,10 +36,7 @@ const Button = styled.button`
 `;
 
 
-const Label = styled.label`
-  font-size: ${props => `${props.theme.fontSizes.medium}`};;
-  margin-bottom: 0.8rem;
-`
+
 
 export interface editedUserFields {
     id?: number,
@@ -105,7 +102,7 @@ function EditUserForm(props: EditUserFormProps) {
             e.preventDefault();
         }}>
             <FormContainer>
-                    <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Register</LargeText>
+                    <LargeText style={{marginTop: "2rem", marginBottom: "4rem", fontWeight: 700}}>Edit user</LargeText>
                 <Label>Name</Label>
                 <Input defaultValue={props?.user?.name ?? ""} onChange={(e)=> setName(e.target.value)}  type="text" name="name"/>
                 {emailErr && <XSmallText style={{color: "red"}}>{nameErr}</XSmallText>}
@@ -124,10 +121,10 @@ function EditUserForm(props: EditUserFormProps) {
                 </FlexContainer>
 
                 <FlexContainer style={{ justifyContent: "space-between", marginTop: "2rem"}}>
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button style={{boxShadow: "unset"}} type="submit" disabled={isSubmitting}>
                         {isSubmitting  ? 'Submitting': 'Submit'}
                     </Button>
-                    <Button style={{backgroundColor: "black"}}  disabled={isSubmitting} onClick={props.onCancel}>
+                    <Button style={{backgroundColor: "black", boxShadow: "unset"}}  disabled={isSubmitting} onClick={props.onCancel}>
                         Cancel
                     </Button>
                 </FlexContainer>
