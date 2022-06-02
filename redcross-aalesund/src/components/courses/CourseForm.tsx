@@ -5,7 +5,11 @@ import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-
 import { SmallText } from '../../styles/CommonStyles';
 import "react-datepicker/dist/react-datepicker.css";
 import "../courses/datepicker.css"
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+import { FaSquare} from "react-icons/fa";
+>>>>>>> 7c8ec1773118d94c9bf147e79201852c3261d8f4
 
 const Container = styled.div`
     width: 100%;
@@ -89,6 +93,26 @@ const InfoText = styled.div`
     text-align: center;
 `;
 
+const Li = styled.li`
+  display: flex;
+  list-style: square;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  white-space: nowrap;
+  font-size: ${props => `${props.theme.fontSizes.small}`};
+  @media (max-width:  560px) {
+    white-space: normal;
+    align-items: center;
+    line-height: normal;
+   
+  }
+`;
+
+
+function splitString(string: string) {
+    let sentences = string.split(". ");
+    return sentences
+}
 
 
 
@@ -112,6 +136,7 @@ export function CourseForm(props: {title: string; info: string;}) {
         >([    ]);
     const title = props.title
     const info = props.info
+    const infoArray: Array<String> = splitString(info); 
 
    
     return(
@@ -119,7 +144,11 @@ export function CourseForm(props: {title: string; info: string;}) {
             <InfoText>
                 <H2>About {title}</H2>
                 <Paragraph>
-                    {info}
+                    {
+                    infoArray.map(function (value) {
+                     return <Li><FaSquare style={{marginRight:".8rem"}}/>{value}</Li>})
+                    }
+                    
                 </Paragraph>
             </InfoText>
             <FormRow>
