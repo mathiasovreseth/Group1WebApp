@@ -127,7 +127,7 @@ export function CourseForm(props: {title: string; info: string;}) {
                         placeholderText="Click to select a date"
                         selected={date}
                         onChange={(date:Date) => setDate(date)}
-                        dateFormat={"yyyy-MM-dd"}
+                        dateFormat={"dd-MM-yyyy"}
                         />
                     <Input name='Course-attendees' onInput={() => setAttendees(Input)} placeholder='Course Attendees'/>
                     <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
