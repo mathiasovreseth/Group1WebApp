@@ -72,11 +72,11 @@ function Header() {
                 <Link to='/about'>
                     <MediumText>About us</MediumText>
                 </Link>
-                <Link to='/community'>
-                    <MediumText>Community</MediumText>
+                <Link to='/questions'>
+                        <MediumText>Ask us a question</MediumText>
                 </Link>
-                <Link to='/company'>
-                    <MediumText>Company</MediumText>
+                <Link to='/terms'>
+                        <MediumText>Terms</MediumText>
                 </Link>
             </Center>
 

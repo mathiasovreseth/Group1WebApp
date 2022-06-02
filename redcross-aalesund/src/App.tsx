@@ -14,6 +14,10 @@ import TermsOfServicePage from "./pages/TermsOfServicePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AdminPage from "./pages/AdminPage";
 import ProductPage from './pages/ProductPage';
+import AskQuestion from './pages/Questions';
+import Terms from './pages/terms';
+import Refunds from './pages/Refunds';
+import Ethics from './pages/Ethics';
 
 export default function App() {
    const auth = useAuth();
@@ -42,6 +46,11 @@ export default function App() {
                         <Route path={"/login"} element={<LoginPage/>}/>
                         <Route path={"/registration"} element={<RegistrationPage/>}/>
                         <Route path={"/product_page"} element={<ProductPage/>}/>
+                        <Route path={"/questions"} element={<AskQuestion/>}/>
+                        <Route path={"/terms"} element={<Terms/>}/>
+                        <Route path={"/Refunds"} element={<Refunds/>}/>
+                        <Route path={"/Ethics"} element={<Ethics/>}/>
+                        
                     </Routes>
                     <Footer/>
 
