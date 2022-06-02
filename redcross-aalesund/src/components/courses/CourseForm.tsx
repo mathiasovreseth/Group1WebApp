@@ -5,11 +5,9 @@ import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-
 import { SmallText } from '../../styles/CommonStyles';
 import "react-datepicker/dist/react-datepicker.css";
 import "../courses/datepicker.css"
-<<<<<<< HEAD
 import { Link } from 'react-router-dom';
-=======
-import { FaSquare} from "react-icons/fa";
->>>>>>> 7c8ec1773118d94c9bf147e79201852c3261d8f4
+import { FaSquare } from 'react-icons/fa';
+
 
 const Container = styled.div`
     width: 100%;
