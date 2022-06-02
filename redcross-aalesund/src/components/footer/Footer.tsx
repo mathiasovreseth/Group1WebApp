@@ -86,21 +86,21 @@ function Footer() {
                     <Link to='/about'>
                         <FooterLinkItem>About us</FooterLinkItem>
                     </Link>
-                    <Link to='/community'>
-                        <FooterLinkItem>Community</FooterLinkItem>
+                    <Link to='/questions'>
+                        <FooterLinkItem>Ask us a question</FooterLinkItem>
                     </Link>
-                    <Link to='/company'>
-                        <FooterLinkItem>Company</FooterLinkItem>
+                    <Link to='/terms'>
+                        <FooterLinkItem>Terms</FooterLinkItem>
                     </Link>
                     <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
-                    <Link to='/mobile-app'>
-                        <FooterLinkItem>Mobile app</FooterLinkItem>
+                    <Link to='/refunds'>
+                        <FooterLinkItem>Refunds</FooterLinkItem>
                     </Link>
                     <Link to='/community'>
                         <FooterLinkItem>Community</FooterLinkItem>
                     </Link>
-                    <Link to='/company'>
-                        <FooterLinkItem style={{marginRight: 0}}>Company</FooterLinkItem>
+                    <Link to='/ethics'>
+                        <FooterLinkItem style={{marginRight: 0}}>Ethics</FooterLinkItem>
                     </Link>
                 </FooterLinkContainer>
             </div>
