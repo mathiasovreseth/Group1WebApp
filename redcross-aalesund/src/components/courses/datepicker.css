@@ -13,7 +13,15 @@
 
 .react-datepicker-wrapper,
 .react-datepicker__input-container,
-.react-datepicker__input-container input{
-    display: block;
-    width: 100%;
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header,
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+    
+    font-size: small;
+    
 }
+
+

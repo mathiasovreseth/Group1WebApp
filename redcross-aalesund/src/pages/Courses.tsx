@@ -38,7 +38,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  margin: 5rem 0 1rem 0;
+  margin: 5rem 1rem 1rem 0;
   border-radius: ${props => `${props.theme.borderRadius}`};
   background: #ededed;
   justify-content: center;

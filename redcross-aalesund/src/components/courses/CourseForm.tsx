@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import DatePicker from 'react-datepicker';
 import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-menu";
@@ -89,15 +89,25 @@ const InfoText = styled.div`
 
 // must send value for course selected
 export function CourseForm(props: {title: string; info: string;}) {
-    const[courseBooking, setCourseBooking] = useState([]);
+   
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [date, setDate] = useState(new Date());
     const [attendees, setAttendees] = useState("");
     const [language, setLanguage] = useState("");
     const [selectedStartTime, setSelectedStartTime] = useState(1);
+    const[courseBooking, setCourseBooking] = useState<Array<{
+        name: string,
+        email: string
+        date: Date,
+        attendees: string
+        language: string
+        selectedStartTime: number
+        }>
+        >([    ]);
     const title = props.title
     const info = props.info
+
    
     return(
         <Container>
@@ -117,13 +127,13 @@ export function CourseForm(props: {title: string; info: string;}) {
                         placeholderText="Click to select a date"
                         selected={date}
                         onChange={(date:Date) => setDate(date)}
-                        dateFormat={"yyyy-MM-dd"}
+                        dateFormat={"dd-MM-yyyy"}
                         />
                     <Input name='Course-attendees' onInput={() => setAttendees(Input)} placeholder='Course Attendees'/>
                     <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
                     <Label> <Radio name='language' onClick={() => setLanguage("Norwegian")} id='norwegian' /> Norwegian</Label>
                     <br />
-                    <Label>Choose start time</Label>
+                    <Label>Choose start time {selectedStartTime==1? "10:00 - 14:00 ": "17:00 - 21:00 "}</Label>
                     <DropdownMenu>
                         <DropdownItemGroup>
                             <DropdownItem onClick={() => setSelectedStartTime(1)}>
@@ -136,8 +146,10 @@ export function CourseForm(props: {title: string; info: string;}) {
                     </DropdownMenu>
 
                     <Submit type="submit" 
-                    //onSubmit={() => 
-                   // setCourseBooking.push(name, email, date, attendees, language, selectedStartTime)} 
+                    onSubmit={() =>{
+                        setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
+                        localStorage.setItem("courseBooking", JSON.stringify(courseBooking))
+                    }}
                     value="Book course"/>
                 </BookingForm>
             </FormRow>
@@ -146,5 +158,4 @@ export function CourseForm(props: {title: string; info: string;}) {
         </Container>
     )
     
-
 }
