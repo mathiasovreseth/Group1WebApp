@@ -14,19 +14,29 @@ import TermsOfServicePage from "./pages/TermsOfServicePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AdminPage from "./pages/AdminPage";
 import ProductPage from './pages/ProductPage';
+import {productsApiResponse} from "./models/ProductsModel";
+import ShoppingCartPage from "./pages/shoppingCartPage/ShoppingCartPage";
 
 export default function App() {
    const auth = useAuth();
+    let [shoppingCartItem, setShoppingCartItem] = useState("");
 
+    useEffect(()=> {
+        let temp = localStorage.getItem("p");
+        if(temp) {
+            setShoppingCartItem(temp);
+        }
+    }, [])
     return (
         <ThemeProvider theme={defaultTheme}>
             <GlobalStyles/>
             {/*wait for the authProvider to check if the user is authenticated or not*/}
             {auth.isAuthenticated != null &&
                 <>
-                    <Header/>
+                    <Header shoppingCartItem={shoppingCartItem}/>
                     <Routes>
                         <Route path={"/"} element={<LandingPage/>}/>
+                        <Route path={"*"} element={<LandingPage/>}/>
                         {/*example route that need authentication*/}
                         <Route
                             path="/admin"
@@ -41,7 +51,8 @@ export default function App() {
                         <Route path={"/privacy-policy"} element={<PrivacyPolicyPage/>}/>
                         <Route path={"/login"} element={<LoginPage/>}/>
                         <Route path={"/registration"} element={<RegistrationPage/>}/>
-                        <Route path={"/product_page"} element={<ProductPage/>}/>
+                        <Route path={"/product-page"} element={<ProductPage/>}/>
+                        <Route path={"/shopping-cart"} element={<ShoppingCartPage product={null}/>}/>
                     </Routes>
                     <Footer/>
 

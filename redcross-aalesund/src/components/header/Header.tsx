@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import styled, {DefaultTheme, ThemeContext, ThemeProps, ThemeProvider, useTheme} from "styled-components";
 import MyDropDownMenu from "../buttons/DropdownMenu";
-import {LargeText, Li, MediumText} from "../../styles/CommonStyles";
+import {LargeText, Li, MediumText, XSmallText} from "../../styles/CommonStyles";
 import redCrossImage from "../../assets/red-cross-image.png";
 import {Link} from "react-router-dom";
 import {defaultTheme} from "../../styles/Theme";
 import {useAuth} from "../../auth/Auth";
 import TextButton from "../buttons/TextButton";
+import {FaBars, FaShoppingBag, FaShoppingBasket, FaShoppingCart} from "react-icons/fa";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -45,6 +46,34 @@ const RightSection = styled.div`
   align-items: center;
 `;
 
+const ShoppingCartContainer = styled.div`
+  margin-right: .8rem;
+  height: 4rem;
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const ShoppingItemCount = styled.div`
+    height: 2rem;
+    width: 2rem;
+    position: absolute;
+    display: flex;
+   justify-content: center;
+  align-items: center;
+    z-index: 6;
+    top: .1rem;
+    right: .5rem;
+    border-radius: 50%;
+    overflow: visible;
+    background-color:  ${props => `${props.theme.palette.primary.accentColor}`};
+`;
+
 const DropDownMenuContainer = styled.div`
   display: none;
   @media (max-width: ${props => `${props.theme.breakPoints.tablet}`}) {
@@ -57,8 +86,10 @@ const linkStyle = {
   textDecoration: "none",
   color: 'black'
 };
-
-function Header() {
+interface HeaderProps  {
+    shoppingCartItem: string;
+}
+function Header(props:HeaderProps ) {
     const auth = useAuth();
     const theme = useTheme();
     const [url, setUrl] = useState("");
@@ -67,6 +98,7 @@ function Header() {
         const urlSplitted = window.location.href.split("/");
         setUrl(urlSplitted[urlSplitted.length -1]);
     },)
+
     return (
         <HeaderContainer>
             <Link to='/'>
@@ -91,6 +123,16 @@ function Header() {
                 <DropDownMenuContainer>
                     <MyDropDownMenu/>
                 </DropDownMenuContainer>
+                <Link to={"/shopping-cart"}>
+                    <ShoppingCartContainer>
+                        <FaShoppingCart style={{fontSize: "2.2rem"}}/>
+                        {props.shoppingCartItem.length > 0 &&
+                            <ShoppingItemCount>
+                                <XSmallText style={{color: "#fff"}}>1</XSmallText>
+                            </ShoppingItemCount>
+                        }
+                    </ShoppingCartContainer>
+                </Link>
                 {auth.isAuthenticated ?
                     <TextButton style={{marginLeft:"1.6rem" }} onClick={()=> auth.signOut()} label={"Sign out"}/> :
                     <Link to={"/login"}>
