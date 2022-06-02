@@ -3,16 +3,17 @@ import { FaSquare } from "react-icons/fa";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import { getCoursesApiResponse } from "../../models/CourseModel";
+import {FlexContainer, SmallText} from "../../styles/CommonStyles";
 
 
 
 const Box = styled.h1`
   height: 5rem;
   width: 30rem;
-  position: absolute;
-  top: 0%;
   background-color: #f16670;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: ${props => `${props.theme.fontSizes.large}`};
 `;
 
@@ -30,19 +31,16 @@ let SelectButton = styled.button`
   border-radius: ${props => `${props.theme.borderRadius}`};
 `;
 
-const BulletPoints = styled.ul`
-  list-style-type: square;
-  text-align: left;
-  padding-top:20%;
+const BulletPoints = styled.div`
+  height: 30rem;
   max-width: 25rem;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   font-size: ${props => `${props.theme.fontSizes.xSmall}`};
-  margin:1rem 0 1rem 0;
 `;
 
-const LI = styled.li`
-  font-size: ${props => `${props.theme.fontSizes.xSmall}`};
-  margin: 0.3rem 0 0 0;
-`;
 
 interface CourseCardProps {
   product: getCoursesApiResponse;
@@ -51,18 +49,40 @@ interface CourseCardProps {
 }
 
 
-
 export function Course(props: CourseCardProps) {
-      return (
+
+    function splitString(string: string) {
+        let sentences = string.split(". ");
+        return sentences
+    }
+    const infoArray: Array<String> = splitString(props.product.description);
+
+    return (
       <>
         <Box>{props.product.title}</Box>
         <BulletPoints>
-    
-        {props.product.description}
+            <div>
+            {
+                infoArray.map(function (value: any) {
+                    return (
+                        <FlexContainer style={{marginBottom: "1.2rem", alignItems: "center", justifyContent: "flex-start"}}>
+                            <div style={{ marginRight:"0.8rem", overflow: "visible"}}>
+                                <FaSquare style={{fontSize: ".6rem"}}/>
+                            </div>
+                            <SmallText style={{}}>{value}</SmallText>
+                        </FlexContainer>
+                    );
+                })
+            }
+            </div>
+            <FlexContainer style={{justifyContent: "center"}}>
+                <Link to='/product_page'>
+                    <SelectButton onClick={() => props.onSubmit(props.product)}>Select</SelectButton>
+                </Link>
+            </FlexContainer>
+
         </BulletPoints>
-      <Link to='/product_page'>
-            <SelectButton onClick={() => props.onSubmit(props.product)}>Select</SelectButton>
-          </Link>
+
       </>
     );
 }

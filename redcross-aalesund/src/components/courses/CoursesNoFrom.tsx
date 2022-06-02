@@ -22,6 +22,10 @@ const CoursesContainer = styled.div`
   @media  (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}){
     flex-direction: column;
   }
+  &:hover,
+  &:focus {
+    
+  }
 `;
 
 const Container = styled.div`
@@ -39,7 +43,6 @@ const Section = styled.div`
   background: #ededed;
   justify-content: center;
   align-items: center;
-  transform: scale(1);
   transition: all 0.4s;
    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   @media  (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}){
@@ -47,7 +50,7 @@ const Section = styled.div`
   }
   &:hover,
   &:focus {
-    transform: scale(1.02);
+    
   }
 `;
 
@@ -80,7 +83,7 @@ function CourseNoForm() {
         <H1> Our courses</H1>
         <CoursesContainer>
           {product && product.map((data: getCoursesApiResponse) => {
-          return <Section> <Course key={data.id} product={data} onSubmit={setSelectedProduct}/> </Section>
+          return <Section> <Course key={data.id} product={data} onSubmit={() => {setSelectedProduct}}/> </Section>
         })}
         </CoursesContainer>
       </Container>
