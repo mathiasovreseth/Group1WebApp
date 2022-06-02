@@ -79,11 +79,11 @@ function Header() {
                 <Link to='/about' onClick={()=> setSelectedIndex(0)}>
                     <MediumText style={{color: url == "about" ? theme.palette.primary.accentColor: "inherit"}}>About us</MediumText>
                 </Link>
-                <Link to='/community' onClick={()=> setSelectedIndex(1)}>
-                    <MediumText style={{color: url == "community" ? theme.palette.primary.accentColor: "inherit"}}>Community</MediumText>
+                <Link to='/questions' onClick={()=> setSelectedIndex(1)}>
+                    <MediumText style={{color: url == "questions" ? theme.palette.primary.accentColor: "inherit"}}>Ask us a question</MediumText>
                 </Link>
-                <Link to='/company' onClick={()=> setSelectedIndex(2)}>
-                    <MediumText style={{color: url == "company" ? theme.palette.primary.accentColor: "inherit"}}>Company</MediumText>
+                <Link to='/ethics' onClick={()=> setSelectedIndex(2)}>
+                    <MediumText style={{color: url == "ethics" ? theme.palette.primary.accentColor: "inherit"}}>Ethics</MediumText>
                 </Link>
             </Center>
 
