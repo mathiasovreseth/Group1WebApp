@@ -3,7 +3,7 @@ import {
 
     FlexContainer,
 
-    Input,
+    Input, Label,
     LargeText, MediumText, SmallText,
 
     XSmallText
@@ -38,10 +38,7 @@ const Button = styled.button`
 `;
 
 
-const Label = styled.label`
-  font-size: ${props => `${props.theme.fontSizes.medium}`};;
-  margin-bottom: 0.8rem;
-`
+
 
 export interface editedProductFields {
     id?: string | null;
@@ -93,7 +90,7 @@ function EditProductForm(props: EditProductFormProps) {
             e.preventDefault();
         }}>
             <FormContainer>
-                <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Register</LargeText>
+                <LargeText style={{marginTop: "2rem", marginBottom: "4rem", fontWeight: 700}}>Edit product</LargeText>
                 <Label>Title</Label>
                 <Input defaultValue={props?.product?.title ?? ""} onChange={(e)=> setTitle(e.target.value)}  type="text" name="title"/>
                 {titleErr && <XSmallText style={{color: "red"}}>{titleErr}</XSmallText>}
@@ -104,7 +101,7 @@ function EditProductForm(props: EditProductFormProps) {
                     <Button type="submit" disabled={isSubmitting}>
                         {isSubmitting  ? 'Submitting': 'Submit'}
                     </Button>
-                    <Button style={{backgroundColor: "black"}}  disabled={isSubmitting} onClick={props.onCancel}>
+                    <Button style={{backgroundColor: "black", boxShadow: "unset"}}  disabled={isSubmitting} onClick={props.onCancel}>
                         Cancel
                     </Button>
                 </FlexContainer>

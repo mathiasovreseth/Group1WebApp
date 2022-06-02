@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import styled, {DefaultTheme, ThemeContext, ThemeProps, ThemeProvider} from "styled-components";
+import styled, {DefaultTheme, ThemeContext, ThemeProps, ThemeProvider, useTheme} from "styled-components";
 import MyDropDownMenu from "../buttons/DropdownMenu";
 import {LargeText, Li, MediumText} from "../../styles/CommonStyles";
 import redCrossImage from "../../assets/red-cross-image.png";
@@ -60,6 +60,13 @@ const linkStyle = {
 
 function Header() {
     const auth = useAuth();
+    const theme = useTheme();
+    const [url, setUrl] = useState("");
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    useEffect(()=> {
+        const urlSplitted = window.location.href.split("/");
+        setUrl(urlSplitted[urlSplitted.length -1]);
+    },)
     return (
         <HeaderContainer>
             <Link to='/'>
@@ -69,14 +76,14 @@ function Header() {
                 </LeftSection>
             </Link>
             <Center>
-                <Link to='/about'>
-                    <MediumText>About us</MediumText>
+                <Link to='/about' onClick={()=> setSelectedIndex(0)}>
+                    <MediumText style={{color: url == "about" ? theme.palette.primary.accentColor: "inherit"}}>About us</MediumText>
                 </Link>
-                <Link to='/community'>
-                    <MediumText>Community</MediumText>
+                <Link to='/community' onClick={()=> setSelectedIndex(1)}>
+                    <MediumText style={{color: url == "community" ? theme.palette.primary.accentColor: "inherit"}}>Community</MediumText>
                 </Link>
-                <Link to='/company'>
-                    <MediumText>Company</MediumText>
+                <Link to='/company' onClick={()=> setSelectedIndex(2)}>
+                    <MediumText style={{color: url == "company" ? theme.palette.primary.accentColor: "inherit"}}>Company</MediumText>
                 </Link>
             </Center>
 
@@ -87,7 +94,7 @@ function Header() {
                 {auth.isAuthenticated ?
                     <TextButton style={{marginLeft:"1.6rem" }} onClick={()=> auth.signOut()} label={"Sign out"}/> :
                     <Link to={"/login"}>
-                        <LogInText>Log in</LogInText>
+                        <LogInText style={{color: url == "login" ? theme.palette.primary.accentColor: "inherit"}}>Log in</LogInText>
                     </Link>
                 }
             </RightSection>

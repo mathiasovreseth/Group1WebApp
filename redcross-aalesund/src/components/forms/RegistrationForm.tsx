@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {
-    FlexColumnContainer, Input, LargeText, SmallText,
+    FlexColumnContainer, Input, Label, LargeText, SmallText,
     XSmallText
 } from "../../styles/CommonStyles";
 import styled from "styled-components";
@@ -25,11 +25,6 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-
-const Label = styled.label`
-  font-size: ${props => `${props.theme.fontSizes.medium}`};;
-  margin-bottom: 0.8rem;
-`
 const FormContainer = styled(FlexColumnContainer)`
   background-color: ${props => `${props.theme.palette.primary.background}`};
   border-radius: ${props => `${props.theme.borderRadius}`};
@@ -146,7 +141,7 @@ function RegistrationForm() {
             <OuterContainer>
 
                 <FormContainer>
-                    <LargeText style={{marginTop: "2rem", marginBottom: "4rem"}}>Register</LargeText>
+                    <LargeText style={{marginTop: "2rem", marginBottom: "4rem", fontWeight: 700}}>Register</LargeText>
                     <Label>Name</Label>
                     <Input onChange={(e) => setName(e.target.value)} type="text" name="name"/>
                     {emailErr && <XSmallText style={{color: "red"}}>{nameErr}</XSmallText>}
