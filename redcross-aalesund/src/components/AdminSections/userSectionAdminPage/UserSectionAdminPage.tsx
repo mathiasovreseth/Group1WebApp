@@ -48,7 +48,7 @@ function UserSectionAdminPage() {
             const postData = {
                 id: user.id,
             };
-            sendApiRequest("POST", "/users/delete",postData, false);
+            sendApiRequest("PUT", "/users/delete",postData, false);
         }
 
     }
@@ -64,7 +64,7 @@ function UserSectionAdminPage() {
         newUserList.push(userToEdit[0]);
         setUsers(newUserList);
 
-        sendApiRequest("POST", "/users/update", editedUser, false);
+        sendApiRequest("PUT", "/users/update", editedUser, false);
         setIsPopupOpen(false);
 
     }
