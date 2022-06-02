@@ -55,7 +55,7 @@ export default function App() {
                         <Route path={"/privacy-policy"} element={<PrivacyPolicyPage/>}/>
                         <Route path={"/login"} element={<LoginPage/>}/>
                         <Route path={"/registration"} element={<RegistrationPage/>}/>
-                        <Route path={"/product_page"} element={<ProductPage/>}/>
+                        <Route path={"/product-page"} element={<ProductPage/>}/>
                         <Route path={"/questions"} element={<AskQuestion/>}/>
                         <Route path={"/terms"} element={<Terms/>}/>
                         <Route path={"/Refunds"} element={<Refunds/>}/>

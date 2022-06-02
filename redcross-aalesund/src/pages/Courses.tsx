@@ -80,7 +80,6 @@ function LoadCourses() {
               });
           });
           setProduct(productTemp);
-          console.log(productTemp);
       }).catch((err: any) => {
           console.log(err);
       });

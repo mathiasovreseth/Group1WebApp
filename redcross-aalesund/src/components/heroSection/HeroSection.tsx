@@ -67,7 +67,7 @@ function HeroSection() {
         Serving anyone without <br/> 
         exceptions is our goal. <br/> 
         We care for people.</H1>
-        <Link to={"/product_page"}>
+        <Link to={"/product-page"}>
           <Button>Book your training</Button>
         </Link>
         

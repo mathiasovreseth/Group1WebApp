@@ -4,12 +4,9 @@ import DatePicker from 'react-datepicker';
 import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-menu";
 import { SmallText } from '../../styles/CommonStyles';
 import "react-datepicker/dist/react-datepicker.css";
-import "../courses/datepicker.css"
-<<<<<<< HEAD
-import { Link } from 'react-router-dom';
-=======
+import "../courses/datepicker.css";
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { FaSquare} from "react-icons/fa";
->>>>>>> 7c8ec1773118d94c9bf147e79201852c3261d8f4
 
 const Container = styled.div`
     width: 100%;
@@ -136,8 +133,8 @@ export function CourseForm(props: {title: string; info: string;}) {
         >([    ]);
     const title = props.title
     const info = props.info
-    const infoArray: Array<String> = splitString(info); 
-
+    const infoArray: Array<String> = splitString(info);
+    let navigate = useNavigate();
    
     return(
         <Container>
@@ -179,15 +176,19 @@ export function CourseForm(props: {title: string; info: string;}) {
                         </DropdownItemGroup>
                     </DropdownMenu>
 
-                    <Link to='/shopping-cart'>
+
 
                     <Submit type="submit" 
                     onSubmit={() =>{
                         setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
-                        localStorage.setItem("courseBooking", JSON.stringify(courseBooking))
+                        localStorage.setItem("courseBooking", JSON.stringify(courseBooking));
+                        window.dispatchEvent( new Event('storage') );
+                        navigate("/shopping-cart", {
+                            replace: true
+                        });
                     }}
                     value="Book course"/>
-                    </Link>
+
                 </BookingForm>
             </FormRow>
         

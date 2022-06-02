@@ -98,6 +98,10 @@ function Header(props:HeaderProps ) {
         const urlSplitted = window.location.href.split("/");
         setUrl(urlSplitted[urlSplitted.length -1]);
     },)
+    window.addEventListener('storage', (event)=> {
+        console.log("Heisann");
+    });
+
 
     return (
         <HeaderContainer>
