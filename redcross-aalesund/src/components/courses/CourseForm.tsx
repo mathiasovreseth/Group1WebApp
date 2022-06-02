@@ -5,6 +5,7 @@ import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-
 import { SmallText } from '../../styles/CommonStyles';
 import "react-datepicker/dist/react-datepicker.css";
 import "../courses/datepicker.css"
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     width: 100%;
@@ -21,6 +22,10 @@ const Container = styled.div`
     @media  (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}){
     flex-direction: column;
     }
+    &:hover,
+  &:focus {
+    
+  }
 `;
 
 const H3 = styled.h3`
@@ -133,7 +138,7 @@ export function CourseForm(props: {title: string; info: string;}) {
                     <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
                     <Label> <Radio name='language' onClick={() => setLanguage("Norwegian")} id='norwegian' /> Norwegian</Label>
                     <br />
-                    <Label>Choose start time {selectedStartTime==1? "10:00 - 14:00 ": "17:00 - 21:00 "}</Label>
+                    <Label>Choose start time: {selectedStartTime==1? "10:00 - 14:00 ": "17:00 - 21:00 "}</Label>
                     <DropdownMenu>
                         <DropdownItemGroup>
                             <DropdownItem onClick={() => setSelectedStartTime(1)}>
@@ -145,12 +150,15 @@ export function CourseForm(props: {title: string; info: string;}) {
                         </DropdownItemGroup>
                     </DropdownMenu>
 
+                    <Link to='/shopping-cart'>
+
                     <Submit type="submit" 
                     onSubmit={() =>{
                         setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
                         localStorage.setItem("courseBooking", JSON.stringify(courseBooking))
                     }}
                     value="Book course"/>
+                    </Link>
                 </BookingForm>
             </FormRow>
         
