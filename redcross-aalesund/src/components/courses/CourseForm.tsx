@@ -151,8 +151,8 @@ export function CourseForm(props: {title: string; info: string;}) {
             <FormRow>
                 <H3>Book {title} now</H3>
                 <BookingForm action="" method="post">
-                    <Input name='Name' onInput={() => setName(Input)} placeholder='Name'/>
-                    <Input name='Email' onInput={() => setEmail(Input)}  placeholder='Email'/>
+                    <Input name='Name' onChange={(e) => setName(e.target.value)} placeholder='Name'/>
+                    <Input name='Email' onChange={(e) => setEmail(e.target.value)}  placeholder='Email'/>
                     <DatePicker
                         className='date-picker'
                         placeholderText="Click to select a date"
@@ -160,7 +160,7 @@ export function CourseForm(props: {title: string; info: string;}) {
                         onChange={(date:Date) => setDate(date)}
                         dateFormat={"dd-MM-yyyy"}
                         />
-                    <Input name='Course-attendees' onInput={() => setAttendees(Input)} placeholder='Course Attendees'/>
+                    <Input  name='Course-attendees' onChange={(e) => setAttendees(e.target.value)} placeholder='Course Attendees'/>
                     <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
                     <Label> <Radio name='language' onClick={() => setLanguage("Norwegian")} id='norwegian' /> Norwegian</Label>
                     <br />
@@ -179,9 +179,17 @@ export function CourseForm(props: {title: string; info: string;}) {
 
 
                     <Submit type="submit" 
-                    onSubmit={() =>{
+                    onClick={() =>{
                         setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
-                        localStorage.setItem("courseBooking", JSON.stringify(courseBooking));
+                        localStorage.setItem("courseBooking", JSON.stringify({
+                            name:name,
+                            email:email,
+                            date:date,
+                            attendees:attendees,
+                            language:language,
+                            title: props.title,
+                            description: props.info,
+                            selectedStartTime:selectedStartTime}));
                         window.dispatchEvent( new Event('storage') );
                         navigate("/shopping-cart", {
                             replace: true

@@ -89,17 +89,33 @@ const linkStyle = {
 interface HeaderProps  {
     shoppingCartItem: string;
 }
-function Header(props:HeaderProps ) {
+function Header( ) {
     const auth = useAuth();
     const theme = useTheme();
     const [url, setUrl] = useState("");
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const [hasProductInCart, setHasProductInCart] = useState(false);
+
     useEffect(()=> {
         const urlSplitted = window.location.href.split("/");
         setUrl(urlSplitted[urlSplitted.length -1]);
     },)
-    window.addEventListener('storage', (event)=> {
-        console.log("Heisann");
+
+    useEffect(()=> {
+        if(localStorage.getItem("courseBooking")) {
+            setHasProductInCart(true);
+        } else {
+            setHasProductInCart(false);
+        }
+    }, []);
+
+    window.addEventListener('storage', (event) => {
+        if(localStorage.getItem("courseBooking")) {
+             setHasProductInCart(true);
+         } else {
+             setHasProductInCart(false);
+         }
+
     });
 
 
@@ -130,7 +146,7 @@ function Header(props:HeaderProps ) {
                 <Link to={"/shopping-cart"}>
                     <ShoppingCartContainer>
                         <FaShoppingCart style={{fontSize: "2.2rem"}}/>
-                        {props.shoppingCartItem.length > 0 &&
+                        {hasProductInCart &&
                             <ShoppingItemCount>
                                 <XSmallText style={{color: "#fff"}}>1</XSmallText>
                             </ShoppingItemCount>
