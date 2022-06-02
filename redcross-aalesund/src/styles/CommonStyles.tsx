@@ -11,7 +11,7 @@ export const FlexColumnContainer = styled.div`
 `;
 
 // link tag without standard styles.
-export const Li = styled.link`
+export const Li = styled.li`
   text-decoration: none;
   color: red;
 `;
