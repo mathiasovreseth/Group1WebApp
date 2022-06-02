@@ -11,6 +11,7 @@ export const defaultTheme: DefaultTheme = {
       xLarge: "3.6rem",
       header: "4rem"
     },
+
     breakPoints: {
       // 600px
       phone: "37.5em",

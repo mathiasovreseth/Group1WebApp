@@ -30,6 +30,8 @@ const Image = styled.img`
   width: 30rem;
   vertical-align: middle;
   margin: 2rem;
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {  
     width: 22.5rem;
     height: 15rem;

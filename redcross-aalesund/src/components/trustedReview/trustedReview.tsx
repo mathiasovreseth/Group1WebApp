@@ -13,6 +13,7 @@ const TrustedComment = styled.section`
   grid-template-columns: 12rem auto;
   grid-template-rows: 12rem fit-content;
   grid-gap: 50px;
+  margin-bottom: 2rem;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {  
     grid-template-columns: 8rem auto;
     grid-template-rows: 8rem fit-content;

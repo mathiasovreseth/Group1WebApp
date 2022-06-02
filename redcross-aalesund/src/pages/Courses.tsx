@@ -29,7 +29,7 @@ const CoursesContainer = styled.div`
 `;
 
 const Container = styled.div`
-  padding-bottom: 2rem;
+  padding-bottom: 5rem;
 `;
 
 const Section = styled.div`
@@ -38,7 +38,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  margin: 5rem 0 1rem 0;
+  margin: 5rem 1rem 1rem 0;
   border-radius: ${props => `${props.theme.borderRadius}`};
   background: #ededed;
   justify-content: center;
@@ -51,6 +51,7 @@ const Section = styled.div`
   }
   &:hover,
   &:focus {
+    cursor: pointer;
     transform: scale(1.02);
   }
 `;
@@ -95,7 +96,6 @@ function LoadCourses() {
   console.log(selectedProduct);
   
   return(
-    <div>
       <Container>
         <H1> Our courses</H1>
         <CoursesContainer>
@@ -113,7 +113,7 @@ function LoadCourses() {
         }
          
       </Container>
-    </div>
+  
 
   )
 }
