@@ -29,7 +29,7 @@ public class ReviewController {
   }
 
   @GetMapping("/getReviewByUser")
-  public ResponseEntity<List<String>> getReviewByUser() {
+  public ResponseEntity<List<Object[]>> getReviewByUser() {
     return ResponseEntity.ok((reviewService.getAll()));
   }
 }
