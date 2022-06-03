@@ -55,16 +55,6 @@ public class UserController {
     try {
       JSONObject json = new JSONObject(http.getBody());
       String id = json.getString("id");
-      //Optional<User> userToRemove = userService.findById(new Long(id));
-
-      /**
-       if(userToRemove.isPresent()) {
-
-       User user = userToRemove.get();
-       user.setEnabled(false);
-       }
-       */
-
 
       if (userService.disableUser(id, false)) {
         return ResponseEntity.ok("User disabled");
@@ -103,6 +93,4 @@ public class UserController {
     User user = User.fromJSONObject(jsonObject);
     userService.addUser(user);
   }
-
-
 }
