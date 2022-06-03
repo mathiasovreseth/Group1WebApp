@@ -109,7 +109,7 @@ function LoadCourses() {
           <LoginForm style={{position: 'absolute',left: '40%'}} />
         </Popup>
         {selectedProduct&&
-         <Section> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title??""} info={selectedProduct?.description??""}/></Section>
+         <Section> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title??""} info={selectedProduct?.description??"" } id={selectedProduct?.id??""}/></Section>
         }
          
       </Container>

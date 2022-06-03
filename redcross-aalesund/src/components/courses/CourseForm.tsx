@@ -115,28 +115,79 @@ function splitString(string: string) {
 
 
 // must send value for course selected
-export function CourseForm(props: {title: string; info: string;}) {
+export function CourseForm(props: {title: string; info: string; id: number;}) {
    
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [date, setDate] = useState(new Date());
     const [attendees, setAttendees] = useState("");
     const [language, setLanguage] = useState("");
-    const [selectedStartTime, setSelectedStartTime] = useState(1);
+    const [selectedStartTime, setSelectedStartTime] = useState("10:00 - 14:00");
     const[courseBooking, setCourseBooking] = useState<Array<{
         name: string,
         email: string
         date: Date,
         attendees: string
         language: string
-        selectedStartTime: number
+        selectedStartTime: string
         }>
         >([    ]);
     const title = props.title
     const info = props.info
+    const id = props.id
     const infoArray: Array<String> = splitString(info); 
 
-   
+    function getCourseSelected(id: number){
+        switch(id){
+            //Two day course
+            case 1:
+                return <Label>Choose start time: {selectedStartTime ? "10:00 - 14:00 ": "17:00 - 21:00 "}</Label>
+                break;
+            //One day course 
+            case 2:
+                return <Label>Choose start time: {selectedStartTime ? "10:00 - 16:00 ": "14:00 - 20:00 "}</Label>
+                break;
+            //Short Consulation  
+            case 3:
+                return <Label>Choose start time: {selectedStartTime ? "13:00 - 14:00 ": "17:00 - 18:00 "}</Label>
+                break;
+        }   
+    }
+
+    function getStartTimes(id: number){
+        switch(id){
+            //Two day course
+            case 1:
+                return <><DropdownItem onClick={() => setSelectedStartTime("10:00 - 14:00")}>
+                            <SmallText>10:00 - 14:00</SmallText>
+                         </DropdownItem>
+                        <DropdownItem onClick={() => setSelectedStartTime("17:00 - 21:00")}>
+                            <SmallText>17:00 - 21:00</SmallText>
+                        </DropdownItem></>
+                break;
+            //One day course 
+            case 2:
+                return <><DropdownItem onClick={() => setSelectedStartTime("10:00 - 16:00")}>
+                            <SmallText>10:00 - 16:00</SmallText>
+                        </DropdownItem>
+                        <DropdownItem onClick={() => setSelectedStartTime("14:00 - 20:00")}>
+                            <SmallText>14:00 - 20:00</SmallText>
+                         </DropdownItem></>
+                break;
+            //Short Consulation  
+            case 3:
+                return <><DropdownItem onClick={() => setSelectedStartTime("13:00 - 14:00")}>
+                            <SmallText>13:00 - 14:00</SmallText>
+                        </DropdownItem>
+                        <DropdownItem onClick={() => setSelectedStartTime("17:00 - 18:00")}>
+                            <SmallText>17:00 - 18:00</SmallText>
+                        </DropdownItem></>
+                break;
+        }  
+
+    }
+        
+    
     return(
         <Container>
             <InfoText>
@@ -165,20 +216,15 @@ export function CourseForm(props: {title: string; info: string;}) {
                     <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
                     <Label> <Radio name='language' onClick={() => setLanguage("Norwegian")} id='norwegian' /> Norwegian</Label>
                     <br />
-                    <Label>Choose start time: {selectedStartTime==1? "10:00 - 14:00 ": "17:00 - 21:00 "}</Label>
+                    <div>
+                    {getCourseSelected(id)}
                     <DropdownMenu>
                         <DropdownItemGroup>
-                            <DropdownItem onClick={() => setSelectedStartTime(1)}>
-                                <SmallText >10:00 - 14:00</SmallText>
-                            </DropdownItem>
-                            <DropdownItem onClick={() => setSelectedStartTime(2)}>
-                                <SmallText>17:00 - 21:00</SmallText>
-                            </DropdownItem>
+                            {getStartTimes(id)}
                         </DropdownItemGroup>
                     </DropdownMenu>
-
+                    </div>
                     <Link to='/shopping-cart'>
-
                     <Submit type="submit" 
                     onSubmit={() =>{
                         setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
