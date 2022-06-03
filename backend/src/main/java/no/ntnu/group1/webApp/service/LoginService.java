@@ -1,7 +1,6 @@
 package no.ntnu.group1.webApp.service;
 
 
-import com.auth0.jwt.JWT;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.repositories.UserRepository;
 import no.ntnu.group1.webApp.security.JwtUtil;
@@ -9,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.Optional;
 
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 @Service
 public class LoginService {
