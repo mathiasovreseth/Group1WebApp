@@ -151,51 +151,9 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
     const infoArray: Array<String> = splitString(info);
     const auth = useAuth();
     const navigate = useNavigate();
-    function validateForm() {
-        let isValid = true;
-        if (email.length === 0) {
-            setFormError((prev: any) => {
-                if (prev) {
-                    return {...prev, emailErr:'Email is Required'};
-                }
-            });
-            isValid = false;
-
-        } else if (!isValidEmail(email)) {
-            setFormError((prev: any) => {
-                if (prev) {
-                    return {...prev, emailErr:'Invalid email address'};
-                }
-            });
-            isValid = false;
-        } else {
-            setFormError((prev: any) => {
-                if (prev) {
-                    return {...prev, emailErr:''};
-                }
-            });
-        }
-        if(attendees !== 5 && attendees !== 1 ) {
-            setFormError((prev: any) => {
-                if (prev) {
-                    return {...prev, attendees:'Only single or 5 person group'};
-                }
-            });
-            isValid = false;
-        }  else {
-            console.log("dsadsa")
-            setFormError((prev: any) => {
-                if (prev) {
-                    return {...prev, attendees:''};
-                }
-            });
-        }
-        return isValid;
-    }
 
     function onSubmit(e: any) {
         e.preventDefault();
-        if(validateForm()) {
             setCourseBooking( [{email, date, attendees, language, selectedStartTime}])
             localStorage.setItem("courseBooking", JSON.stringify({
                 email:email,
@@ -210,7 +168,6 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
             navigate("/shopping-cart", {
                 replace: true
             });
-        }
     }
 
     function getCourseSelected(id: number){
@@ -273,7 +230,6 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
                 <H3>Book {title} now</H3>
                 <BookingForm action="" method="post">
                     <Input defaultValue={auth.user.email} disabled={true} type={"text"} name='Email' onChange={(e) => e.preventDefault()}  placeholder='Email'/>
-                    {formError.emailErr && <XSmallText style={{color: "red"}}>{formError.emailErr}</XSmallText>}
                     <DatePicker
                         className='date-picker'
                         placeholderText="Click to select a date"

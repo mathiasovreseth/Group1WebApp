@@ -105,14 +105,13 @@ function LoadCourses() {
     }
     
 }
-  console.log(selectedProduct);
-  
+
   return(
       <Container>
         <H1> Our courses</H1>
         <CoursesContainer>
           {product && product.map((data: getCoursesApiResponse) => {
-          return <Section  > <Course key={data.id} product={data} onSubmit={(data) => {
+          return <Section> <Course key={data.id} product={data} onSubmit={(data) => {
             openPopup(); setSelectedProduct(data);
           }}/> </Section>
         })}

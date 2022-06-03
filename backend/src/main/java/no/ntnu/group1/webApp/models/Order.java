@@ -23,14 +23,19 @@ public class Order {
     private Date orderDate;
     private Date startDate;
     private Date endDate;
+    private int attendees;
+    private boolean processed;
+
 
     public Order(){}
 
-    public Order(User costumer, Product product, Date orderDate,Date startDate, Date endDate) {
+    public Order(User costumer, Product product, Date orderDate,Date startDate, Date endDate, int attendees) {
         this.costumer = costumer;
         this.product = product;
         this.orderDate = orderDate;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.processed = false;
+        this.attendees = attendees;
     }
 }

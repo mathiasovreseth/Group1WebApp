@@ -110,6 +110,7 @@ function Header( ) {
     }, []);
 
     window.addEventListener('storage', (event) => {
+        console.log("heisann");
         if(localStorage.getItem("courseBooking")) {
              setHasProductInCart(true);
          } else {

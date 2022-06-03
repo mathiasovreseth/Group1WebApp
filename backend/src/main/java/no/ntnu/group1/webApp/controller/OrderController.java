@@ -30,20 +30,28 @@ public class OrderController {
         this.userService = userService;
         this.productService = productService;
     }
-
+    @CrossOrigin
     @PostMapping("/add")
     public ResponseEntity<String> addNewOrder(HttpEntity<String> http) {
         JSONObject json = null;
         try {
             json = new JSONObject(http.getBody());
-            Long userId = json.getLong("userId");
+            String userEmail = json.getString("email");
             Long productId = json.getLong("productId");
-            Optional<User> userOptional = userService.findById(userId);
+            Long startDateTime = json.getLong("startDate");
+            Long endDateTime = json.getLong("endDate");
+            int attendees = json.getInt("attendees");
+
+            Date startDate = new Date(startDateTime);
+            Date endDate = new Date(endDateTime);
+
+            Optional<User> userOptional = userService.findUserByEmail(userEmail);
             Optional<Product> productOptional = productService.findById(productId);
+
             if(userOptional.isPresent() && productOptional.isPresent()) {
                 User user = userOptional.get();
                 Product product = productOptional.get();
-                Order order = new Order(user, product, new Date(), new Date(), new Date());
+                Order order = new Order(user, product, new Date(), startDate, endDate,attendees);
                 if(orderService.addNewOrder(order)) {
                     return new ResponseEntity<>(HttpStatus.OK);
                 } else {
