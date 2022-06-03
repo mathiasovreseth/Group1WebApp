@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import DatePicker from 'react-datepicker';
 import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-menu";
-import { SmallText } from '../../styles/CommonStyles';
+import {SmallText, XSmallText} from '../../styles/CommonStyles';
 import "react-datepicker/dist/react-datepicker.css";
 import "../courses/datepicker.css";
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { FaSquare} from "react-icons/fa";
+import {isValidEmail, isValidPassword} from "../../utils/FormValidation";
 
 const Container = styled.div`
     width: 100%;
@@ -130,12 +131,81 @@ export function CourseForm(props: {title: string; info: string;}) {
         language: string
         selectedStartTime: number
         }>
-        >([    ]);
+        >([ ]);
+    const[formError, setFormError] = useState<{
+        nameErr?: string;
+        emailErr?: string;
+        attendees?: string;
+    }>({
+        nameErr: "",
+        emailErr: "",
+        attendees: "",
+    });
+
     const title = props.title
     const info = props.info
     const infoArray: Array<String> = splitString(info);
-    let navigate = useNavigate();
-   
+    const navigate = useNavigate();
+    function validateForm() {
+        let isValid = true;
+        if (name.length === 0) {
+            setFormError((prev: any) => {
+                if (prev) {
+                    console.log("HELLO MADAGASKAR");
+                    return {...prev, name:'Name is required'};
+                }
+            });
+            isValid = false;
+
+        }
+        if (email.length === 0) {
+            setFormError((prev: any) => {
+                if (prev) {
+                    return {...prev, emailErr:'Email is Required'};
+                }
+            });
+            isValid = false;
+
+        } else if (!isValidEmail(email)) {
+            setFormError((prev: any) => {
+                if (prev) {
+                    return {...prev, emailErr:'Invalid email address'};
+                }
+            });
+            isValid = false;
+        }
+        if(attendees.length == 0 || parseInt(attendees) <= 0 ) {
+            setFormError((prev: any) => {
+                if (prev) {
+                    return {...prev, attendees:'Attendees is required'};
+                }
+            });
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    function onSubmit(e: any) {
+        e.preventDefault();
+        if(validateForm()) {
+            setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
+            localStorage.setItem("courseBooking", JSON.stringify({
+                name:name,
+                email:email,
+                date:date,
+                attendees:attendees,
+                language:language,
+                title: props.title,
+                description: props.info,
+                selectedStartTime:selectedStartTime}));
+            window.dispatchEvent( new Event('storage') );
+            navigate("/shopping-cart", {
+                replace: true
+            });
+        }
+    }
+
+    console.log(formError.nameErr);
     return(
         <Container>
             <InfoText>
@@ -145,14 +215,15 @@ export function CourseForm(props: {title: string; info: string;}) {
                     infoArray.map(function (value) {
                      return <Li><FaSquare style={{marginRight:".8rem"}}/>{value}</Li>})
                     }
-                    
                 </Paragraph>
             </InfoText>
             <FormRow>
                 <H3>Book {title} now</H3>
                 <BookingForm action="" method="post">
                     <Input name='Name' onChange={(e) => setName(e.target.value)} placeholder='Name'/>
+                    {formError.nameErr && <XSmallText style={{color: "red"}}>{formError.nameErr}</XSmallText>}
                     <Input name='Email' onChange={(e) => setEmail(e.target.value)}  placeholder='Email'/>
+                    {formError.emailErr && <XSmallText style={{color: "red"}}>{formError.emailErr}</XSmallText>}
                     <DatePicker
                         className='date-picker'
                         placeholderText="Click to select a date"
@@ -161,6 +232,7 @@ export function CourseForm(props: {title: string; info: string;}) {
                         dateFormat={"dd-MM-yyyy"}
                         />
                     <Input  name='Course-attendees' onChange={(e) => setAttendees(e.target.value)} placeholder='Course Attendees'/>
+                    {formError.attendees && <XSmallText style={{color: "red"}}>{formError.attendees}</XSmallText>}
                     <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
                     <Label> <Radio name='language' onClick={() => setLanguage("Norwegian")} id='norwegian' /> Norwegian</Label>
                     <br />
@@ -178,28 +250,13 @@ export function CourseForm(props: {title: string; info: string;}) {
 
 
 
-                    <Submit type="submit" 
-                    onClick={() =>{
-                        setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
-                        localStorage.setItem("courseBooking", JSON.stringify({
-                            name:name,
-                            email:email,
-                            date:date,
-                            attendees:attendees,
-                            language:language,
-                            title: props.title,
-                            description: props.info,
-                            selectedStartTime:selectedStartTime}));
-                        window.dispatchEvent( new Event('storage') );
-                        navigate("/shopping-cart", {
-                            replace: true
-                        });
-                    }}
+                    <Submit type="submit"
+                    onClick={(e)=> onSubmit(e)}
                     value="Book course"/>
 
                 </BookingForm>
             </FormRow>
-        
+        dsa
             
         </Container>
     )
