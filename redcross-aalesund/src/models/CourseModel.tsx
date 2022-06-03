@@ -7,3 +7,13 @@ export interface getCoursesApiResponse{
       comment: string]
     >;
   }
+
+
+  export interface getCommentsApiResponse{
+    map(arg0: (value: any) => void): import("react").ReactNode;
+    id: number,
+    name: string,
+    comment: string
+  }
+
+  

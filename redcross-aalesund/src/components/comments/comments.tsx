@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getCoursesApiResponse } from "../../models/CourseModel";
+import { useAuth } from "../../auth/Auth";
+import { getCommentsApiResponse, getCoursesApiResponse } from "../../models/CourseModel";
+import { getUserApiResponse } from "../../models/UserModel";
 import { H1 } from "../../styles/CommonStyles";
+import { sendApiRequest } from "../../utils/requests";
 
 
 const H2 = styled.h2`
@@ -46,24 +49,50 @@ const Paragraph = styled.p`
   }
 `;
 
-interface CourseCardProps {
-  product: getCoursesApiResponse;
-  onSubmit: (product: getCoursesApiResponse) => void;
-  
-}
 
 
-function Comments(props: {reviews: Array<any>;}) {
+function Comments(props: {reviews: Array<any>; name: string;}) {
   const reviews = props.reviews;
 
+  const[review, setReview] = useState<getCommentsApiResponse>();
+
+
+
+  useEffect(()=> {
+    sendApiRequest("GET","/reviews/getReviewByUser",null, true).then((data: any) => {
+        const reviewTemp: any = [];
+        data.forEach((review: getCommentsApiResponse)=> {
+            reviewTemp.push({
+                0: review.id,
+                1: review.name,
+                2: review.comment
+            });
+        });
+        setReview(reviewTemp);
+    }).catch((err: any) => {
+        console.log(err);
+    });
+}, []);
   
-console.log(props.reviews);
+  
+console.log(review);
+
+function findMatchingReviews(rev: any){
+  let exists = false
+  reviews.map(function (value){
+    if(value.reviewId === rev.id){
+      exists = true
+    }
+    })
+    return exists
+  }
 
 
-function createComment(reviewId: number,  comment: string ){
+
+function createComment(reviewId: number, comment: string, name: string){
     return(
       <>
-      <H2>{reviewId}</H2>
+      <H2>{name}</H2>
       <Paragraph>{comment}</Paragraph>
       </>
     )
@@ -74,9 +103,9 @@ function createComment(reviewId: number,  comment: string ){
           <>
           <H1>Comments</H1>
           <TrustedComment>
-            {reviews.map(function (value){
+            {review && review.map(function (value) {
               return(
-                createComment(value.reviewId, value.comment)
+                findMatchingReviews(value) && createComment(value.reviewId, value.comment, value.name)
               )
             })}
           </TrustedComment>
@@ -85,5 +114,6 @@ function createComment(reviewId: number,  comment: string ){
   
 
 }
+
 
 export default Comments

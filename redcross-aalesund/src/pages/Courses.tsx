@@ -124,8 +124,6 @@ function LoadCourses() {
         <SectionForm> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title ?? ""} info={selectedProduct?.description ?? ""} id={selectedProduct?.id ?? ""} /></SectionForm>}
 
     </Container>
-     {selectedProduct &&
-     <Comments reviews={selectedProduct?.reviews}/> }
     </>
 
   )
