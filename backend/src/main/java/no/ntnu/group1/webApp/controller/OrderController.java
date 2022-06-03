@@ -41,6 +41,7 @@ public class OrderController {
             Long startDateTime = json.getLong("startDate");
             Long endDateTime = json.getLong("endDate");
             int attendees = json.getInt("attendees");
+            String language = json.getString("language");
 
             Date startDate = new Date(startDateTime);
             Date endDate = new Date(endDateTime);
@@ -51,7 +52,7 @@ public class OrderController {
             if(userOptional.isPresent() && productOptional.isPresent()) {
                 User user = userOptional.get();
                 Product product = productOptional.get();
-                Order order = new Order(user, product, new Date(), startDate, endDate,attendees);
+                Order order = new Order(user, product, new Date(), startDate, endDate,attendees, language);
                 if(orderService.addNewOrder(order)) {
                     return new ResponseEntity<>(HttpStatus.OK);
                 } else {

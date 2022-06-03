@@ -95,6 +95,7 @@ interface orderShoppingCart {
     selectedStartTime: string;
     date: Date;
     attendees: string;
+    language: string;
 }
 
 interface OrderBody {
@@ -103,6 +104,7 @@ interface OrderBody {
     startDate: number;
     endDate: number;
     attendees: number;
+    language: string;
 }
 
 function ShoppingCartPage() {
@@ -121,6 +123,7 @@ function ShoppingCartPage() {
                 title: orderParsed.title,
                 attendees: orderParsed.attendees,
                 date: fullDate,
+                language: orderParsed.language,
                 selectedStartTime:orderParsed.selectedStartTime,
 
             });
@@ -139,6 +142,7 @@ function ShoppingCartPage() {
                 startDate: dateArray[0].getTime(),
                 endDate: dateArray[1].getTime(),
                 attendees: parseInt(order.attendees),
+                language: order.language,
             }
             sendApiRequest("POST", "/orders/add", orderBody, false).then(()=> {
                 setOrder(null);
