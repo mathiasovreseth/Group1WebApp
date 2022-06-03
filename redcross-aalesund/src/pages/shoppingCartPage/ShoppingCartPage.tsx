@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {FlexContainer, Label, MediumText, SmallText} from "../../styles/CommonStyles";
+import {FlexContainer, Label, MediumText, SmallText, XSmallText} from "../../styles/CommonStyles";
 import {FaCross, FaCrosshairs, FaRegCheckCircle, FaStopCircle, FaTrash} from "react-icons/fa";
 import CrossSymbol from '../../assets/cross.svg';
 
@@ -20,7 +20,7 @@ const Divider = styled.div`
 `;
 
 const InnerContainer = styled(FlexContainer)`
-  width: 50vw;
+  width: 60vw;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -60,6 +60,7 @@ const ProductCard = styled(FlexContainer)`
 const RightSectionProductCard = styled(FlexContainer)`
   width: 100%;
   column-gap: 4rem;
+  overflow: visible;
   justify-content: space-evenly;
   @media (max-width: 46.5em) {
     justify-content: space-between;
@@ -87,7 +88,7 @@ const Button = styled.button`
 interface productShoppingCart {
     title: string;
     description: string;
-    selectedStartTime: number;
+    selectedStartTime: string;
     date: string;
     attendees: string;
 }
@@ -105,8 +106,8 @@ function ShoppingCartPage() {
                 description: productParsed.description,
                 title: productParsed.title,
                 attendees: productParsed.attendees,
-                date: fullDate.toDateString(),
-                selectedStartTime: productParsed.selectedStartTime,
+                date: fullDate.toDateString() + " at " +  productParsed.selectedStartTime,
+                selectedStartTime:productParsed.selectedStartTime,
 
             });
 
@@ -131,17 +132,17 @@ function ShoppingCartPage() {
                     <ProductCard>
                         <div style={{maxWidth: "40rem"}}>
                             <Label>{product.title}</Label>
-                            <SmallText>{product.description}</SmallText>
+                            <XSmallText>{product.description}</XSmallText>
                         </div>
                         <RightSectionProductCard>
 
                             <div>
                                 <Label>Date</Label>
-                                <SmallText>{product.date}</SmallText>
+                                <XSmallText>{product.date}</XSmallText>
                             </div>
                             <div>
                                 <Label>Attendees</Label>
-                                <SmallText>{product.attendees}</SmallText>
+                                <XSmallText>{product.attendees}</XSmallText>
                             </div>
                             <IconContainer>
                                 <img style={{width: "1.6rem", height: "1.6rem"}} src={CrossSymbol} alt="remove"

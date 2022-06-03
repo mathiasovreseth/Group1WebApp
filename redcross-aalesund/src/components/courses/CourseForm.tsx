@@ -9,6 +9,7 @@ import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { FaSquare} from "react-icons/fa";
 
 import "../courses/datepicker.css"
+import {isValidEmail} from "../../utils/FormValidation";
 
 
 
@@ -24,12 +25,11 @@ const Container = styled.div`
     padding-left: 10%;
     padding-right: 10%;
     padding-top: 2rem;
-    @media  (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}){
-    flex-direction: column;
-    }
-    &:hover,
-  &:focus {
-    
+   
+  @media (max-width:  56.25em) {
+    justify-items: center;
+    grid-template-columns: 1fr;
+    align-items: center;
   }
 `;
 
@@ -58,7 +58,7 @@ const Paragraph = styled.p`
 const FormRow = styled.div`
 `;
 
-const Input = styled.input.attrs({ type: 'text' })`
+const Input = styled.input`
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -92,6 +92,9 @@ const InfoText = styled.div`
     padding-top: 2rem;
     background-color: #ededed;  
     text-align: center;
+  @media (max-width:  56.25em) {
+    display: none;
+  }
 `;
 
 const Li = styled.li`
@@ -123,14 +126,14 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [date, setDate] = useState(new Date());
-    const [attendees, setAttendees] = useState("");
-    const [language, setLanguage] = useState("");
+    const [attendees, setAttendees] = useState(1);
+    const [language, setLanguage] = useState("English");
     const [selectedStartTime, setSelectedStartTime] = useState("10:00 - 14:00");
     const[courseBooking, setCourseBooking] = useState<Array<{
         name: string,
         email: string
         date: Date,
-        attendees: string
+        attendees: number
         language: string
         selectedStartTime: string
         }>
@@ -155,12 +158,17 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
         if (name.length === 0) {
             setFormError((prev: any) => {
                 if (prev) {
-                    console.log("HELLO MADAGASKAR");
-                    return {...prev, name:'Name is required'};
+                    return {...prev, nameErr:'Name is required'};
                 }
             });
             isValid = false;
 
+        } else {
+            setFormError((prev: any) => {
+                if (prev) {
+                    return {...prev, nameErr:''};
+                }
+            });
         }
         if (email.length === 0) {
             setFormError((prev: any) => {
@@ -177,14 +185,27 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
                 }
             });
             isValid = false;
-        }
-        if(attendees.length == 0 || parseInt(attendees) <= 0 ) {
+        } else {
             setFormError((prev: any) => {
                 if (prev) {
-                    return {...prev, attendees:'Attendees is required'};
+                    return {...prev, emailErr:''};
+                }
+            });
+        }
+        if(attendees !== 5 && attendees !== 1 ) {
+            setFormError((prev: any) => {
+                if (prev) {
+                    return {...prev, attendees:'Only single or 5 person group'};
                 }
             });
             isValid = false;
+        }  else {
+            console.log("dsadsa")
+            setFormError((prev: any) => {
+                if (prev) {
+                    return {...prev, attendees:''};
+                }
+            });
         }
         return isValid;
     }
@@ -209,21 +230,17 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
         }
     }
 
-    console.log(formError.nameErr);
     function getCourseSelected(id: number){
         switch(id){
             //Two day course
             case 1:
                 return <Label>Choose start time: {selectedStartTime ? "10:00 - 14:00 ": "17:00 - 21:00 "}</Label>
-                break;
             //One day course
             case 2:
                 return <Label>Choose start time: {selectedStartTime ? "10:00 - 16:00 ": "14:00 - 20:00 "}</Label>
-                break;
             //Short Consulation
             case 3:
                 return <Label>Choose start time: {selectedStartTime ? "13:00 - 14:00 ": "17:00 - 18:00 "}</Label>
-                break;
         }
     }
 
@@ -237,7 +254,6 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
                         <DropdownItem onClick={() => setSelectedStartTime("17:00 - 21:00")}>
                             <SmallText>17:00 - 21:00</SmallText>
                         </DropdownItem></>
-                break;
             //One day course
             case 2:
                 return <><DropdownItem onClick={() => setSelectedStartTime("10:00 - 16:00")}>
@@ -246,7 +262,6 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
                         <DropdownItem onClick={() => setSelectedStartTime("14:00 - 20:00")}>
                             <SmallText>14:00 - 20:00</SmallText>
                          </DropdownItem></>
-                break;
             //Short Consulation
             case 3:
                 return <><DropdownItem onClick={() => setSelectedStartTime("13:00 - 14:00")}>
@@ -255,7 +270,6 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
                         <DropdownItem onClick={() => setSelectedStartTime("17:00 - 18:00")}>
                             <SmallText>17:00 - 18:00</SmallText>
                         </DropdownItem></>
-                break;
         }
 
     }
@@ -275,9 +289,9 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
             <FormRow>
                 <H3>Book {title} now</H3>
                 <BookingForm action="" method="post">
-                    <Input name='Name' onChange={(e) => setName(e.target.value)} placeholder='Name'/>
+                    <Input type={"text"} name='Name' onChange={(e) => setName(e.target.value)} placeholder='Name'/>
                     {formError.nameErr && <XSmallText style={{color: "red"}}>{formError.nameErr}</XSmallText>}
-                    <Input name='Email' onChange={(e) => setEmail(e.target.value)}  placeholder='Email'/>
+                    <Input type={"text"} name='Email' onChange={(e) => setEmail(e.target.value)}  placeholder='Email'/>
                     {formError.emailErr && <XSmallText style={{color: "red"}}>{formError.emailErr}</XSmallText>}
                     <DatePicker
                         className='date-picker'
@@ -286,9 +300,10 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
                         onChange={(date:Date) => setDate(date)}
                         dateFormat={"dd-MM-yyyy"}
                         />
-                    <Input  name='Course-attendees' onChange={(e) => setAttendees(e.target.value)} placeholder='Course Attendees'/>
-                    {formError.attendees && <XSmallText style={{color: "red"}}>{formError.attendees}</XSmallText>}
-                    <Label> <Radio onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
+                        <Label> <Radio defaultChecked={true}  onClick={() => setAttendees(1)} name='attendees' id='single-group' /> Single group</Label>
+                    <Label> <Radio  name='attendees' onClick={() => setAttendees(5)} id='five-person-group' /> Five person group</Label>
+                    <br />
+                        <Label> <Radio defaultChecked={true} onClick={() => setLanguage("English")} name='language' id='english' /> English</Label>
                     <Label> <Radio name='language' onClick={() => setLanguage("Norwegian")} id='norwegian' /> Norwegian</Label>
                     <br />
                     <div>
@@ -307,8 +322,6 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
 
                 </BookingForm>
             </FormRow>
-        dsa
-            
         </Container>
     )
     
