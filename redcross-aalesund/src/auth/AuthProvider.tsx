@@ -18,10 +18,15 @@ export const authHelper = {
     parseJwtUser: (jwtString: string) => {
             let user: UserAuthResponse | null = null;
             const jwtObject = authHelper.parseJwt(jwtString);
-            if (jwtObject) {
+            const splittedRoles = jwtObject.roles.split(":");
+            const roleString: string = splittedRoles[0];
+            const roleStringFormatted = roleString.substr(1, roleString.length -2);
+
+        if (jwtObject) {
                 user = {
                     email: jwtObject.sub,
-                    role:  jwtObject.roles[0].authority,
+                    role: roleStringFormatted,
+                    name: splittedRoles[1]
                 }
 
             }
