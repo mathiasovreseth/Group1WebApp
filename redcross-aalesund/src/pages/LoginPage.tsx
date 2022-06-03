@@ -21,7 +21,7 @@ function LoginPage(props:any) {
 
     return (
     <OuterContainer>
-    <LoginForm />
+    <LoginForm shouldRedirect={true}/>
     </OuterContainer>
     )
 }

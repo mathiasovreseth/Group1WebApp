@@ -3,10 +3,10 @@ import styled, {ThemeProvider} from "styled-components";
 import {FlexColumnContainer, FlexContainer, LargeText, MediumText } from '../styles/CommonStyles';
 
 import TextButton from '../components/buttons/TextButton';
-import UserSectionAdminPage from "../components/AdminSections/userSectionAdminPage/UserSectionAdminPage";
+import UserSectionAdminPage from "../components/adminSections/userSectionAdminPage/UserSectionAdminPage";
 import {FaBars} from 'react-icons/fa';
-import ProductSectionAdminPage from "../components/AdminSections/productSectionAdminPage/ProductSectionAdminPage";
-import OrderSectionAdminPage from "../components/AdminSections/orderSectionAdminpage/OrderSectionAdminPage";
+import ProductSectionAdminPage from "../components/adminSections/productSectionAdminPage/ProductSectionAdminPage";
+import OrderSectionAdminPage from "../components/adminSections/orderSectionAdminpage/OrderSectionAdminPage";
 
 
 const OuterContainer = styled.div`

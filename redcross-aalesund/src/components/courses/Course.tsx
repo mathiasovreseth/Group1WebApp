@@ -76,7 +76,7 @@ export function Course(props: CourseCardProps) {
             }
             </div>
             <FlexContainer style={{justifyContent: "center"}}>
-                <Link to='/product_page'>
+                <Link to='/product-page'>
                     <SelectButton onClick={() => props.onSubmit(props.product)}>Select</SelectButton>
                 </Link>
             </FlexContainer>

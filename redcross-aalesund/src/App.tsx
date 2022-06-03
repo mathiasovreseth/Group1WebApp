@@ -23,21 +23,14 @@ import ShoppingCartPage from "./pages/shoppingCartPage/ShoppingCartPage";
 
 export default function App() {
    const auth = useAuth();
-    let [shoppingCartItem, setShoppingCartItem] = useState("");
 
-    useEffect(()=> {
-        let temp = localStorage.getItem("p");
-        if(temp) {
-            setShoppingCartItem(temp);
-        }
-    }, [])
-    return (
+   return (
         <ThemeProvider theme={defaultTheme}>
             <GlobalStyles/>
             {/*wait for the authProvider to check if the user is authenticated or not*/}
             {auth.isAuthenticated != null &&
                 <>
-                    <Header shoppingCartItem={shoppingCartItem}/>
+                    <Header/>
                     <Routes>
                         <Route path={"/"} element={<LandingPage/>}/>
                         <Route path={"*"} element={<LandingPage/>}/>
@@ -55,12 +48,12 @@ export default function App() {
                         <Route path={"/privacy-policy"} element={<PrivacyPolicyPage/>}/>
                         <Route path={"/login"} element={<LoginPage/>}/>
                         <Route path={"/registration"} element={<RegistrationPage/>}/>
-                        <Route path={"/product_page"} element={<ProductPage/>}/>
+                        <Route path={"/product-page"} element={<ProductPage/>}/>
                         <Route path={"/questions"} element={<AskQuestion/>}/>
                         <Route path={"/terms"} element={<Terms/>}/>
                         <Route path={"/Refunds"} element={<Refunds/>}/>
                         <Route path={"/Ethics"} element={<Ethics/>}/>
-                        <Route path={"/shopping-cart"} element={<ShoppingCartPage product={null}/>}/>
+                        <Route path={"/shopping-cart"} element={<ShoppingCartPage/>}/>
                     </Routes>
                     <Footer/>
 

@@ -43,6 +43,8 @@ const Button = styled.button`
 
 interface LoginFromProps {
     style?: CSSProperties;
+    shouldRedirect: boolean;
+    onLoginSuccess?: ()=> void;
 
 }
 
@@ -68,7 +70,12 @@ function LoginForm(props: LoginFromProps) {
         };
         auth.signIn(user).then(res => {
             // navigate to page the user previously was on
-            navigate(from, {replace: true});
+            if(props.shouldRedirect) {
+                navigate(from, {replace: true});
+            }
+            if(props.onLoginSuccess) {
+                props.onLoginSuccess();
+            }
             setIsSubmitting(false);
         }).catch(err => {
             // display error message if login failed

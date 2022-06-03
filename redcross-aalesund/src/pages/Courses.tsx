@@ -43,7 +43,6 @@ const Section = styled.div`
   background: #ededed;
   justify-content: center;
   align-items: center;
-  transform: scale(1);
   transition: all 0.4s;
    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   @media  (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}){
@@ -53,6 +52,20 @@ const Section = styled.div`
   &:focus {
     cursor: pointer;
     transform: scale(1.02);
+  }
+`;
+const SectionForm = styled.div`
+  min-height: 25rem;
+  display: flex;
+  flex-direction: column;
+  margin: 5rem 1rem 1rem 0;
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  background: #ededed;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  @media  (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}){
+    margin: 2rem 0 2rem 0;
   }
 `;
 
@@ -80,7 +93,6 @@ function LoadCourses() {
               });
           });
           setProduct(productTemp);
-          console.log(productTemp);
       }).catch((err: any) => {
           console.log(err);
       });
@@ -106,10 +118,10 @@ function LoadCourses() {
         })}
         </CoursesContainer>
         <Popup  overlayStyle={{}} contentStyle={{height: '100%', width: '100%', overflow: 'hidden', backgroundColor: 'inherit',  border: 'none'}} defaultOpen={false} open={isPopupOpen}>
-          <LoginForm style={{position: 'absolute',left: '40%'}} />
+          <LoginForm onLoginSuccess={()=> setIsPopupOpen(false)} shouldRedirect={false} style={{position: 'absolute',left: '40%'}} />
         </Popup>
         {selectedProduct&&
-         <Section> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title??""} info={selectedProduct?.description??"" } id={selectedProduct?.id??""}/></Section>
+         <SectionForm> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title??""} info={selectedProduct?.description??"" } id={selectedProduct?.id??""}/></SectionForm>
         }
          
       </Container>
