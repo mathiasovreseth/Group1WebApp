@@ -3,6 +3,8 @@ import styled from "styled-components";
 import {FlexContainer, Label, MediumText, SmallText, XSmallText} from "../../styles/CommonStyles";
 import {FaCross, FaCrosshairs, FaRegCheckCircle, FaStopCircle, FaTrash} from "react-icons/fa";
 import CrossSymbol from '../../assets/cross.svg';
+import {sendApiRequest} from "../../utils/requests";
+import {useAuth} from "../../auth/Auth";
 
 const OuterContainer = styled(FlexContainer)`
   width: 100vw;
@@ -86,75 +88,115 @@ const Button = styled.button`
 
 
 interface productShoppingCart {
+    id: number;
     title: string;
     description: string;
     selectedStartTime: string;
-    date: string;
+    date: Date;
     attendees: string;
 }
 
-function ShoppingCartPage() {
-    const [product, setProduct] = useState<productShoppingCart | null>();
+interface OrderBody {
+    email: string;
+    productId: number;
+    startDate: number;
+    endDate: number;
+}
 
+function ShoppingCartPage() {
+    const [order, setOrder] = useState<productShoppingCart | null>();
+    const auth = useAuth();
     useEffect(() => {
         const productString = localStorage.getItem("courseBooking");
+
         if (productString) {
             const productParsed: productShoppingCart = JSON.parse(productString);
             let fullDate: Date = new Date(productParsed.date);
             // const dateFormatted = new Date(fullDate.getFullYear(), fullDate.getMonth(), fullDate.getDate());
-            setProduct({
+            setOrder({
+                id: productParsed.id,
                 description: productParsed.description,
                 title: productParsed.title,
                 attendees: productParsed.attendees,
-                date: fullDate.toDateString() + " at " +  productParsed.selectedStartTime,
+                date: fullDate,
                 selectedStartTime:productParsed.selectedStartTime,
 
             });
 
-
         } else {
-            setProduct(null);
+            setOrder(null);
         }
     }, []);
+
+    function onOrderSubmit() {
+        const dateArray: Array<Date> | null = formatDate();
+        if(dateArray && order) {
+            const orderBody:OrderBody = {
+                productId: order.id,
+                email: auth.user.email,
+                startDate: dateArray[0].getTime(),
+                endDate: dateArray[1].getTime(),
+            }
+        }
+
+        // sendApiRequest("POST", "/orders/add");
+    }
+    function formatDate(): Array<Date> | null {
+        if(order) {
+            const date: Date = order.date;
+            const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            const splittedTime = order.selectedStartTime.split(" ");
+            const startTime = splittedTime[0];
+            const endTime = splittedTime[2];
+            const startTimeSplitted = startTime.split(":")
+            const endTimeSplitted = endTime.split(":")
+            startDate.setHours(parseInt(startTimeSplitted[0]),  0, 0, 0);
+            endDate.setHours(parseInt(endTimeSplitted[0]),  0, 0, 0);
+            return [startDate, endDate]
+        } else {
+            return null;
+        }
+    }
     return (
         <OuterContainer>
             <InnerContainer>
                 <Label>Shopping cart</Label>
                 <Divider/>
-                {!product &&
+                {!order &&
                 <NoItemsTextContainer>
                     <SmallText>No items in shopping cart</SmallText>
                 </NoItemsTextContainer>
                 }
 
-                {product &&
+                {order &&
                 <div style={{width: "100%"}}>
                     <ProductCard>
                         <div style={{maxWidth: "40rem"}}>
-                            <Label>{product.title}</Label>
-                            <XSmallText>{product.description}</XSmallText>
+                            <Label>{order.title}</Label>
+                            <XSmallText>{order.description}</XSmallText>
                         </div>
                         <RightSectionProductCard>
 
                             <div>
                                 <Label>Date</Label>
-                                <XSmallText>{product.date}</XSmallText>
+                                <XSmallText>{order.date.toDateString() + " at " +  order.selectedStartTime}</XSmallText>
                             </div>
                             <div>
                                 <Label>Attendees</Label>
-                                <XSmallText>{product.attendees}</XSmallText>
+                                <XSmallText>{order.attendees}</XSmallText>
                             </div>
                             <IconContainer>
                                 <img style={{width: "1.6rem", height: "1.6rem"}} src={CrossSymbol} alt="remove"
                                      onClick={() => {
-                                         setProduct(null);
+                                         setOrder(null);
                                          localStorage.removeItem("courseBooking");
                                          window.dispatchEvent(new Event('storage'));
                                      }}/>
                             </IconContainer>
                         </RightSectionProductCard>
                     </ProductCard>
-                    <Button onClick={()=> {}}>Book</Button>
+                    <Button onClick={()=> onOrderSubmit()}>Book</Button>
                 </div>
                 }
             </InnerContainer>

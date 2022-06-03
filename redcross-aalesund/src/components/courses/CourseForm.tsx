@@ -10,6 +10,7 @@ import { FaSquare} from "react-icons/fa";
 
 import "../courses/datepicker.css"
 import {isValidEmail} from "../../utils/FormValidation";
+import {useAuth} from "../../auth/Auth";
 
 
 
@@ -123,14 +124,12 @@ function splitString(string: string) {
 // must send value for course selected
 export function CourseForm(props: {title: string; info: string; id: number;}) {
    
-    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [date, setDate] = useState(new Date());
     const [attendees, setAttendees] = useState(1);
     const [language, setLanguage] = useState("English");
     const [selectedStartTime, setSelectedStartTime] = useState("10:00 - 14:00");
     const[courseBooking, setCourseBooking] = useState<Array<{
-        name: string,
         email: string
         date: Date,
         attendees: number
@@ -139,11 +138,9 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
         }>
         >([ ]);
     const[formError, setFormError] = useState<{
-        nameErr?: string;
         emailErr?: string;
         attendees?: string;
     }>({
-        nameErr: "",
         emailErr: "",
         attendees: "",
     });
@@ -152,24 +149,10 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
     const info = props.info
     const id = props.id
     const infoArray: Array<String> = splitString(info);
+    const auth = useAuth();
     const navigate = useNavigate();
     function validateForm() {
         let isValid = true;
-        if (name.length === 0) {
-            setFormError((prev: any) => {
-                if (prev) {
-                    return {...prev, nameErr:'Name is required'};
-                }
-            });
-            isValid = false;
-
-        } else {
-            setFormError((prev: any) => {
-                if (prev) {
-                    return {...prev, nameErr:''};
-                }
-            });
-        }
         if (email.length === 0) {
             setFormError((prev: any) => {
                 if (prev) {
@@ -213,13 +196,13 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
     function onSubmit(e: any) {
         e.preventDefault();
         if(validateForm()) {
-            setCourseBooking( [{name, email, date, attendees, language, selectedStartTime}])
+            setCourseBooking( [{email, date, attendees, language, selectedStartTime}])
             localStorage.setItem("courseBooking", JSON.stringify({
-                name:name,
                 email:email,
                 date:date,
                 attendees:attendees,
                 language:language,
+                id: props.id,
                 title: props.title,
                 description: props.info,
                 selectedStartTime:selectedStartTime}));
@@ -289,9 +272,7 @@ export function CourseForm(props: {title: string; info: string; id: number;}) {
             <FormRow>
                 <H3>Book {title} now</H3>
                 <BookingForm action="" method="post">
-                    <Input type={"text"} name='Name' onChange={(e) => setName(e.target.value)} placeholder='Name'/>
-                    {formError.nameErr && <XSmallText style={{color: "red"}}>{formError.nameErr}</XSmallText>}
-                    <Input type={"text"} name='Email' onChange={(e) => setEmail(e.target.value)}  placeholder='Email'/>
+                    <Input defaultValue={auth.user.email} disabled={true} type={"text"} name='Email' onChange={(e) => e.preventDefault()}  placeholder='Email'/>
                     {formError.emailErr && <XSmallText style={{color: "red"}}>{formError.emailErr}</XSmallText>}
                     <DatePicker
                         className='date-picker'

@@ -17,15 +17,20 @@ public class Order {
     Long id;
     @ManyToOne
     private User costumer;
-    @OneToMany(targetEntity = Product.class)
-    private List<Product> product;
+
+    @OneToOne
+    private Product product;
     private Date orderDate;
+    private Date startDate;
+    private Date endDate;
 
     public Order(){}
 
-    public Order(User costumer, List product, Date orderDate) {
+    public Order(User costumer, Product product, Date orderDate,Date startDate, Date endDate) {
         this.costumer = costumer;
         this.product = product;
         this.orderDate = orderDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }
