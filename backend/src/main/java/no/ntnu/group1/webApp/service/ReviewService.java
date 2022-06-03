@@ -5,6 +5,7 @@ import no.ntnu.group1.webApp.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,5 +16,9 @@ public class ReviewService {
 
   public Optional<Review> findReviewById(Long id) {
     return reviewRepository.findById(id);
+
+  }
+  public List<String> getAll() {
+    return (List<String>) reviewRepository.getCommentAndUser();
   }
 }
