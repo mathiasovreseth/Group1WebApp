@@ -1,34 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { getCoursesApiResponse } from "../../models/CourseModel";
+import { H1 } from "../../styles/CommonStyles";
 
 
-const H1 = styled.h1`
-  color: #d52d27;
-  font-size: 4.8rem;
-  font-weight: normal;
-  margin: 2rem;
-  @media screen and (max-width: 800px) {
-    font-size: 3rem;
+const H2 = styled.h2`
+  font-size: ${props => `${props.theme.fontSizes.large}`};
+  font-weight: bold;
+  padding-top: 1rem;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
+    font-size: ${props => `${props.theme.fontSizes.medium}`};
   }
-  text-align: center;
 `;
 
 const TrustedComment = styled.section`
   display: grid;
   padding-left: 5%;
   padding-right: 5%;
-  grid-template-columns: 12rem auto;
-  grid-template-rows: 12rem auto;
-  // box-shadow: 0 0 1rem 0 rgba(90, 90, 90, 0.2);
+  text-align: center;
+  grid-template-columns: 15% 1fr 15%;
+  grid-template-rows: 12rem fit-content;
   grid-gap: 50px;
-  @media screen and (max-width: 800px) {
+  margin-bottom: 2rem;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {  
     grid-template-columns: 8rem auto;
-    grid-template-rows: 8rem auto;
+    grid-template-rows: 8rem fit-content;
+    margin-bottom: 2rem;
   }
-`;
-
-const CommentPicture = styled.div`
-  align-self: center;
+  
 `;
 
 const Comment = styled.div`
@@ -39,47 +38,52 @@ const Comment = styled.div`
   }
 `;
 
-const Image = styled.img`
-  border-radius: 50%;
-  object-fit: cover;
-  width: 12rem;
-  height: 12rem;
-  align-self: center;
-  @media screen and (max-width: 800px) {
-    width: 8rem;
-    height: 8rem;
+const Paragraph = styled.p`
+  font-size: ${props => `${props.theme.fontSizes.medium}`};
+  padding-top: 0.5rem;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
+    font-size: ${props => `${props.theme.fontSizes.xSmall}`};
   }
 `;
 
-
-class Comments extends React.Component {
-
-    Constructor(props: String) {
-        this.state = {  
-         name: "test",
-         comment: "ee"
-      }  
-    }
+interface CourseCardProps {
+  product: getCoursesApiResponse;
+  onSubmit: (product: getCoursesApiResponse) => void;
+  
+}
 
 
+function Comments(props: {reviews: Array<any>;}) {
+  const reviews = props.reviews;
+
+  
+console.log(props.reviews);
 
 
-    render() {
-        return (
-            <>
-                <TrustedComment>
-                    <CommentPicture>
-                        <p>image</p>
-                    </CommentPicture>
-                    <Comment>
-                        <H1>name</H1>
-                        <p>Comment</p>
-                    </Comment>
-                </TrustedComment>
-            </>
+function createComment(reviewId: number,  comment: string ){
+    return(
+      <>
+      <H2>{reviewId}</H2>
+      <Paragraph>{comment}</Paragraph>
+      </>
+    )
+}
+
+    
+    return (
+          <>
+          <H1>Comments</H1>
+          <TrustedComment>
+            {reviews.map(function (value){
+              return(
+                createComment(value.reviewId, value.comment)
+              )
+            })}
+          </TrustedComment>
+          </>
         )
-    }
+  
 
 }
 
-export {Comments}
+export default Comments

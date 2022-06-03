@@ -5,7 +5,6 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import {Course} from "../components/courses/Course";
 import {CourseForm} from "../components/courses/CourseForm";
-import { CommentSection } from "./CommentSection";
 import {sendApiRequest} from "../../src/utils/requests"
 import { getCoursesApiResponse } from "../models/CourseModel";
 import Popup from "reactjs-popup";
@@ -14,6 +13,7 @@ import authHelper from "../auth/AuthProvider";
 import { useAuth } from "../auth/Auth";
 import { FlexColumnContainer } from "../styles/CommonStyles";
 import { H1 } from "../styles/CommonStyles";
+import Comments from "../components/comments/comments";
 
 const CoursesContainer = styled.div`
   width: 100%;
@@ -107,26 +107,30 @@ function LoadCourses() {
 }
 
   return(
+      <>
       <Container>
-        <H1> Our courses</H1>
-        <CoursesContainer>
-          {product && product.map((data: getCoursesApiResponse) => {
+      <H1> Our courses</H1>
+      <CoursesContainer>
+        {product && product.map((data: getCoursesApiResponse) => {
           return <Section> <Course key={data.id} product={data} onSubmit={(data) => {
             openPopup(); setSelectedProduct(data);
-          }}/> </Section>
+          } } /> </Section>;
         })}
-        </CoursesContainer>
-        <Popup  overlayStyle={{}} contentStyle={{height: '100%', width: '100%', overflow: 'hidden', backgroundColor: 'inherit',  border: 'none'}} defaultOpen={false} open={isPopupOpen}>
-          <LoginForm onLoginSuccess={()=> setIsPopupOpen(false)} shouldRedirect={false} style={{position: 'absolute',left: '40%'}} />
-        </Popup>
-        {selectedProduct&&
-         <SectionForm> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title??""} info={selectedProduct?.description??"" } id={selectedProduct?.id??""}/></SectionForm>
-        }
-         
-      </Container>
-  
+      </CoursesContainer>
+      <Popup overlayStyle={{}} contentStyle={{ height: '100%', width: '100%', overflow: 'hidden', backgroundColor: 'inherit', border: 'none' }} defaultOpen={false} open={isPopupOpen}>
+        <LoginForm onLoginSuccess={() => setIsPopupOpen(false)} shouldRedirect={false} style={{ position: 'absolute', left: '40%' }} />
+      </Popup>
+      {selectedProduct &&
+        <SectionForm> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title ?? ""} info={selectedProduct?.description ?? ""} id={selectedProduct?.id ?? ""} /></SectionForm>}
+
+    </Container>
+     {selectedProduct &&
+     <Comments reviews={selectedProduct?.reviews}/> }
+    </>
 
   )
+
+
 }
 
 
