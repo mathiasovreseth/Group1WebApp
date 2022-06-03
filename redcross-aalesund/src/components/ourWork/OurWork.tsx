@@ -13,6 +13,9 @@ const H2 = styled.h2`
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     font-size: ${props => `${props.theme.fontSizes.medium}`};
   }
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+    text-align: center
+  } ;
 `;
 
 const Paragraph = styled.p`
@@ -21,6 +24,7 @@ const Paragraph = styled.p`
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     font-size: ${props => `${props.theme.fontSizes.small}`};
   }
+ 
   
 `;
 
@@ -37,6 +41,7 @@ const Image = styled.img`
     height: 15rem;
   } ;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+    margin:auto;
   } ;
 `;
 

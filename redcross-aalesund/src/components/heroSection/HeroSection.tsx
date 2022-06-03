@@ -38,7 +38,10 @@ const H1 = styled.h1`
     font-size: ${props => `${props.theme.fontSizes.large}`};
   }
   @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
-    margin-left: 4rem;
+    width: 25rem;
+    font-size: ${props => `${props.theme.fontSizes.large}`};
+    margin: 8rem 0rem 2rem 15vw;
+    
   }
 
 `;
@@ -55,7 +58,7 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {
-    margin-left: 4rem;
+    margin-left: 15vw;
   }
 `;
 
