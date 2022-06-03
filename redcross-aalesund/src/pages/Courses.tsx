@@ -105,12 +105,7 @@ function LoadCourses() {
     }
     
 }
-  console.log(selectedProduct);
 
-  function isDefined() {
-      return selectedProduct?.id !== undefined
-  }
-  
   return(
       <>
       <Container>
@@ -129,13 +124,13 @@ function LoadCourses() {
         <SectionForm> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title ?? ""} info={selectedProduct?.description ?? ""} id={selectedProduct?.id ?? ""} /></SectionForm>}
 
     </Container>
-     {selectedProduct && 
+     {selectedProduct &&
      <Comments reviews={selectedProduct?.reviews}/> }
     </>
 
   )
 
-  
+
 }
 
 

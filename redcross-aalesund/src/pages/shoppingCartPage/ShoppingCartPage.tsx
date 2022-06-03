@@ -5,6 +5,7 @@ import {FaCross, FaCrosshairs, FaRegCheckCircle, FaStopCircle, FaTrash} from "re
 import CrossSymbol from '../../assets/cross.svg';
 import {sendApiRequest} from "../../utils/requests";
 import {useAuth} from "../../auth/Auth";
+import {ToastContainer, toast} from 'react-toastify';
 
 const OuterContainer = styled(FlexContainer)`
   width: 100vw;
@@ -87,13 +88,14 @@ const Button = styled.button`
 `;
 
 
-interface productShoppingCart {
+interface orderShoppingCart {
     id: number;
     title: string;
     description: string;
     selectedStartTime: string;
     date: Date;
     attendees: string;
+    language: string;
 }
 
 interface OrderBody {
@@ -101,25 +103,28 @@ interface OrderBody {
     productId: number;
     startDate: number;
     endDate: number;
+    attendees: number;
+    language: string;
 }
 
 function ShoppingCartPage() {
-    const [order, setOrder] = useState<productShoppingCart | null>();
+    const [order, setOrder] = useState<orderShoppingCart | null>();
+
     const auth = useAuth();
     useEffect(() => {
-        const productString = localStorage.getItem("courseBooking");
-
-        if (productString) {
-            const productParsed: productShoppingCart = JSON.parse(productString);
-            let fullDate: Date = new Date(productParsed.date);
+        const orderString = localStorage.getItem("courseBooking");
+        if (orderString) {
+            const orderParsed: orderShoppingCart = JSON.parse(orderString);
+            let fullDate: Date = new Date(orderParsed.date);
             // const dateFormatted = new Date(fullDate.getFullYear(), fullDate.getMonth(), fullDate.getDate());
             setOrder({
-                id: productParsed.id,
-                description: productParsed.description,
-                title: productParsed.title,
-                attendees: productParsed.attendees,
+                id: orderParsed.id,
+                description: orderParsed.description,
+                title: orderParsed.title,
+                attendees: orderParsed.attendees,
                 date: fullDate,
-                selectedStartTime:productParsed.selectedStartTime,
+                language: orderParsed.language,
+                selectedStartTime:orderParsed.selectedStartTime,
 
             });
 
@@ -136,10 +141,44 @@ function ShoppingCartPage() {
                 email: auth.user.email,
                 startDate: dateArray[0].getTime(),
                 endDate: dateArray[1].getTime(),
+                attendees: parseInt(order.attendees),
+                language: order.language,
             }
+            sendApiRequest("POST", "/orders/add", orderBody, false).then(()=> {
+                setOrder(null);
+
+                toast.success('Order placed', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    onClose: () => {
+                    }
+                });
+                localStorage.removeItem("courseBooking");
+                window.dispatchEvent( new Event('storage') );
+            }).catch(()=> {
+                toast.error('Error placing order, please try again later', {
+                    position: "top-center",
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    onClose: () => {
+
+                    }
+                });
+            })
         }
 
-        // sendApiRequest("POST", "/orders/add");
+
     }
     function formatDate(): Array<Date> | null {
         if(order) {
@@ -168,6 +207,18 @@ function ShoppingCartPage() {
                     <SmallText>No items in shopping cart</SmallText>
                 </NoItemsTextContainer>
                 }
+                <ToastContainer
+                    position="top-center"
+                    autoClose={1000}
+                    hideProgressBar={true}
+                    style={{overflowY: "hidden"}}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
 
                 {order &&
                 <div style={{width: "100%"}}>
