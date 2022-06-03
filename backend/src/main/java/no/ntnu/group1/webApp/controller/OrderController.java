@@ -1,12 +1,20 @@
 package no.ntnu.group1.webApp.controller;
 
 import no.ntnu.group1.webApp.models.Order;
+import no.ntnu.group1.webApp.models.Product;
+import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.service.OrderService;
+import no.ntnu.group1.webApp.service.ProductService;
+import no.ntnu.group1.webApp.service.UserService;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,20 +22,40 @@ import java.util.Optional;
 @RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService orderService;
+    private final UserService userService;
+    private final ProductService productService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, UserService userService, ProductService productService) {
         this.orderService = orderService;
+        this.userService = userService;
+        this.productService = productService;
     }
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<String> addNewOrder(@RequestBody Order order) {
-        ResponseEntity<String> response;
-        if(orderService.addNewOrder(order)){
-            response = new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PostMapping("/add")
+    public ResponseEntity<String> addNewOrder(HttpEntity<String> http) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(http.getBody());
+            Long userId = json.getLong("userId");
+            Long productId = json.getLong("productId");
+            Optional<User> userOptional = userService.findById(userId);
+            Optional<Product> productOptional = productService.findById(productId);
+            if(userOptional.isPresent() && productOptional.isPresent()) {
+                User user = userOptional.get();
+                Product product = productOptional.get();
+                Order order = new Order(user, product, new Date(), new Date(), new Date());
+                if(orderService.addNewOrder(order)) {
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } else {
+                   return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return response;
     }
 
     @DeleteMapping("/{id}")
@@ -51,4 +79,6 @@ public class OrderController {
     public ResponseEntity<Optional<Order>> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
     }
+
+
 }
