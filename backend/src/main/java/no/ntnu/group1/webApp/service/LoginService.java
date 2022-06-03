@@ -39,7 +39,8 @@ public class LoginService {
     public Optional<User> login(String email, String password) {
         Optional<User> foundUser = userRepository.findByEmail(email);
 
-        if (foundUser.isPresent()) {
+        boolean userIsEnabled = userRepository.getUserStatus(foundUser.get().getId());
+        if (foundUser.isPresent() && userIsEnabled) {
             User user = foundUser.get();
 
             // Checking if password given by client matches password for user.
