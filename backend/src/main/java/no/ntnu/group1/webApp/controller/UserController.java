@@ -43,7 +43,6 @@ public class UserController {
       saveUserFromJsonObject(new JSONObject(entity.getBody()));
       return ResponseEntity.ok().build();
     } catch (JSONException e) {
-      System.out.println("------------------------------------------");
       return ResponseEntity.badRequest().build();
     }
   }
@@ -77,11 +76,17 @@ public class UserController {
       String email = json.getString("email");
       String name = json.getString("name");
       Boolean enabled = json.getBoolean("enabled");
-      if (userService.updateUser(id, name, email, role, enabled)) {
-        return ResponseEntity.ok("User updated");
+      String password = json.getString("password");
+      Optional<User> userOptional = userService.findById(Long.parseLong(id));
+      if(userOptional.isPresent()) {
+        User user = userOptional.get();
+        if(userService.updateUser(user, name, email, role, enabled, password)) {
+          return ResponseEntity.ok("User updated");
+        } else {
+          return ResponseEntity.internalServerError().build();
+        }
       } else {
         return ResponseEntity.internalServerError().build();
-
       }
     } catch (JSONException e) {
       e.printStackTrace();
