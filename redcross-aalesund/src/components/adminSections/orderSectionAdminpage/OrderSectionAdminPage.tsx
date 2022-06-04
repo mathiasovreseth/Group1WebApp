@@ -6,6 +6,7 @@ import {productsApiResponse} from "../../../models/ProductsModel";
 import OrderCardAdminCard from "./OrderCardAdminPage";
 import {getAllOrders} from "../../../models/OrderModel";
 import {toast, ToastContainer} from "react-toastify";
+import {sortById} from "../../../utils/Sorting";
 
 const InnerContainer = styled(FlexContainer)`
   justify-content: center;
@@ -39,9 +40,11 @@ function ProductSectionAdminPage() {
                     }
                 });
             });
-            setOrders(ordersTemp);
+            setOrders(sortById(ordersTemp));
         });
     }, []);
+
+
 
     function onClickProcessed(id: number) {
         sendApiRequest("PUT", "/orders/process-order", {id: id}, false).then(()=> {
@@ -57,7 +60,10 @@ function ProductSectionAdminPage() {
             });
 
             let orderToEdit: Array<getAllOrders> = orders.filter((order)=> order.id == id);
+            const newOrderList = orders.filter((t) => t.id != id);
             orderToEdit[0].processed = true;
+            newOrderList.push(orderToEdit[0]);
+            setOrders(newOrderList);
 
         }).catch(()=> {
             toast.error('Error processing order', {

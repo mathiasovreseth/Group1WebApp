@@ -45,6 +45,7 @@ export interface editedUserFields {
     email: string,
     password: string,
     userRole: string,
+    enabled: boolean,
 }
 
 interface EditUserFormProps {
@@ -56,6 +57,9 @@ function EditUserForm(props: EditUserFormProps) {
     const [name, setName] = useState(props.user?.name ?? "");
     const [email, setEmail] = useState(props.user?.email ?? "");
     const [role, setRole] = useState(props.user?.userRole ?? "USER");
+    const [enabled, setEnabled] = useState(props.user?.enabled ?? false);
+    const [password, setPassword] = useState("");
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [nameErr, setNameErr] = useState('');
     const [emailErr, setEmailErr] = useState('');
@@ -68,7 +72,9 @@ function EditUserForm(props: EditUserFormProps) {
             name: name,
             email: email,
             userRole: role,
-            password: '',
+            password: password,
+            enabled: enabled,
+
         }
         props.onSubmit(editedUserValues);
     }
@@ -81,6 +87,7 @@ function EditUserForm(props: EditUserFormProps) {
         } else if(!isValidUsername(name)) {
             setNameErr("name must be lowercase and contain only letters");
         }
+
         if (email.length === 0) {
             setEmailErr('Email is required');
             isValid = false;
@@ -109,15 +116,27 @@ function EditUserForm(props: EditUserFormProps) {
                 <Label>E-mail</Label>
                 <Input defaultValue={props?.user?.email ?? ""}  onChange={(e)=> setEmail(e.target.value)}  type="email" name="email"/>
                 {emailErr && <XSmallText style={{color: "red"}}>{emailErr}</XSmallText>}
-                <MediumText style={{marginBottom: "1.2rem"}}>Role</MediumText>
+                <Label>Password(leave empty to not change)</Label>
+                <Input defaultValue={password}  onChange={(e)=> setPassword(e.target.value)}  type="password" name="password"/>
+                <Label style={{marginBottom: "1.2rem"}}>Role</Label>
                 <FlexContainer style={{alignItems: "center"}}>
-                    <input checked={role === "USER"} onClick={()=> setRole("USER")} type="checkbox" id="user" name="user" value="User"/>
+                    <input checked={role === "USER"} onClick={()=> setRole("USER")} type="checkbox" id="user" name="role" value="User"/>
                     <SmallText style={{marginLeft: ".8rem"}}>User</SmallText>
+                </FlexContainer>
+                <FlexContainer style={{alignItems: "center"}}>
+                    <input checked={role === "ADMIN"} onClick={()=> setRole("ADMIN")}  type="checkbox" id="admin" name="role" value="Admin"/>
+                    <SmallText style={{marginLeft: ".8rem"}}>Admin</SmallText>
+                </FlexContainer>
+                <Label style={{marginTop: "1.2rem"}}>Enabled</Label>
+
+                <FlexContainer style={{alignItems: "center",}}>
+                    <input checked={enabled} onClick={()=> setEnabled(true)} type="checkbox" id="user" name="enabled" value="User"/>
+                    <SmallText style={{marginLeft: ".8rem"}}>True</SmallText>
 
                 </FlexContainer>
                 <FlexContainer style={{alignItems: "center"}}>
-                    <input checked={role === "ADMIN"} onClick={()=> setRole("ADMIN")}  type="checkbox" id="admin" name="admin" value="Admin"/>
-                    <SmallText style={{marginLeft: ".8rem"}}>Admin</SmallText>
+                    <input checked={!enabled} onClick={()=> setEnabled(false)}  type="checkbox" id="admin" name="enabled" value="Admin"/>
+                    <SmallText style={{marginLeft: ".8rem"}}>False</SmallText>
                 </FlexContainer>
 
                 <FlexContainer style={{ justifyContent: "space-between", marginTop: "2rem"}}>

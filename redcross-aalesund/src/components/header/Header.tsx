@@ -31,10 +31,19 @@ const Center = styled.div`
   display: flex;
   width: 42rem;
   justify-content: space-between;
+  @media (max-width: 58.125em) {
+    width: 30rem;
+  }
   @media (max-width: ${props => `${props.theme.breakPoints.tablet}`}) {
     display: none;
   }
 `
+
+const RedCrossText = styled(LargeText)`
+  @media (max-width: 28.75em) {
+    display: none;
+  }
+`;
 
 const LogInText = styled(MediumText)`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
@@ -47,7 +56,7 @@ const RightSection = styled.div`
 `;
 
 const ShoppingCartContainer = styled.div`
-  margin-right: .8rem;
+  margin-left: 1.8rem;
   height: 4rem;
   width: 4rem;
   display: flex;
@@ -110,7 +119,6 @@ function Header( ) {
     }, []);
 
     window.addEventListener('storage', (event) => {
-        console.log("heisann");
         if(localStorage.getItem("courseBooking")) {
              setHasProductInCart(true);
          } else {
@@ -125,7 +133,7 @@ function Header( ) {
             <Link to='/'>
                 <LeftSection>
                     <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
-                    <LargeText>Røde kors</LargeText>
+                    <RedCrossText>Røde kors</RedCrossText>
                 </LeftSection>
             </Link>
             <Center>

@@ -16,11 +16,15 @@ const Container = styled(FlexContainer)`
 `
 const Section = styled(FlexColumnContainer)`
     width: 50rem;
+    justify-content: flex-start;
     
 `;
 
 const Title = styled(H1)`
   margin-bottom: 1.8rem;
+  margin-left: 0;
+  overflow: visible;
+  text-align: start;
 `;
 const MediumTitle = styled(LargeText)`
   color:  ${props => `${props.theme.palette.primary.accentColor}`};
@@ -41,10 +45,13 @@ const Li = styled.li`
    
   }
 `;
-const MapImg = styled.img`
-   object-fit: cover;
-  
+
+const Image = styled.img`
+  object-fit: cover;
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
+
 const AboutPage = () => {
     return (
         <Container>
@@ -65,7 +72,7 @@ const AboutPage = () => {
                 </ul>
             </Section>
             <Section>
-                <MapImg src={groupImg}/>
+                <Image src={groupImg}/>
             </Section>
         </Container>
     );
