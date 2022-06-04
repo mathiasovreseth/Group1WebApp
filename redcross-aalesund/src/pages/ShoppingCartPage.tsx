@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {FlexContainer, Label, MediumText, SmallText, XSmallText} from "../../styles/CommonStyles";
-import {FaCross, FaCrosshairs, FaRegCheckCircle, FaStopCircle, FaTrash} from "react-icons/fa";
-import CrossSymbol from '../../assets/cross.svg';
-import {sendApiRequest} from "../../utils/requests";
-import {useAuth} from "../../auth/Auth";
+import CrossSymbol from '../assets/cross.svg';
 import {ToastContainer, toast} from 'react-toastify';
+import {FlexContainer, Label, SmallText, XSmallText} from "../styles/CommonStyles";
+import {useAuth} from "../auth/Auth";
+import {sendApiRequest} from "../utils/requests";
 
 const OuterContainer = styled(FlexContainer)`
   width: 100vw;
@@ -150,7 +149,7 @@ function ShoppingCartPage() {
                 toast.success('Order placed', {
                     position: "top-center",
                     autoClose: 1000,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     bodyStyle: {fontSize: "3.2rem"},
                     pauseOnHover: true,
@@ -165,15 +164,12 @@ function ShoppingCartPage() {
                 toast.error('Error placing order, please try again later', {
                     position: "top-center",
                     autoClose: false,
-                    hideProgressBar: false,
+                    hideProgressBar: true,
                     closeOnClick: true,
                     bodyStyle: {fontSize: "3.2rem"},
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    onClose: () => {
-
-                    }
                 });
             })
         }

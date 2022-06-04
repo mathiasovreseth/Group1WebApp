@@ -79,6 +79,25 @@ public class OrderController {
     }
 
     @CrossOrigin
+    @PutMapping("/process-order")
+    public ResponseEntity<String> processOrder(HttpEntity<String> http){
+        JSONObject json = null;
+        try {
+            json = new JSONObject(http.getBody());
+            Long id = json.getLong("id");
+            if(orderService.markAsProcessed(id)){
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<Order>> getAllOrders() {
         return  ResponseEntity.ok(orderService.getAll());

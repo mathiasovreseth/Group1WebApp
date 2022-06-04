@@ -19,7 +19,8 @@ import Terms from './pages/terms';
 import Refunds from './pages/Refunds';
 import Ethics from './pages/Ethics';
 import {productsApiResponse} from "./models/ProductsModel";
-import ShoppingCartPage from "./pages/shoppingCartPage/ShoppingCartPage";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
+import PageNotFound from "./pages/PageNotFound";
 
 export default function App() {
    const auth = useAuth();
@@ -33,7 +34,7 @@ export default function App() {
                     <Header/>
                     <Routes>
                         <Route path={"/"} element={<LandingPage/>}/>
-                        <Route path={"*"} element={<LandingPage/>}/>
+                        <Route path={"*"} element={<PageNotFound/>}/>
                         {/*example route that need authentication*/}
                         <Route
                             path="/admin"
