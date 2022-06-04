@@ -49,6 +49,23 @@ public class OrderService {
         return (List<Order>) orderRepository.findAll();
     }
 
+    public boolean markAsProcessed(Long id) {
+        Optional<Order> orderOptional = findById(id);
+        if(orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            order.setProcessed(true);
+            try{
+                orderRepository.save(order);
+                return true;
+            }catch (IllegalArgumentException e){
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
     public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
     }

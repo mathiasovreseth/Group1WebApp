@@ -4,54 +4,94 @@ import {FlexColumnContainer, FlexContainer, MediumText} from "../../../styles/Co
 import styled from "styled-components";
 import {productsApiResponse} from "../../../models/ProductsModel";
 import OrderCardAdminCard from "./OrderCardAdminPage";
+import {getAllOrders} from "../../../models/OrderModel";
+import {toast, ToastContainer} from "react-toastify";
 
 const InnerContainer = styled(FlexContainer)`
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 5rem;
+  justify-content: center;
+  margin-top: 5rem;
 `;
 
 
 function ProductSectionAdminPage() {
-    let [orders, setOrders] = useState<Array<productsApiResponse>>([]);
-    let [productToEdit, setProductToEdit] = useState<productsApiResponse>();
+    let [orders, setOrders] = useState<Array<getAllOrders>>([]);
+    // let [productToEdit, setProductToEdit] = useState<productsApiResponse>();
 
-    useEffect(()=> {
-        sendApiRequest("GET","/orders/getAll",null, true).then((data: any) => {
-            //     const ordersTemp: any = [];
-            //     data.forEach((product: productsApiResponse)=> {
-            //         ordersTemp.push({
-            //             id: product.id,
-            //             title: product.title,
-            //             description: product.description,
-            //         });
-            //     });
-            //     setOrders(ordersTemp);
-            // }).catch((err: any) => {
-            //     console.log(err);
-            // });
+    useEffect(() => {
+        sendApiRequest("GET", "/orders/getAll", null, true).then((data: any) => {
+            const ordersTemp: Array<getAllOrders> = [];
+            data.forEach((order: getAllOrders) => {
+                ordersTemp.push({
+                    id: order.id,
+                    attendees: order.attendees,
+                    startDate: new Date(order.startDate),
+                    endDate: new Date(order.endDate),
+                    orderDate: new Date(order.orderDate),
+                    processed: order.processed,
+                    costumer: {
+                        id: order.costumer.id,
+                        email: order.costumer.email,
+                    },
+                    product: {
+                        id: order.product.id,
+                        title: order.product.title,
+                        description: order.product.description,
+                    }
+                });
+            });
+            setOrders(ordersTemp);
         });
     }, []);
 
+    function onClickProcessed(id: number) {
+        sendApiRequest("PUT", "/orders/process-order", {id: id}, false).then(()=> {
+            toast.success('Order processed', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                bodyStyle: {fontSize: "3.2rem"},
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
+            let orderToEdit: Array<getAllOrders> = orders.filter((order)=> order.id == id);
+            orderToEdit[0].processed = true;
+
+        }).catch(()=> {
+            toast.error('Error processing order', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                bodyStyle: {fontSize: "3.2rem"},
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        })
+    }
     return (
         <InnerContainer>
-            <FlexColumnContainer style={{justifyContent: "flex-start", alignItems: "flex-start"}}>
-                <FlexContainer style={{width: "80rem",padding: "0 2rem", justifyContent: "space-between", marginBottom: "2rem"}}>
-                    <FlexContainer style={{width: "20rem", justifyContent: "center"}}>
-                        <MediumText>Order Id</MediumText>
-                    </FlexContainer>
-                    <FlexContainer style={{width: "20rem", justifyContent: "center"}}>
-                        <MediumText>Customer Id</MediumText>
-                    </FlexContainer>
-                    <FlexContainer style={{width: "20rem", justifyContent: "center"}}>
-                        <MediumText>Product Id</MediumText>
-                    </FlexContainer>
-                </FlexContainer>
-                {orders && orders.map((data: productsApiResponse)=> {
-                    return <OrderCardAdminCard orderId={""} productId={""} customerId={""}/>
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={true}
+                style={{overflowY: "hidden"}}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            <FlexContainer style={{justifyContent: "center", alignItems: "flex-start", flexWrap: "wrap", rowGap: "1.2rem"}}>
+                {orders && orders.map((data: getAllOrders) => {
+                    return <OrderCardAdminCard onClickProcessed={onClickProcessed} key={data.id} order={data}/>
                 })}
-            </FlexColumnContainer>
+            </FlexContainer>
         </InnerContainer>
     )
 }
