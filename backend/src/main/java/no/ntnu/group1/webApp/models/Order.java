@@ -3,9 +3,14 @@ package no.ntnu.group1.webApp.models;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @ToString
@@ -13,7 +18,8 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
-    private @Id @GeneratedValue
+    private @Id
+    @GeneratedValue
     Long id;
     @ManyToOne
     private User costumer;
@@ -28,9 +34,10 @@ public class Order {
     private String language;
 
 
-    public Order(){}
+    public Order() {
+    }
 
-    public Order(User costumer, Product product, Date orderDate,Date startDate, Date endDate, int attendees, String language) {
+    public Order(User costumer, Product product, Date orderDate, Date startDate, Date endDate, int attendees, String language) {
         this.costumer = costumer;
         this.product = product;
         this.orderDate = orderDate;

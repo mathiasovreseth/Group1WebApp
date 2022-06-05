@@ -9,11 +9,10 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-  Optional<User> findById(Long id);
+    Optional<User> findById(Long id);
 
-  Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-  @Query("SELECT enabled FROM User WHERE id = :id")
-  boolean getUserStatus(@Param("id") Long id);
-
+    @Query("SELECT enabled FROM User WHERE id = :id")
+    boolean getUserStatus(@Param("id") Long id);
 }

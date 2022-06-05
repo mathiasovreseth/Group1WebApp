@@ -1,7 +1,6 @@
 package no.ntnu.group1.webApp.service;
 
 import no.ntnu.group1.webApp.models.Product;
-import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,7 @@ public class ProductService {
     public List<Product> getAll() {
         return (List<Product>) productRepository.findAll();
     }
+
     public void removeProduct(String id) {
         Long convertedId = Long.valueOf(id);
         productRepository.deleteById(convertedId);
@@ -49,7 +49,4 @@ public class ProductService {
         int nrOfUpdatedTables = entityManager.createNativeQuery(sql).executeUpdate();
         return nrOfUpdatedTables == 1;
     }
-
-
-
 }

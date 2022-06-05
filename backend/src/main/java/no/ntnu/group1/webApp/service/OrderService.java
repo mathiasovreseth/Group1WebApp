@@ -1,7 +1,6 @@
 package no.ntnu.group1.webApp.service;
 
 import no.ntnu.group1.webApp.models.Order;
-import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,31 +11,31 @@ import java.util.Optional;
 @Service
 public class OrderService {
     @Autowired
-    private  OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
-    public boolean addNewOrder(Order order){
+    public boolean addNewOrder(Order order) {
         boolean added = false;
-        if(canBeAdded(order)){
+        if (canBeAdded(order)) {
             orderRepository.save(order);
             added = true;
         }
         return added;
     }
 
-    public boolean removeOrder (Long orderId) {
+    public boolean removeOrder(Long orderId) {
         boolean removed = false;
-        if(findById(orderId) != null){
+        if (findById(orderId) != null) {
             orderRepository.deleteById(orderId);
             removed = true;
         }
         return removed;
     }
 
-    public boolean update(Order order){
-        try{
+    public boolean update(Order order) {
+        try {
             orderRepository.save(order);
             return true;
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }
@@ -51,13 +50,13 @@ public class OrderService {
 
     public boolean markAsProcessed(Long id) {
         Optional<Order> orderOptional = findById(id);
-        if(orderOptional.isPresent()) {
+        if (orderOptional.isPresent()) {
             Order order = orderOptional.get();
             order.setProcessed(true);
-            try{
+            try {
                 orderRepository.save(order);
                 return true;
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 return false;
             }
         } else {
@@ -69,5 +68,4 @@ public class OrderService {
     public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
     }
-
 }

@@ -18,6 +18,7 @@ public class LoginService {
     final private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtUtil jwtUtil;
+
     public LoginService(UserRepository userRepository,
                         PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -53,5 +54,4 @@ public class LoginService {
         }
         return Optional.empty();
     }
-
 }

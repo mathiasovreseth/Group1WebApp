@@ -11,14 +11,14 @@ import java.util.Optional;
 @Service
 public class ReviewService {
 
-  @Autowired
-  private ReviewRepository reviewRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
-  public Optional<Review> findReviewById(Long id) {
-    return reviewRepository.findById(id);
+    public Optional<Review> findReviewById(Long id) {
+        return reviewRepository.findById(id);
+    }
 
-  }
-  public List<Object[]> getAll() {
-    return (List<Object[]>) reviewRepository.getCommentAndUser();
-  }
+    public List<Object[]> getAll() {
+        return reviewRepository.getCommentAndUser();
+    }
 }

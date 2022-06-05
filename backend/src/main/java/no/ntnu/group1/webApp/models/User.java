@@ -4,13 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.json.JSONObject;
 
-
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 
 @Getter
@@ -21,15 +29,9 @@ import java.util.*;
 public class User {
 
 
-    public User() {
-    }
-
-    //TODO: Remove enum when admin privileges is implemented
-    public enum Roles {
-        USER,
-        ADMIN
-    }
-
+    // fetchType.eager fixed Lazyinititilization exeption
+    @OneToMany(targetEntity = Review.class, fetch = FetchType.EAGER)
+    List<Review> reviews;
     private @Id
     @GeneratedValue
     Long id;
@@ -40,11 +42,8 @@ public class User {
     private String token;
     private boolean enabled;
     private Date accountCreated;
-    // fetchType.eager fixed Lazyinititilization exeption
-    @OneToMany(targetEntity = Review.class, fetch = FetchType.EAGER)
-    List<Review> reviews;
-
-
+    public User() {
+    }
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
@@ -57,6 +56,17 @@ public class User {
         } else {
             this.role = "USER";
         }
+    }
+
+    public static User fromJSONObject(JSONObject jsonObject) throws JSONException {
+
+        String username = jsonObject.getString("username");
+        String email = jsonObject.getString("email");
+        String password = jsonObject.getString("password");
+
+
+        return new User(username, email, password);
+
     }
 
     public void addReview(Review review) {
@@ -89,16 +99,5 @@ public class User {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(getUserRole()));
         return authorities;
-    }
-
-    public static User fromJSONObject(JSONObject jsonObject) throws JSONException {
-
-        String username = jsonObject.getString("username");
-        String email = jsonObject.getString("email");
-        String password = jsonObject.getString("password");
-
-
-        return new User(username, email, password);
-
     }
 }
