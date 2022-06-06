@@ -59,8 +59,8 @@ function ProductSectionAdminPage() {
             const postData = {
                 id: product.id,
             };
-            sendApiRequest("POST", "/products/remove",postData, false).then(()=> {
-                toast.success('Product deleted', {
+            sendApiRequest("DELETE", "/products/remove",postData, false).then((res: any)=> {
+                toast.success(res, {
                     position: "top-center",
                     autoClose: 1000,
                     hideProgressBar: true,
@@ -71,8 +71,8 @@ function ProductSectionAdminPage() {
                     progress: undefined,
 
                 });
-            }).catch(()=> {
-                toast.error('Failed to deleted product', {
+            }).catch((err: any)=> {
+                toast.error(err, {
                     position: "top-center",
                     autoClose: 1000,
                     hideProgressBar: true,

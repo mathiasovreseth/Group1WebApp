@@ -25,7 +25,7 @@ export function sendApiRequest(method: any, url: string, requestBody: any, shoul
         request.onreadystatechange = function () {
             if (request.readyState === XMLHttpRequest.DONE) {
                 if (request.status === 200) {
-                    let responseJson = "";
+                    let responseJson = request?.responseText ?? "";
                     if (request.responseText && shouldParseJsonResponse) {
                         responseJson = JSON.parse(request.responseText);
                     }
