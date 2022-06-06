@@ -16,15 +16,16 @@ import javax.persistence.Table;
 @Table(name = "reviews")
 public class Review {
 
-  @Id
-  @GeneratedValue
-  private Long id;
-  private String comment;
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String comment;
 
 
-  public Review() {}
+    public Review() {
+    }
 
-  public Review(String comment) {
-    this.comment = comment;
-  }
+    public Review(String comment) {
+        this.comment = comment;
+    }
 }

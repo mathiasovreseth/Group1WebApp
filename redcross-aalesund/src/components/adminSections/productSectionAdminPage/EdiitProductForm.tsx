@@ -49,7 +49,7 @@ export interface editedProductFields {
 interface EditProductFormProps {
     onSubmit: (product: editedProductFields) => void;
     onCancel: () => void;
-    product: productsApiResponse | undefined;
+    product: productsApiResponse | null;
 }
 function EditProductForm(props: EditProductFormProps) {
     const [title, setTitle] = useState(props.product?.title ?? "");

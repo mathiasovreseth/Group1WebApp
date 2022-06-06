@@ -6,6 +6,8 @@ import {productsApiResponse} from "../../../models/ProductsModel";
 import ProductsAdminPageCard from "./ProductsAdminPageCard";
 import EditProductForm, {editedProductFields} from "./EdiitProductForm";
 import Popup from "reactjs-popup";
+import {sortById} from "../../../utils/Sorting";
+import {toast, ToastContainer} from "react-toastify";
 
 const InnerContainer = styled(FlexContainer)`
     align-items: center;
@@ -30,7 +32,7 @@ const Button = styled.button`
 
 function ProductSectionAdminPage() {
     let [products, setProducts] = useState<Array<productsApiResponse>>([]);
-    let [productToEdit, setProductToEdit] = useState<productsApiResponse>();
+    let [productToEdit, setProductToEdit] = useState<productsApiResponse | null>();
 
     let [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     useEffect(()=> {
@@ -43,7 +45,7 @@ function ProductSectionAdminPage() {
                     description: product.description,
                 });
             });
-            setProducts(productsTemp);
+            setProducts(sortById(productsTemp));
         }).catch((err: any) => {
             console.log(err);
         });
@@ -52,12 +54,35 @@ function ProductSectionAdminPage() {
     function handleDeleteProduct(product: productsApiResponse) {
         if(window.confirm("Are you sure?")) {
             const newProductsList = products.filter((t) =>t.id != product.id);
-            setProducts(newProductsList);
+            setProducts(sortById(newProductsList));
 
             const postData = {
                 id: product.id,
             };
-            sendApiRequest("POST", "/products/remove",postData, false);
+            sendApiRequest("POST", "/products/remove",postData, false).then(()=> {
+                toast.success('Product deleted', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+            }).catch(()=> {
+                toast.error('Failed to deleted product', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            });
         }
 
     }
@@ -68,23 +93,68 @@ function ProductSectionAdminPage() {
     function handleEditProduct(editedProduct: editedProductFields) {
         // if id is null the user has created a product
         if(!editedProduct.id) {
-            sendApiRequest("POST", "/products/add", editedProduct, false);
-            const productToAdd:productsApiResponse = {
-                id: "refresh to set",
-                title: editedProduct.title,
-                description: editedProduct.description,
-            }
-            setProducts([...products, productToAdd]);
+            sendApiRequest("POST", "/products/add", editedProduct, false).then(()=> {
+                toast.success('Product added', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                const productToAdd:productsApiResponse = {
+                    id: "Refresh to set",
+                    title: editedProduct.title,
+                    description: editedProduct.description,
+                }
+                setProducts([...products, productToAdd]);
+            }).catch(()=> {
+                toast.error('Failed to add product', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+            });
         } else {
+            sendApiRequest("POST", "/products/update", editedProduct, false).then(()=> {
+                toast.success('Product edited', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                const productToEditList = products.filter((t) => t.id == editedProduct.id);
+                const newProductList = products.filter((t) => t.id != editedProduct.id);
+                productToEditList[0].title = editedProduct.title;
+                productToEditList[0].description = editedProduct.description;
+                newProductList.push(productToEditList[0]);
+                setProducts(sortById(newProductList));
+            }).catch(() => {
+                toast.error('Failed to edit product', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
 
-            sendApiRequest("POST", "/products/update", editedProduct, false);
+                });
+            })
 
-            const productToEditList = products.filter((t) => t.id == editedProduct.id);
-            const newProductList = products.filter((t) => t.id != editedProduct.id);
-            productToEditList[0].title = editedProduct.title;
-            productToEditList[0].description = editedProduct.description;
-            newProductList.push(productToEditList[0]);
-            setProducts(newProductList);
         }
 
 
@@ -106,15 +176,30 @@ function ProductSectionAdminPage() {
                         <MediumText>Description</MediumText>
                     </FlexContainer>
                     <Popup   defaultOpen={false} open={isPopupOpen}>
-                        <EditProductForm product={productToEdit} onCancel={()=> setIsPopupOpen(false)} onSubmit={(product)=> handleEditProduct(product)} />
+                        <EditProductForm product={productToEdit ?? null} onCancel={()=> setIsPopupOpen(false)} onSubmit={(product)=> handleEditProduct(product)} />
                     </Popup>
                 </FlexContainer>
                 {products && products.map((data: productsApiResponse)=> {
                     return <ProductsAdminPageCard key={data.id} product={data} onEditClick={(product)=> openPopup(product)}
                                                   onDeleteClick={(product)=> handleDeleteProduct(product)}/>
                 })}
-                <Button onClick={()=> setIsPopupOpen(true)} style={{width: "100%", boxShadow: "unset"}} disabled={false}>ADD product</Button>
+                <Button onClick={()=> {
+                    setProductToEdit(null);
+                    setIsPopupOpen(true);
+                }} style={{width: "100%", boxShadow: "unset"}} disabled={false}>ADD product</Button>
             </FlexColumnContainer>
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={true}
+                style={{overflowY: "hidden"}}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </InnerContainer>
     )
 }

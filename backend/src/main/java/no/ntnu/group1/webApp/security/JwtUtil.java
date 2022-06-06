@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import no.ntnu.group1.webApp.models.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -17,12 +16,12 @@ import java.util.function.Function;
  */
 @Component
 public class JwtUtil {
-    @Value("${jwt_secret_key}")
-    private String SECRET_KEY;
     /**
      * Key inside JWT token where roles are stored
      */
     private static final String JWT_AUTH_KEY = "roles";
+    @Value("${jwt_secret_key}")
+    private String SECRET_KEY;
 
     /**
      * Generate a JWT token for an authenticated user

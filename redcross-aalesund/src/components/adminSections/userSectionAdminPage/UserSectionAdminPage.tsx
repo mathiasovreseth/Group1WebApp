@@ -7,6 +7,8 @@ import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
 import EditUserForm, {editedUserFields} from "./EditUserForm";
 import UserCardAdminPage from "./UserCardAdminPage";
+import {sortById} from "../../../utils/Sorting";
+import {toast, ToastContainer} from "react-toastify";
 
 
 const InnerContainer = styled(FlexContainer)`
@@ -35,7 +37,7 @@ function UserSectionAdminPage() {
                     accountCreated: user.accountCreated,
                 });
             });
-            setUsers(usersTemp);
+            setUsers(sortById(usersTemp));
         }).catch((err: any) => {
             console.log(err);
         });
@@ -43,12 +45,38 @@ function UserSectionAdminPage() {
 
     function handleDeleteUser(user: getUserApiResponse) {
         if(window.confirm("Are you sure?")) {
-            const newUserList = users.filter((t) =>t.id != user.id);
-            setUsers(newUserList);
             const postData = {
                 id: user.id,
             };
-            sendApiRequest("PUT", "/users/delete",postData, false);
+            sendApiRequest("PUT", "/users/delete",postData, false).then(()=> {
+                const userToDisable: Array<getUserApiResponse> = users.filter((t) =>t.id != user.id);
+                const newUserList: Array<getUserApiResponse> = users.filter((t) => t.id == user.id);
+                userToDisable[0].enabled = false;
+                newUserList.push(userToDisable[0]);
+                setUsers(sortById(newUserList));
+                toast.success('User disabled', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+            }).catch((e: any)=> {
+                toast.error('Error disabling user', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            })
         }
 
     }
@@ -61,10 +89,36 @@ function UserSectionAdminPage() {
         const newUserList = users.filter((t) => t.id != editedUser.id);
         userToEdit[0].name = editedUser.name;
         userToEdit[0].email = editedUser.email;
+        userToEdit[0].enabled = editedUser.enabled;
+        userToEdit[0].userRole = editedUser.userRole;
         newUserList.push(userToEdit[0]);
-        setUsers(newUserList);
 
-        sendApiRequest("PUT", "/users/update", editedUser, false);
+        setUsers(sortById(newUserList));
+        sendApiRequest("PUT", "/users/update", editedUser, false).then(()=> {
+            toast.success('User edited', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                bodyStyle: {fontSize: "3.2rem"},
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        }).catch((e: any)=> {
+            toast.error('Failed to update user', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                bodyStyle: {fontSize: "3.2rem"},
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+        });
         setIsPopupOpen(false);
 
     }
@@ -97,6 +151,18 @@ function UserSectionAdminPage() {
                     return <UserCardAdminPage key={data.id} user={data} onDeleteClick={handleDeleteUser} onEditClick={openPopup}/>
                 })}
             </FlexColumnContainer>
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={true}
+                style={{overflowY: "hidden"}}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </InnerContainer>
     )
 }
