@@ -65,7 +65,7 @@ public class UserController {
     /**
      * Disables the user account specified.
      *
-     * @param http the http entity to be deleted
+     * @param http the http data
      * @return the response entity
      */
     @CrossOrigin
@@ -89,7 +89,7 @@ public class UserController {
     /**
      * Updates the user account specified.
      *
-     * @param http the http entity to be updated
+     * @param http the http data
      * @return the response entity
      */
     @CrossOrigin
@@ -118,10 +118,5 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
-    }
-
-    private void saveUserFromJsonObject(JSONObject jsonObject) throws JSONException {
-        User user = User.fromJSONObject(jsonObject);
-        userService.addUser(user);
     }
 }

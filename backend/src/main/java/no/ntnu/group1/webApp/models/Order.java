@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
+/**
+ * Represents an order.
+ */
 @Getter
 @ToString
 @Setter
@@ -34,9 +37,23 @@ public class Order {
     private String language;
 
 
+    /**
+     * Instantiates a new Order.
+     */
     public Order() {
     }
 
+    /**
+     * Instantiates a new Order.
+     *
+     * @param costumer  the costumer
+     * @param product   the product
+     * @param orderDate the order date
+     * @param startDate the start date of the course
+     * @param endDate   the end date of the course
+     * @param attendees the number of attendees
+     * @param language  the language the course will be presented in
+     */
     public Order(User costumer, Product product, Date orderDate, Date startDate, Date endDate, int attendees, String language) {
         this.costumer = costumer;
         this.product = product;

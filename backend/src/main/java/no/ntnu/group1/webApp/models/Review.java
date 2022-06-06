@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Represents a review.
+ */
 @Getter
 @ToString
 @Setter
@@ -22,9 +25,17 @@ public class Review {
     private String comment;
 
 
+    /**
+     * Instantiates a new Review.
+     */
     public Review() {
     }
 
+    /**
+     * Instantiates a new Review.
+     *
+     * @param comment the review
+     */
     public Review(String comment) {
         this.comment = comment;
     }
