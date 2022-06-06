@@ -72,8 +72,8 @@ function Comments(props: {reviews: Array<any>; name: string;}) {
     }).catch((err: any) => {
         console.log(err);
     });
-}, []);
-  
+}, [setSelectedProduct]);
+  //flytt til courses
   
 console.log(review);
 
