@@ -89,9 +89,8 @@ public class AuthController {
       User user = new User(name, email, passwordEncoder.encode(password));
       userService.addUser(user);
       return new ResponseEntity("User successfully registered", HttpStatus.OK);
-    } catch (JSONException e) {
+    } catch (JSONException | IllegalArgumentException e) {
       return new ResponseEntity("Field(s) is missing in the request", HttpStatus.BAD_REQUEST);
     }
   }
-
 }

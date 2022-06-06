@@ -115,7 +115,7 @@ public class UserController {
             } else {
                 return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
             }
-        } catch (JSONException e) {
+        } catch (JSONException | IllegalArgumentException e) {
             return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
