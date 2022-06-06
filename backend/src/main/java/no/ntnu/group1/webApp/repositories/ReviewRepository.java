@@ -18,7 +18,7 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
      *
      * @return the comment and user
      */
-    @Query(value = "SELECT reviews.id, users.name, comment from reviews inner join products_reviews pr on reviews.id = pr.reviews_id inner join users_reviews ur on reviews.id = ur.reviews_id inner join users on ur.user_id = users.id",
+    @Query(value = "SELECT reviews.id, reviews.enabled, users.name, comment from reviews inner join products_reviews pr on reviews.id = pr.reviews_id inner join users_reviews ur on reviews.id = ur.reviews_id inner join users on ur.user_id = users.id where reviews.enabled = true",
             nativeQuery = true)
     List<Object> getCommentAndUser();
 }

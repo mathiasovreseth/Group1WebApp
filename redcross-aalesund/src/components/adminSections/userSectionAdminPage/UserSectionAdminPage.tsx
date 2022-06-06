@@ -48,13 +48,13 @@ function UserSectionAdminPage() {
             const postData = {
                 id: user.id,
             };
-            sendApiRequest("PUT", "/users/delete",postData, false).then(()=> {
+            sendApiRequest("PUT", "/users/delete",postData, false).then((res: any)=> {
                 const userToDisable: Array<getUserApiResponse> = users.filter((t) =>t.id != user.id);
                 const newUserList: Array<getUserApiResponse> = users.filter((t) => t.id == user.id);
                 userToDisable[0].enabled = false;
                 newUserList.push(userToDisable[0]);
                 setUsers(sortById(newUserList));
-                toast.success('User disabled', {
+                toast.success(res, {
                     position: "top-center",
                     autoClose: 1000,
                     hideProgressBar: true,
@@ -66,7 +66,7 @@ function UserSectionAdminPage() {
 
                 });
             }).catch((e: any)=> {
-                toast.error('Error disabling user', {
+                toast.error(e, {
                     position: "top-center",
                     autoClose: 1000,
                     hideProgressBar: true,

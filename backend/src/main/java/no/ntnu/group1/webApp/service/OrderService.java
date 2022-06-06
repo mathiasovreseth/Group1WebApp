@@ -31,22 +31,6 @@ public class OrderService {
         return added;
     }
 
-    /**
-     * Removes an order.
-     *
-     * @param orderId the order id
-     * @return {@code true} if successful, {@code false} if not successful
-     */
-    public boolean removeOrder(Long orderId) {
-        boolean removed = false;
-        if (findById(orderId) != null) {
-            orderRepository.deleteById(orderId);
-            removed = true;
-        }
-        return removed;
-    }
-
-
     private boolean canBeAdded(Order order) {
         return order != null;
     }
@@ -81,6 +65,8 @@ public class OrderService {
             return false;
         }
     }
+
+
 
     /**
      * Find order by id.

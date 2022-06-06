@@ -45,18 +45,19 @@ public class AuthController {
   ResponseEntity<?> login(HttpEntity<String> http) {
     try {
       JSONObject json = new JSONObject(http.getBody());
-
       String email = json.getString("email");
       String password = json.getString("password");
-
       String token = loginService.login(email, password);
-      if (token != null) {
-        return ResponseEntity.ok(new AuthenticationResponse(token));
-      } else {
-        return ResponseEntity.notFound().build();
+
+      if(token.equals("401")) {
+        return new ResponseEntity("Email or password is incorrect", HttpStatus.UNAUTHORIZED);
+
+      } else if(token.equals("404")) {
+        return new ResponseEntity("User was not found", HttpStatus.NOT_FOUND);
       }
+      return new ResponseEntity(new AuthenticationResponse(token), HttpStatus.OK);
     } catch (JSONException e) {
-      return ResponseEntity.badRequest().build();
+      return new ResponseEntity("Field is missing in the request", HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -74,7 +75,7 @@ public class AuthController {
    */
   @CrossOrigin
   @PostMapping("/api/auth/register")
-  public ResponseEntity<String> registerUser(HttpEntity<String> entity) {
+  public ResponseEntity<?> registerUser(HttpEntity<String> entity) {
     try {
       JSONObject json = new JSONObject(entity.getBody());
 
@@ -83,43 +84,13 @@ public class AuthController {
       String password = json.getString("password");
 
       if (userService.findUserByEmail(email).isPresent()) {
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        return new ResponseEntity("User already exists",HttpStatus.CONFLICT);
       }
       User user = new User(name, email, passwordEncoder.encode(password));
-      System.out.println(user.getUserRole());
       userService.addUser(user);
-
-
-      return ResponseEntity.ok("User successfully registered.");
-    } catch (JSONException e) {
-      return ResponseEntity.badRequest().build();
-    }
-  }
-
-  /**
-   * Confirm a user so they can login.
-   *
-   * @param entity the email of the user to confirm
-   * @return ResponseEntity the response ok or not
-   */
-  @PostMapping("/api/auth/confirmUser")
-  public ResponseEntity<String> confirmUser(HttpEntity<String> entity) {
-    try {
-      JSONObject json = new JSONObject(entity.getBody());
-
-      String email = json.getString("email");
-      Optional<User> optionalUser = userService.findUserByEmail(email);
-      if (optionalUser.isPresent()) {
-        User user = optionalUser.get();
-        user.setEnabled(true);
-      } else {
-        return ResponseEntity.notFound().build();
-      }
-
-      return ResponseEntity.ok("User " + email + " is now able to log in");
-    } catch (JSONException e) {
-      return ResponseEntity.badRequest().build();
+      return new ResponseEntity("User successfully registered", HttpStatus.OK);
+    } catch (JSONException | IllegalArgumentException e) {
+      return new ResponseEntity("Field(s) is missing in the request", HttpStatus.BAD_REQUEST);
     }
   }
 }

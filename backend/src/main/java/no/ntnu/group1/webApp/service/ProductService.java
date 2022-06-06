@@ -71,6 +71,9 @@ public class ProductService {
         Long convertedId = Long.valueOf(id);
         return productRepository.findById(convertedId);
     }
+    public void save(Product product) {
+         productRepository.save(product);
+    }
 
     /**
      * Updates a prodic.

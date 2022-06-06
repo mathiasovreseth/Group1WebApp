@@ -26,7 +26,6 @@ public class Order {
     Long id;
     @ManyToOne
     private User costumer;
-
     @OneToOne
     private Product product;
     private Date orderDate;

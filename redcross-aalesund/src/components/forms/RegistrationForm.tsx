@@ -80,9 +80,9 @@ function RegistrationForm() {
                 progress: undefined,
                 onClose: () => navigate("/login")
             });
-        }).catch(err => {
-            setIsSubmitting(false);
+        }).catch((err) => {
             setPassErr(err);
+            setIsSubmitting(false);
         });
 
     }

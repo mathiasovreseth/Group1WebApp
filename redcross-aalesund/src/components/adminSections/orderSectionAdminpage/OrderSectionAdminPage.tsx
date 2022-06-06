@@ -47,8 +47,8 @@ function ProductSectionAdminPage() {
 
 
     function onClickProcessed(id: number) {
-        sendApiRequest("PUT", "/orders/process-order", {id: id}, false).then(()=> {
-            toast.success('Order processed', {
+        sendApiRequest("PUT", "/orders/process-order", {id: id}, false).then((res: any)=> {
+            toast.success(res, {
                 position: "top-center",
                 autoClose: 1000,
                 hideProgressBar: true,
@@ -65,8 +65,8 @@ function ProductSectionAdminPage() {
             newOrderList.push(orderToEdit[0]);
             setOrders(newOrderList);
 
-        }).catch(()=> {
-            toast.error('Error processing order', {
+        }).catch((err: any)=> {
+            toast.error(err, {
                 position: "top-center",
                 autoClose: 1000,
                 hideProgressBar: true,

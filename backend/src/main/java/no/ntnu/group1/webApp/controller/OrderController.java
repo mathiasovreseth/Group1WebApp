@@ -77,35 +77,20 @@ public class OrderController {
                 Product product = productOptional.get();
                 Order order = new Order(user, product, new Date(), startDate, endDate, attendees, language);
                 if (orderService.addNewOrder(order)) {
-                    return new ResponseEntity<>(HttpStatus.OK);
+                    return new ResponseEntity("Order succesfully added", HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity("Failed to add order", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity("User/product not found", HttpStatus.NOT_FOUND);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
 
-    /**
-     * Removes the order specified.
-     *
-     * @param id the id of the order
-     * @return the response entity
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> removeOrder(@PathVariable Long id) {
-        ResponseEntity<String> response;
-        if (orderService.removeOrder(id)) {
-            response = new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return response;
-    }
+
 
     /**
      * Processes an order.
@@ -121,13 +106,13 @@ public class OrderController {
             json = new JSONObject(http.getBody());
             Long id = json.getLong("id");
             if (orderService.markAsProcessed(id)) {
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity("Order processed", HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity("Failed to process order", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
 
     }

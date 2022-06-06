@@ -5,6 +5,7 @@ import no.ntnu.group1.webApp.service.ProductService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,7 @@ public class ProductController {
      * @return the product by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> getProductByID(@PathParam("id") Long id) {
+    public ResponseEntity<Optional<Product>> getProductByID(@PathVariable Long id) {
         return ResponseEntity.ok(productService.findById(id));
     }
 
@@ -69,12 +70,10 @@ public class ProductController {
             if (productService.updateProduct(id, title, description)) {
                 return ResponseEntity.ok("product updated");
             } else {
-                return ResponseEntity.internalServerError().build();
-
+                return new ResponseEntity("Failed to update Product", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -95,11 +94,10 @@ public class ProductController {
                 productService.removeProduct(id);
                 return ResponseEntity.ok("product removed");
             } else {
-                return ResponseEntity.internalServerError().build();
+                return new ResponseEntity("Product does not exist", HttpStatus.NOT_FOUND);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -119,9 +117,8 @@ public class ProductController {
             Product product = new Product(title, description);
             productService.add(product);
             return ResponseEntity.ok("product added");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+        } catch (JSONException | IllegalArgumentException e) {
+            return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
 }

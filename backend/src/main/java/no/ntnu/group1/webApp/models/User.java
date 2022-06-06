@@ -56,6 +56,10 @@ public class User {
      * @param password the password of the user
      */
     public User(String name, String email, String password) {
+        this.checkForNullAndBlank(name);
+        this.checkForNullAndBlank(email);
+        this.checkForNullAndBlank(password);
+
         this.name = name;
         this.email = email;
         this.password = password;
@@ -115,5 +119,22 @@ public class User {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(getUserRole()));
         return authorities;
+    }
+
+
+  /**
+   * Checks the parameter against {@code null} and blank string.
+   * Throws IllegalArgumentException if the argument is null or blank.
+   *
+   * @param text the text to be checked
+   */
+    private void checkForNullAndBlank(String text) {
+        if (text == null) {
+            throw new IllegalArgumentException("Parameter can not be null");
+        }
+
+        if (text.isBlank()) {
+            throw new IllegalArgumentException("Parameter can not be empty");
+        }
     }
 }
