@@ -8,11 +8,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the order service of the application.
+ */
 @Service
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    /**
+     * Add a new order.
+     *
+     * @param order the order to be added
+     * @return {@code true} if successful, {@code false} if not successful
+     */
     public boolean addNewOrder(Order order) {
         boolean added = false;
         if (canBeAdded(order)) {
@@ -22,6 +31,12 @@ public class OrderService {
         return added;
     }
 
+    /**
+     * Removes an order.
+     *
+     * @param orderId the order id
+     * @return {@code true} if successful, {@code false} if not successful
+     */
     public boolean removeOrder(Long orderId) {
         boolean removed = false;
         if (findById(orderId) != null) {
@@ -31,23 +46,26 @@ public class OrderService {
         return removed;
     }
 
-    public boolean update(Order order) {
-        try {
-            orderRepository.save(order);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
 
     private boolean canBeAdded(Order order) {
         return order != null;
     }
 
+    /**
+     * Gets all orders
+     *
+     * @return all orders
+     */
     public List<Order> getAll() {
         return (List<Order>) orderRepository.findAll();
     }
 
+    /**
+     * Mark order as processed.
+     *
+     * @param id the id of the order
+     * @return {@code true} if successful, {@code false} if not successful
+     */
     public boolean markAsProcessed(Long id) {
         Optional<Order> orderOptional = findById(id);
         if (orderOptional.isPresent()) {
@@ -62,9 +80,14 @@ public class OrderService {
         } else {
             return false;
         }
-
     }
 
+    /**
+     * Find order by id.
+     *
+     * @param id the id of the order
+     * @return the order if present
+     */
     public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
     }

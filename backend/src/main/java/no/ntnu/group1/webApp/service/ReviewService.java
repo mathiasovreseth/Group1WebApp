@@ -8,16 +8,30 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the review service of the application.
+ */
 @Service
 public class ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
 
+    /**
+     * Find review by id.
+     *
+     * @param id the id of the review
+     * @return the review if present
+     */
     public Optional<Review> findReviewById(Long id) {
         return reviewRepository.findById(id);
     }
 
+    /**
+     * Gets all reviews.
+     *
+     * @return all reviews
+     */
     public List<Object[]> getAll() {
         return reviewRepository.getCommentAndUser();
     }

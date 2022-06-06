@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 
+/**
+ * Represents the login service of the application.
+ */
 @Service
 public class LoginService {
 
@@ -19,6 +22,12 @@ public class LoginService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * Instantiates a new Login service.
+     *
+     * @param userRepository  the user repository
+     * @param passwordEncoder the password encoder
+     */
     public LoginService(UserRepository userRepository,
                         PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
