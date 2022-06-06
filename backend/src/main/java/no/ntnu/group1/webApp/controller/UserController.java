@@ -63,23 +63,6 @@ public class UserController {
 
 
     /**
-     * Add new user response entity.
-     *
-     * @param entity the entity to be added
-     * @return the response entity
-     */
-    @PostMapping("addUser")
-    public ResponseEntity<User> addNewUser(HttpEntity<String> entity) {
-        try {
-            saveUserFromJsonObject(new JSONObject(entity.getBody()));
-            return ResponseEntity.ok().build();
-        } catch (JSONException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-
-    /**
      * Disables the user account specified.
      *
      * @param http the http entity to be deleted
