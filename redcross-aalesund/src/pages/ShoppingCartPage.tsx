@@ -143,10 +143,10 @@ function ShoppingCartPage() {
                 attendees: parseInt(order.attendees),
                 language: order.language,
             }
-            sendApiRequest("POST", "/orders/add", orderBody, false).then(()=> {
+            sendApiRequest("POST", "/orders/add", orderBody, false).then((res: any) => {
                 setOrder(null);
 
-                toast.success('Order placed', {
+                toast.success(res, {
                     position: "top-center",
                     autoClose: 1000,
                     hideProgressBar: true,
@@ -160,8 +160,8 @@ function ShoppingCartPage() {
                 });
                 localStorage.removeItem("courseBooking");
                 window.dispatchEvent( new Event('storage') );
-            }).catch(()=> {
-                toast.error('Error placing order, please try again later', {
+            }).catch((err: any)=> {
+                toast.error(err, {
                     position: "top-center",
                     autoClose: false,
                     hideProgressBar: true,
