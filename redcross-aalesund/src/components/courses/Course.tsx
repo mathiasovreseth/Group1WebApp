@@ -60,7 +60,7 @@ export function Course(props: CourseCardProps) {
     return (
       <>
         <Box>{props.product.title}</Box>
-        <BulletPoints>
+        <BulletPoints onClick={() => props.onSubmit(props.product)}>
             <div>
             {
                 infoArray.map(function (value: any) {
