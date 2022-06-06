@@ -29,11 +29,9 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
                 if (userData) {
                     setCookie("current_email", userData.email, 1);
                     setCookie("current_user_role", userData.role, 1);
-                    setCookie("current_user_name", userData.name, 1);
                     const userAuth: UserAuthResponse = {
                         email: userData.email,
                         role: userData.role,
-                        name: userData.name,
                     }
                     setUser(userAuth);
                     setIsAuthenticated(true);
@@ -69,7 +67,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
         deleteCookie("jwt");
         deleteCookie("current_email");
         deleteCookie("current_user_role");
-        deleteCookie("current_user_name");
+        
         setUser(null);
         setIsAuthenticated(false);
         navigate("/login");
@@ -79,12 +77,10 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
     let initializeAuth =  () => {
         const email = getCookie("current_email");
         const role = getCookie("current_user_role");
-        const name = getCookie("current_user_name");
         if (email && role) {
             const userAuth: UserAuthResponse = {
                 email: email,
                 role: role,
-                name: name
             }
             setUser(userAuth as UserAuthResponse);
             setIsAuthenticated(true);
@@ -92,7 +88,6 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
             deleteCookie("jwt");
             deleteCookie("current_email");
             deleteCookie("current_user_role");
-            deleteCookie("current_user_name");
             setIsAuthenticated(false);
             setUser(null);
         }
