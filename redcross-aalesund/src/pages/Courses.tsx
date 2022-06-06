@@ -113,7 +113,11 @@ function LoadCourses() {
       <CoursesContainer>
         {product && product.map((data: getCoursesApiResponse) => {
           return <Section> <Course key={data.id} product={data} onSubmit={(data) => {
-            openPopup(); setSelectedProduct(data);
+              if(!auth.isAuthenticated) {
+                  openPopup();
+              } else{
+                  setSelectedProduct(data);
+              }
           } } /> </Section>;
         })}
       </CoursesContainer>
