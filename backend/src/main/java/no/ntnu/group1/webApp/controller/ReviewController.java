@@ -5,6 +5,7 @@ import no.ntnu.group1.webApp.models.Review;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.repositories.ReviewRepository;
 import no.ntnu.group1.webApp.repositories.UserRepository;
+import no.ntnu.group1.webApp.security.JwtUtil;
 import no.ntnu.group1.webApp.service.ProductService;
 import no.ntnu.group1.webApp.service.ReviewService;
 import no.ntnu.group1.webApp.service.UserService;
@@ -16,8 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Represents the review controller of the application.
@@ -33,6 +36,7 @@ public class ReviewController {
     private UserRepository userRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+
 
     /**
      * Instantiates a new Review controller.
@@ -71,9 +75,9 @@ public class ReviewController {
             Long productId = json.getLong("productId");
             String email = json.getString("email");
             String comment = json.getString("comment");
-            Optional<User> userOptional= userService.findUserByEmail(email);
-            Optional<Product> productOptional= productService.findById(productId);
-            if(userOptional.isPresent() && productOptional.isPresent()) {
+            Optional<User> userOptional = userService.findUserByEmail(email);
+            Optional<Product> productOptional = productService.findById(productId);
+            if (userOptional.isPresent() && productOptional.isPresent()) {
                 User user = userOptional.get();
                 Product product = productOptional.get();
                 Review review = new Review(comment);
@@ -100,24 +104,34 @@ public class ReviewController {
      * @return the response entity
      */
     @PutMapping("/update")
-    public ResponseEntity<?> updateReview(HttpEntity<String> http) {
+    public ResponseEntity<?> updateReview(HttpEntity<String> http, HttpServletRequest request) {
         try {
             JSONObject json = new JSONObject(http.getBody());
             Long reviewId = json.getLong("reviewId");
             String comment = json.getString("comment");
-            Optional<Review> reviewOptional= reviewService.findReviewById(reviewId);
-            if(reviewOptional.isPresent()) {
-                Review review = reviewOptional.get();
-                review.setComment(comment);
-                reviewRepository.save(review);
-                return ResponseEntity.ok(reviewService.findReviewById(review.getId()));
-            } else {
-                return new ResponseEntity("Review not found", HttpStatus.NOT_FOUND);
+            final String authorizationHeader = request.getHeader("Authorization");
 
+            if (authorizationHeader != null) {
+                String permissionResponse = reviewService.checkPermission(authorizationHeader, reviewId);
+                if(permissionResponse.equals("200")) {
+                    Optional<Review> reviewOptional = reviewService.findReviewById(reviewId);
+                    if(reviewOptional.isPresent()) {
+                        Review review = reviewOptional.get();
+                        review.setComment(comment);
+                        reviewRepository.save(review);
+                    }
+                } else if(permissionResponse.equals("403")) {
+                    return new ResponseEntity("User does not have permission to edit this review", HttpStatus.FORBIDDEN);
+
+                } else if(permissionResponse.equals("404")) {
+                    return new ResponseEntity("Could not find the owner of the review", HttpStatus.FORBIDDEN);
+                }
+                return new ResponseEntity("Review updated", HttpStatus.OK);
+            } else {
+                return new ResponseEntity("Token missing in header", HttpStatus.BAD_REQUEST);
             }
         } catch (JSONException e) {
             return new ResponseEntity("Field(s) missing or null", HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
     }
 
@@ -128,20 +142,31 @@ public class ReviewController {
      * @return the response entity
      */
     @PutMapping("/delete")
-    public ResponseEntity<?> deleteReview(HttpEntity<String> http) {
+    public ResponseEntity<?> deleteReview(HttpEntity<String> http, HttpServletRequest request) {
         try {
             JSONObject json = new JSONObject(http.getBody());
             Long reviewId = json.getLong("reviewId");
-            Optional<Review> reviewOptional= reviewService.findReviewById(reviewId);
-            if(reviewOptional.isPresent()) {
-                Review review = reviewOptional.get();
-                review.setEnabled(false);
-                reviewRepository.save(review);
-                return ResponseEntity.ok("Review deleted");
-            } else {
-                return new ResponseEntity("Review not found", HttpStatus.NOT_FOUND);
+            final String authorizationHeader = request.getHeader("Authorization");
+            if(authorizationHeader != null) {
+                String permissionResponse = reviewService.checkPermission(authorizationHeader, reviewId);
+                if(permissionResponse.equals("200")) {
+                    Optional<Review> reviewOptional = reviewService.findReviewById(reviewId);
+                    if(reviewOptional.isPresent()) {
+                        Review review = reviewOptional.get();
+                        review.setEnabled(false);
+                        reviewRepository.save(review);
+                    }
+                } else if(permissionResponse.equals("403")) {
+                    return new ResponseEntity("User does not have permission to edit this review", HttpStatus.FORBIDDEN);
 
+                } else if(permissionResponse.equals("404")) {
+                    return new ResponseEntity("Could not find the owner of the review", HttpStatus.FORBIDDEN);
+                }
+                return new ResponseEntity("Review deleted", HttpStatus.OK);
+            } else {
+                return new ResponseEntity("Token missing in header", HttpStatus.BAD_REQUEST);
             }
+
         } catch (JSONException e) {
             return new ResponseEntity("Field(s) missing or null", HttpStatus.INTERNAL_SERVER_ERROR);
 
