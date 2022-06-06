@@ -23,6 +23,7 @@ public class Review {
     @GeneratedValue
     private Long id;
     private String comment;
+    private boolean enabled;
 
 
     /**
@@ -38,5 +39,6 @@ public class Review {
      */
     public Review(String comment) {
         this.comment = comment;
+        this.enabled = true;
     }
 }

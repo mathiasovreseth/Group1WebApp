@@ -1,5 +1,6 @@
 package no.ntnu.group1.webApp.service;
 
+import no.ntnu.group1.webApp.models.Product;
 import no.ntnu.group1.webApp.models.Review;
 import no.ntnu.group1.webApp.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class ReviewService {
      */
     public Optional<Review> findReviewById(Long id) {
         return reviewRepository.findById(id);
+    }
+
+    public void add(Review review) {
+         reviewRepository.save(review);
+
+
     }
 
     /**
