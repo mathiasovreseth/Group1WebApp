@@ -56,9 +56,10 @@ public class LoginService {
                 userRepository.save(user);
                 return token;
             } else {
-                return null;
+                return "401";
             }
+        } else {
+            return "404";
         }
-        return null;
     }
 }

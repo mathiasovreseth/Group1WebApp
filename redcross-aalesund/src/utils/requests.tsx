@@ -30,12 +30,8 @@ export function sendApiRequest(method: any, url: string, requestBody: any, shoul
                         responseJson = JSON.parse(request.responseText);
                     }
                     resolve(responseJson);
-                } else if(request.status === 404) {
-                    reject("User not found");
-                } else if(request.status === 409) {
-                    reject("User already exists")
                 } else {
-                    reject("Uknown error, please contact support")
+                    reject(request.responseText);
                 }
             }
         };
