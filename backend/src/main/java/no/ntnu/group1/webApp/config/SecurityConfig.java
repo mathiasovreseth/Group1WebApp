@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  * Represents the security config of the application.
+ * @EnableWebSecurity tells that this i a a class for configuring web security
  */
 @Configuration
 @EnableWebSecurity
@@ -32,10 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @CrossOrigin
     @Override
     protected void configure(HttpSecurity security) throws Exception {
+        // Allow JWT authentication
         security.cors().and().csrf().disable()
                 .authorizeRequests()
                 //permit logins and registrations
-                .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/orders/getAll").permitAll()

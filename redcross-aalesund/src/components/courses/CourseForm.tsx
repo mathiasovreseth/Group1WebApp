@@ -241,7 +241,6 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
         }
 
     }
-    console.log(props.id);
     return (
         <Container>
             <InfoText>
