@@ -49,10 +49,9 @@ public class AuthController {
       String email = json.getString("email");
       String password = json.getString("password");
 
-      Optional<User> userOptional = loginService.login(email, password);
-      if (userOptional.isPresent()) {
-        User user = userOptional.get();
-        return ResponseEntity.ok(new AuthenticationResponse(user.getToken()));
+      String token = loginService.login(email, password);
+      if (token != null) {
+        return ResponseEntity.ok(new AuthenticationResponse(token));
       } else {
         return ResponseEntity.notFound().build();
       }
