@@ -1,74 +1,75 @@
 import React from "react";
 import styled from "styled-components";
-import image from "../../assets/baby.jpg";
 import FieldDuty from "../../assets/FieldDuty.jpg";
 import Frivillig from "../../assets/Frivillig.jpg";
+import { H1 } from "../../styles/CommonStyles";
 
-const H1 = styled.h1`
-  color: #d52d27;
-  font-size: 4.8rem;
-  font-weight: normal;
-  margin: 2rem;
-  @media screen and (max-width: 800px) {
-    font-size: 3rem;
-  }
-  text-align: center;
-`;
 
 const H2 = styled.h2`
-  font-size: 2rem;
-  font-weight: normal;
+  font-size: ${props => `${props.theme.fontSizes.large}`};
+  font-weight: bold;
+  padding-top: 1rem;
   margin: 2rem;
-  @media screen and (max-width: 800px) {
-    font-size: 1.5rem;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
+    font-size: ${props => `${props.theme.fontSizes.medium}`};
   }
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+    text-align: center
+  } ;
 `;
 
 const Paragraph = styled.p`
-  font-size: 1.5rem;
+  font-size: ${props => `${props.theme.fontSizes.medium}`};
   margin: 2rem;
-  @media screen and (max-width: 800px) {
-    font-size: 1rem;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
+    font-size: ${props => `${props.theme.fontSizes.small}`};
   }
+ 
+  
 `;
 
-const ImageLeft = styled.img`
+const Image = styled.img`
   flex-shrink: 0; 
-  height: 200px;
-  width: 300px;
+  height: 20rem;
+  width: 30rem;
   vertical-align: middle;
-  @media screen and (max-width: 800px) {
-    height: 100px;
-    width: 150px;
+  margin: 2rem;
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {  
+    width: 22.5rem;
+    height: 15rem;
+  } ;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+    margin:auto;
   } ;
 `;
-const ImageRight = styled.img`
-  flex-shrink: 0;
-  height: 200px;
-  width: 300px;
-  vertical-align: middle;
-  @media screen and (max-width: 800px) {
-    height: 100px;
-    width: 150px;
-  } ;
-`;
+
 const Container = styled.div`
   display: flex;
   align-items: center;
   padding-left: 5%;
   padding-right: 5%;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+    flex-wrap: wrap;
+  } ;
+`;
+
+const ContainerReverse = styled(Container)`
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.phone}`}) {  
+      flex-wrap: wrap-reverse;
+    } ;
 `;
 
 const TextContainer = styled.div`
-  margin-left: 10px;
 `;
 
 function OurWork() {
   return (
-    <div>
+    <>
       <H1>Our work</H1>
       <Container>
-        <ImageLeft src={Frivillig} alt="image" />
+        <Image src={Frivillig} alt="image" />
         <TextContainer>
           <H2>Vårt arbeid i Norge</H2>
           <Paragraph>
@@ -80,7 +81,7 @@ function OurWork() {
           </Paragraph>
         </TextContainer>
       </Container>
-      <Container>
+      <ContainerReverse>
         <TextContainer>
           <H2>Vårt arbeid internasjonalt</H2>
           <Paragraph>
@@ -93,9 +94,9 @@ function OurWork() {
             Norge og utlandet.
           </Paragraph>
         </TextContainer>
-        <ImageRight src={FieldDuty} alt="image" />
-      </Container>
-    </div>
+        <Image src={FieldDuty} alt="image" />
+      </ContainerReverse>
+    </>
   );
 }
 export default OurWork;

@@ -1,28 +1,78 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import GlobalStyles from "./styles/GlobalStyles";
-import { ThemeProvider } from 'styled-components';
+import {ThemeProvider} from 'styled-components';
 import {defaultTheme} from "./styles/Theme";
 import LandingPage from "./pages/LandingPage";
-import {Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import RegistrationPage from "./pages/RegistrationPage";
+import {RequireAdminAuth, RequireAuth, useAuth} from "./auth/Auth";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import AdminPage from "./pages/AdminPage";
+import ProductPage from './pages/ProductPage';
+import AskQuestion from './pages/Questions';
+import Terms from './pages/terms';
+import Refunds from './pages/Refunds';
+import Ethics from './pages/Ethics';
+import {productsApiResponse} from "./models/ProductsModel";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
+import PageNotFound from "./pages/PageNotFound";
 
 export default function App() {
-    return (
+   const auth = useAuth();
+
+   return (
         <ThemeProvider theme={defaultTheme}>
             <GlobalStyles/>
-            <Header/>
-            <Routes>
-                <Route path={"/"} element={<LandingPage/>}/>
-                <Route path={"/about"} element={<AboutPage/>}/>
-                <Route path={"/login"} element={<LoginPage/>}/>
-                <Route path={"/registration"} element={<RegistrationPage />}/>
-            </Routes>
-            <Footer/>
+            {/*wait for the authProvider to check if the user is authenticated or not*/}
+            {auth.isAuthenticated != null &&
+                <>
+                    <Header/>
+                    <Routes>
+                        <Route path={"/"} element={<LandingPage/>}/>
+                        <Route path={"*"} element={<PageNotFound/>}/>
+                        {/*example route that need authentication*/}
+                        <Route
+                            path="/admin"
+                            element={
+                                <RequireAdminAuth>
+                                    <AdminPage/>
+                                </RequireAdminAuth>
+                            }
+                        />
+                        <Route path={"/terms-of-service"} element={<TermsOfServicePage/>}/>
+                        <Route path={"/about"} element={ <AboutPage/>}/>
+                        <Route path={"/privacy-policy"} element={<PrivacyPolicyPage/>}/>
+                        <Route path={"/login"} element={<LoginPage/>}/>
+                        <Route path={"/registration"} element={<RegistrationPage/>}/>
+                        <Route path={"/product-page"} element={<ProductPage/>}/>
+                        <Route path={"/questions"} element={<AskQuestion/>}/>
+                        <Route path={"/terms"} element={<Terms/>}/>
+                        <Route path={"/Refunds"} element={<Refunds/>}/>
+                        <Route path={"/Ethics"} element={<Ethics/>}/>
+                        <Route path={"/shopping-cart"} element={<ShoppingCartPage/>}/>
+                    </Routes>
+                    <Footer/>
+
+                </>
+            }
+
+
         </ThemeProvider>
+
     );
 }
+
+
+
+
+
+
+
+
+
 

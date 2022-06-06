@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
-import {FlexContainer} from "../../styles/CommonStyles";
+import {FlexContainer, MediumText} from "../../styles/CommonStyles";
 import mathiasL from "../../assets/mathiasL.jpeg";
 import mathiasJ from "../../assets/mathiasj.jpeg";
 import sjur from "../../assets/sjur.jpeg";
 import michal from "../../assets/michal.jpeg";
 import redCrossImage from "../../assets/red-cross-image.png";
+import {Link} from "react-router-dom";
 
 const FooterContainer = styled.div`
   display: flex;
@@ -36,8 +37,7 @@ const FooterLinkContainer = styled.div`
 
 
 `;
-const FooterLinkItem = styled.h1`
-  font-size: ${props => `${props.theme.fontSizes.medium}`};
+const FooterLinkItem = styled(MediumText)`
   margin-right: 7rem;
   @media (max-width: 56.25em) {
     margin-right: 0;
@@ -83,13 +83,25 @@ function Footer() {
         <FooterContainer>
             <div style={{display: "flex", justifyContent: "center"}}>
                 <FooterLinkContainer>
-                    <FooterLinkItem>About us</FooterLinkItem>
-                    <FooterLinkItem>Community</FooterLinkItem>
-                    <FooterLinkItem>Company</FooterLinkItem>
+                    <Link to='/about'>
+                        <FooterLinkItem>About us</FooterLinkItem>
+                    </Link>
+                    <Link to='/questions'>
+                        <FooterLinkItem>Ask us a question</FooterLinkItem>
+                    </Link>
+                    <Link to='/terms'>
+                        <FooterLinkItem>Terms</FooterLinkItem>
+                    </Link>
                     <RedCrossImage src={redCrossImage} alt={'Red cross'}/>
-                    <FooterLinkItem>Mobile app</FooterLinkItem>
-                    <FooterLinkItem>Community</FooterLinkItem>
-                    <FooterLinkItem style={{marginRight: 0}}>Company</FooterLinkItem>
+                    <Link to='/refunds'>
+                        <FooterLinkItem>Refunds</FooterLinkItem>
+                    </Link>
+                    <Link to='/community'>
+                        <FooterLinkItem>Community</FooterLinkItem>
+                    </Link>
+                    <Link to='/ethics'>
+                        <FooterLinkItem style={{marginRight: 0}}>Ethics</FooterLinkItem>
+                    </Link>
                 </FooterLinkContainer>
             </div>
             <div style={{width: "80vw", marginTop: "1.2rem", backgroundColor: "#333", height: "0.3rem"}}/>

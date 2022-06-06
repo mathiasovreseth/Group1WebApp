@@ -1,6 +1,6 @@
 
 import React from "react";
-import {FlexColumnContainer, FlexContainer, LargeText, MediumText, xLargeText} from "../styles/CommonStyles";
+import {FlexColumnContainer, FlexContainer, H1, LargeText, MediumText} from "../styles/CommonStyles";
 import styled from "styled-components";
 import { FaSquare} from "react-icons/fa";
 import groupImg from '../assets/gruppebilde2.jpg';
@@ -16,15 +16,19 @@ const Container = styled(FlexContainer)`
 `
 const Section = styled(FlexColumnContainer)`
     width: 50rem;
+    justify-content: flex-start;
     
 `;
 
-const Title = styled(xLargeText)`
-    color:  ${props => `${props.theme.palette.primary.accentColor}`};
+const Title = styled(H1)`
   margin-bottom: 1.8rem;
+  margin-left: 0;
+  overflow: visible;
+  text-align: start;
 `;
 const MediumTitle = styled(LargeText)`
   color:  ${props => `${props.theme.palette.primary.accentColor}`};
+  font-weight: bold;
   margin-bottom: 1.6rem;
 `
 const Li = styled.li`
@@ -41,10 +45,13 @@ const Li = styled.li`
    
   }
 `;
-const MapImg = styled.img`
-   object-fit: cover;
-  
+
+const Image = styled.img`
+  object-fit: cover;
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
+
 const AboutPage = () => {
     return (
         <Container>
@@ -53,9 +60,9 @@ const AboutPage = () => {
                 <MediumText style={{marginBottom: "1.2rem"}}>Our team consists of medical professionals with more than 30 years of experience. We are certified
                     according to ISO 8072 and DNV 23:786.</MediumText>
                 <ul style={{marginBottom: "1.2rem", listStyle: "square"}}>
-                    <Li><FaSquare style={{marginRight:".8rem"}}/>Lorem ipsum fanterier Lorem ipsum fanterier Lorem ipsum fanterier</Li>
-                    <Li><FaSquare style={{marginRight:".8rem"}}/>Lorem ipsum fanterier Lorem ipsum fanterier Lorem ipsum fanterier</Li>
-                    <Li><FaSquare style={{marginRight:".8rem"}}/>Lorem ipsum fanterier Lorem ipsum fanterier Lorem ipsum fanterier</Li>
+                    <Li><FaSquare style={{marginRight:".8rem"}}/>Provide courses for industrial HMS responsibles for 12 years</Li>
+                    <Li><FaSquare style={{marginRight:".8rem"}}/>3000 customers from 6 different countries</Li>
+                    {/* <Li><FaSquare style={{marginRight:".8rem"}}/>Lorem ipsum fanterier Lorem ipsum fanterier Lorem ipsum fanterier</Li> */}
                 </ul>
                 <MediumTitle>Kontakt</MediumTitle>
                 <ul>
@@ -65,7 +72,7 @@ const AboutPage = () => {
                 </ul>
             </Section>
             <Section>
-                <MapImg src={groupImg}/>
+                <Image src={groupImg}/>
             </Section>
         </Container>
     );

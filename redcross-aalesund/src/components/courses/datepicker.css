@@ -1,0 +1,31 @@
+
+.date-picker
+{
+    font-size: medium;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0 0 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+.date-picker:hover {
+    cursor: pointer;
+
+}
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header,
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+    
+    font-size: small;
+    
+}
+
+

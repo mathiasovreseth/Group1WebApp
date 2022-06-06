@@ -9,7 +9,9 @@ export const defaultTheme: DefaultTheme = {
       medium: "1.8rem",
       large: "2.4rem",
       xLarge: "3.6rem",
+      header: "4rem"
     },
+
     breakPoints: {
       // 600px
       phone: "37.5em",

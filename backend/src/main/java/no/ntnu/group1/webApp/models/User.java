@@ -3,52 +3,82 @@ package no.ntnu.group1.webApp.models;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 
-import javax.persistence.*;
-import java.util.*;
-
-
+/**
+ * Represents a user.
+ */
 @Getter
 @ToString
 @Setter
 @Entity
 @Table(name = "users")
 public class User {
-
-
-    public User() {
-    }
-
-    public enum Roles {
-        USER,
-        ADMIN
-    }
-    private @Id @GeneratedValue Long id;
+    @OneToMany(targetEntity = Review.class, fetch = FetchType.EAGER)
+    List<Review> reviews;
+    private @Id
+    @GeneratedValue
+    Long id;
     private String name;
     private String email;
     private String password;
-    private String userRole;
-    private String token;
+    private String role;
     private boolean enabled;
     private Date accountCreated;
-    @OneToMany(targetEntity = Review.class)
-    List<Review> reviews;
 
+    /**
+     * Instantiates a new User.
+     */
+    public User() {
+    }
 
-    public User(String name, String email, String password, String userRole) {
+    /**
+     * Instantiates a new User.
+     *
+     * @param name     the name of the user
+     * @param email    the email of the user
+     * @param password the password of the user
+     */
+    public User(String name, String email, String password) {
+        this.checkForNullAndBlank(name);
+        this.checkForNullAndBlank(email);
+        this.checkForNullAndBlank(password);
+
         this.name = name;
         this.email = email;
         this.password = password;
-        this.userRole = "ADMIN";
-        this.enabled = false;
+        this.enabled = true;
         this.accountCreated = new Date();
+
+        if (this.name.equalsIgnoreCase("admin")) {
+            this.role = "ADMIN";
+        } else {
+            this.role = "USER";
+        }
     }
 
+
+    /**
+     * Add review.
+     *
+     * @param review the review to be added
+     */
     public void addReview(Review review) {
         this.reviews.add(review);
     }
@@ -71,47 +101,40 @@ public class User {
         return Objects.hash(id, name);
     }
 
+    /**
+     * Gets user role.
+     *
+     * @return the role of the user
+     */
     public String getUserRole() {
-        return userRole;
+        return this.role;
     }
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
-
+    /**
+     * Gets authorities.
+     *
+     * @return the authorities of the user
+     */
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));
+        authorities.add(new SimpleGrantedAuthority(getUserRole()));
         return authorities;
     }
 
-    public static User fromJSONObject(JSONObject jsonObject) throws JSONException{
 
-        String username = jsonObject.getString("username");
-        String email = jsonObject.getString("email");
-        String password = jsonObject.getString("password");
-        String userRole = jsonObject.getString("role");
+  /**
+   * Checks the parameter against {@code null} and blank string.
+   * Throws IllegalArgumentException if the argument is null or blank.
+   *
+   * @param text the text to be checked
+   */
+    private void checkForNullAndBlank(String text) {
+        if (text == null) {
+            throw new IllegalArgumentException("Parameter can not be null");
+        }
 
-        return new User(username, email, password, userRole);
-
+        if (text.isBlank()) {
+            throw new IllegalArgumentException("Parameter can not be empty");
+        }
     }
-
-//    public boolean isEnabled(){
-//        return enabled;
-//    }
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return enabled;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return enabled;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return enabled;
-//    }
-
 }

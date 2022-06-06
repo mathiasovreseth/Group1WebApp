@@ -3,6 +3,7 @@ import DropdownMenu, {DropdownItem, DropdownItemGroup} from "@atlaskit/dropdown-
 import styled from "styled-components";
 import {FaBars} from 'react-icons/fa';
 import {SmallText} from "../../styles/CommonStyles";
+import { Link } from 'react-router-dom';
 
 
 const MenuButton = styled.button`
@@ -20,7 +21,7 @@ const MenuButton = styled.button`
 // }
 
 
-/// make this more reusable
+
 function MyDropDownMenu() {
     return (
         <DropdownMenu
@@ -36,15 +37,21 @@ function MyDropDownMenu() {
             )}
         >
             <DropdownItemGroup>
+                <Link to={'/about'}>
                 <DropdownItem>
                     <SmallText>About us</SmallText>
                 </DropdownItem>
+                </Link>
+                <Link to={'/community'}>
                 <DropdownItem>
                     <SmallText>Community</SmallText>
                 </DropdownItem>
+                </Link>
+                <Link to={'/company'}>
                 <DropdownItem>
                     <SmallText>Company</SmallText>
                 </DropdownItem>
+                </Link>
             </DropdownItemGroup>
         </DropdownMenu>
     )
