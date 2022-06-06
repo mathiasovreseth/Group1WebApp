@@ -64,7 +64,7 @@ function AskQuestion() {
                 <InputMail type="email" name="email" placeholder="Your email.."/>
                 <Label>Question</Label>
                 <InputText type="text" name="Question" placeholder="Your question.."/>
-                <Button type="submit">Book your training</Button>
+                <Button type="submit">Send </Button>
             </Form>
             </FormContainer>   
         </>
