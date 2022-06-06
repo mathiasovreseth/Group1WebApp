@@ -5,6 +5,7 @@ import no.ntnu.group1.webApp.models.Review;
 import no.ntnu.group1.webApp.models.User;
 import no.ntnu.group1.webApp.repositories.ReviewRepository;
 import no.ntnu.group1.webApp.repositories.UserRepository;
+import no.ntnu.group1.webApp.security.JwtUtil;
 import no.ntnu.group1.webApp.service.ProductService;
 import no.ntnu.group1.webApp.service.ReviewService;
 import no.ntnu.group1.webApp.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +35,8 @@ public class ReviewController {
     private UserRepository userRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * Instantiates a new Review controller.
@@ -100,7 +104,10 @@ public class ReviewController {
      * @return the response entity
      */
     @PutMapping("/update")
-    public ResponseEntity<?> updateReview(HttpEntity<String> http) {
+    public ResponseEntity<?> updateReview(HttpEntity<String> http, HttpServletRequest request) {
+        final String authorizationHeader = request.getHeader("Authorization");
+        String jwt = authorizationHeader.substring(7);
+        String email = jwt
         try {
             JSONObject json = new JSONObject(http.getBody());
             Long reviewId = json.getLong("reviewId");
