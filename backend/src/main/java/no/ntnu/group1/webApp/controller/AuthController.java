@@ -37,7 +37,7 @@ public class AuthController {
   /**
    * Provides user token on correct login.
    *
-   * @param http HttpEntity of request.
+   * @param http Http data
    * @return ResponseEntity containing user's token, or empty 404 status on incorrect login/missing user.
    */
   @CrossOrigin
@@ -70,7 +70,7 @@ public class AuthController {
    * "password": "password",
    * }
    *
-   * @param entity HttpEntity of request
+   * @param entity Http data
    * @return ResponseEntity
    */
   @CrossOrigin

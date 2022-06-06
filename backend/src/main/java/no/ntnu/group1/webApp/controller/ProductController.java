@@ -32,7 +32,7 @@ public class ProductController {
     /**
      * Gets all products.
      *
-     * @return the all products
+     * @return all products
      */
     @CrossOrigin
     @GetMapping("getAll")
@@ -43,7 +43,7 @@ public class ProductController {
     /**
      * Gets product by id.
      *
-     * @param id the id
+     * @param id the id of the product
      * @return the product by id
      */
     @GetMapping("/{id}")
@@ -54,7 +54,7 @@ public class ProductController {
     /**
      * Updates the specified product.
      *
-     * @param http the http entity to be updated
+     * @param http the http data
      * @return the response entity
      */
     @CrossOrigin
@@ -81,7 +81,7 @@ public class ProductController {
     /**
      * Removes the specified product.
      *
-     * @param http the http entity to be removed
+     * @param http the http data
      * @return the response entity
      */
     @CrossOrigin
@@ -106,7 +106,7 @@ public class ProductController {
     /**
      * Adds a product.
      *
-     * @param http the http entity to be added
+     * @param http the http data
      * @return the response entity
      */
     @CrossOrigin

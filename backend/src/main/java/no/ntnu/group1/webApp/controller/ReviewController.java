@@ -33,7 +33,7 @@ public class ReviewController {
     /**
      * Gets review by id.
      *
-     * @param id the id
+     * @param id the id of the review
      * @return the review by id
      */
     @GetMapping("/{id}")

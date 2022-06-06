@@ -41,7 +41,7 @@ public class UserController {
     /**
      * Gets all users.
      *
-     * @return the all users
+     * @return all users
      */
     @CrossOrigin
     @GetMapping("/getAll")
