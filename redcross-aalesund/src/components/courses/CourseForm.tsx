@@ -152,13 +152,13 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
 
     useEffect(()=> {
         switch (props.id) {
-            case 1:
-                setSelectedStartTime("10:00 - 14:00");
-                break;
-            case 2:
+            case 4:
                 setSelectedStartTime("10:00 - 16:00");
                 break;
-            case 3:
+            case 5:
+                setSelectedStartTime("10:00 - 14:00");
+                break;
+            case 6:
                 setSelectedStartTime("13:00 - 14:00");
                 break;
         }
@@ -186,23 +186,23 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
     function getCourseSelected(id: number) {
         switch (id) {
             //Two day course
-            case 1:
+            case 4:
                 if(selectedStartTime == "17:00 - 21:00") {
                     setfullStartTimeString("Choose start time: " + "17:00 - 21:00");
-                } else {
-                    setfullStartTimeString("Choose start time: " + "10:00 - 14:00");
-                }
-                break;
-            //One day course
-            case 2:
-                if(selectedStartTime == "14:00 - 20:00") {
-                    setfullStartTimeString("Choose start time: " + "14:00 - 20:00");
                 } else {
                     setfullStartTimeString("Choose start time: " + "10:00 - 16:00");
                 }
                 break;
+            //One day course
+            case 5:
+                if(selectedStartTime == "14:00 - 20:00") {
+                    setfullStartTimeString("Choose start time: " + "14:00 - 20:00");
+                } else {
+                    setfullStartTimeString("Choose start time: " + "10:00 - 14:00");
+                }
+                break;
             //Short Consulation
-            case 3:
+            case 6:
                 if(selectedStartTime == "17:00 - 18:00") {
                     setfullStartTimeString("Choose start time: " + "17:00 - 18:00");
                 } else {
@@ -215,7 +215,7 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
     function getStartTimes(id: number) {
         switch (id) {
             //Two day course
-            case 1:
+            case 4:
                 return <><DropdownItem onClick={() => setSelectedStartTime("10:00 - 14:00")}>
                     <SmallText>10:00 - 14:00</SmallText>
                 </DropdownItem>
@@ -223,7 +223,7 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
                         <SmallText>17:00 - 21:00</SmallText>
                     </DropdownItem></>
             //One day course
-            case 2:
+            case 5:
                 return <><DropdownItem onClick={() => setSelectedStartTime("10:00 - 16:00")}>
                     <SmallText>10:00 - 16:00</SmallText>
                 </DropdownItem>
@@ -231,7 +231,7 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
                         <SmallText>14:00 - 20:00</SmallText>
                     </DropdownItem></>
             //Short Consulation
-            case 3:
+            case 6:
                 return <><DropdownItem onClick={() => setSelectedStartTime("13:00 - 14:00")}>
                     <SmallText>13:00 - 14:00</SmallText>
                 </DropdownItem>
@@ -241,7 +241,7 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
         }
 
     }
-    console.log(selectedStartTime);
+    console.log(props.id);
     return (
         <Container>
             <InfoText>
@@ -298,7 +298,7 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
                     <div>
                         <Label>{fullStartTimeString}</Label>
                         <DropdownMenu >
-                            <DropdownItemGroup>
+                            <DropdownItemGroup >
                                 {getStartTimes(id)}
                             </DropdownItemGroup>
                         </DropdownMenu>

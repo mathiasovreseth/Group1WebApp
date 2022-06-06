@@ -67,6 +67,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
         deleteCookie("jwt");
         deleteCookie("current_email");
         deleteCookie("current_user_role");
+        
         setUser(null);
         setIsAuthenticated(false);
         navigate("/login");
