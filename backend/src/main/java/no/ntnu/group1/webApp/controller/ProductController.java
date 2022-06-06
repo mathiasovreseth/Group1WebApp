@@ -16,26 +16,51 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the product controller of the application.
+ */
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
 
+    /**
+     * Instantiates a new Product controller.
+     *
+     * @param productService the product service
+     */
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
+    /**
+     * Gets all products.
+     *
+     * @return the all products
+     */
     @CrossOrigin
     @GetMapping("getAll")
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productService.getAll());
     }
 
+    /**
+     * Gets product by id.
+     *
+     * @param id the id
+     * @return the product by id
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Product>> getProductByID(@PathParam("id") Long id) {
         return ResponseEntity.ok(productService.findById(id));
     }
 
+    /**
+     * Updates the specified product.
+     *
+     * @param http the http entity to be updated
+     * @return the response entity
+     */
     @CrossOrigin
     @PostMapping("update")
     public ResponseEntity<?> updateProduct(HttpEntity<String> http) {
@@ -57,6 +82,12 @@ public class ProductController {
         }
     }
 
+    /**
+     * Removes the specified product.
+     *
+     * @param http the http entity to be removed
+     * @return the response entity
+     */
     @CrossOrigin
     @PostMapping("remove")
     public ResponseEntity<?> removeProduct(HttpEntity<String> http) {
@@ -76,6 +107,12 @@ public class ProductController {
         }
     }
 
+    /**
+     * Adds a product.
+     *
+     * @param http the http entity to be added
+     * @return the response entity
+     */
     @CrossOrigin
     @PostMapping("add")
     public ResponseEntity<?> addProduct(HttpEntity<String> http) {

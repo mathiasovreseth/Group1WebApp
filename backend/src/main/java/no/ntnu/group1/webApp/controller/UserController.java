@@ -19,6 +19,9 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the user controller of the application.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/users")
@@ -26,16 +29,32 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * Instantiates a new User controller.
+     *
+     * @param userService the user service
+     */
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAll());
     }
 
+    /**
+     * Gets user by email.
+     *
+     * @param email the email
+     * @return the user by email
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Optional<User>> getUserByEmail(@PathParam("email")
                                                          @PathVariable("id") String email) {
@@ -43,6 +62,12 @@ public class UserController {
     }
 
 
+    /**
+     * Add new user response entity.
+     *
+     * @param entity the entity to be added
+     * @return the response entity
+     */
     @PostMapping("addUser")
     public ResponseEntity<User> addNewUser(HttpEntity<String> entity) {
         try {
@@ -54,6 +79,12 @@ public class UserController {
     }
 
 
+    /**
+     * Disables the user account specified.
+     *
+     * @param http the http entity to be deleted
+     * @return the response entity
+     */
     @CrossOrigin
     @PutMapping("delete")
     public ResponseEntity<?> deleteUser(HttpEntity<String> http) {
@@ -72,6 +103,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Updates the user account specified.
+     *
+     * @param http the http entity to be updated
+     * @return the response entity
+     */
     @CrossOrigin
     @PutMapping("update")
     public ResponseEntity<?> updateUser(HttpEntity<String> http) {

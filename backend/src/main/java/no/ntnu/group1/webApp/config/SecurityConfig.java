@@ -12,6 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+/**
+ * Represents the security config of the application.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -20,6 +23,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
 
 
+    /**
+     * Defines the security config for the different mappings used by the application.
+     *
+     * @param security the HttpSecurity
+     * @throws Exception
+     */
     @CrossOrigin
     @Override
     protected void configure(HttpSecurity security) throws Exception {
