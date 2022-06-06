@@ -139,6 +139,11 @@ function LoadCourses() {
                 }
               }); setSelectedProduct(data); 
             })
+              if(!auth.isAuthenticated) {
+                  openPopup();
+              } else{
+                  setSelectedProduct(data);
+              }
           } } /> </Section>;
         })}
       </CoursesContainer>

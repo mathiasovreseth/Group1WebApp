@@ -7,6 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
 
+/**
+ * Represents the password configuration of the application.
+ */
 @Configuration
 public class PasswordConfig {
 

@@ -24,6 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the order controller of the application.
+ */
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
@@ -31,12 +34,25 @@ public class OrderController {
     private final UserService userService;
     private final ProductService productService;
 
+    /**
+     * Instantiates a new Order controller.
+     *
+     * @param orderService   the order service
+     * @param userService    the user service
+     * @param productService the product service
+     */
     public OrderController(OrderService orderService, UserService userService, ProductService productService) {
         this.orderService = orderService;
         this.userService = userService;
         this.productService = productService;
     }
 
+    /**
+     * Adds a new order.
+     *
+     * @param http the http entity to be added
+     * @return the response entity
+     */
     @CrossOrigin
     @PostMapping("/add")
     public ResponseEntity<String> addNewOrder(HttpEntity<String> http) {
@@ -74,6 +90,12 @@ public class OrderController {
         }
     }
 
+    /**
+     * Removes the order specified.
+     *
+     * @param id the id of the order
+     * @return the response entity
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> removeOrder(@PathVariable Long id) {
         ResponseEntity<String> response;
@@ -85,6 +107,12 @@ public class OrderController {
         return response;
     }
 
+    /**
+     * Processes an order.
+     *
+     * @param http the http entity to be processed
+     * @return the response entity
+     */
     @CrossOrigin
     @PutMapping("/process-order")
     public ResponseEntity<String> processOrder(HttpEntity<String> http) {
@@ -104,12 +132,23 @@ public class OrderController {
 
     }
 
+    /**
+     * Gets all orders.
+     *
+     * @return all orders
+     */
     @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAll());
     }
 
+    /**
+     * Gets order by id.
+     *
+     * @param id the id of the order
+     * @return the order by id
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Order>> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));

@@ -7,7 +7,6 @@ export enum UserRole {
 // change this
 export interface UserAuthResponse {
     email: string,
-    name: string;
     role: string,
 }
 export interface UserRegistrationFormValues {

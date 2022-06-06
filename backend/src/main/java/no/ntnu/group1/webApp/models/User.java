@@ -21,15 +21,15 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Represents a user.
+ */
 @Getter
 @ToString
 @Setter
 @Entity
 @Table(name = "users")
 public class User {
-
-
-    // fetchType.eager fixed Lazyinititilization exeption
     @OneToMany(targetEntity = Review.class, fetch = FetchType.EAGER)
     List<Review> reviews;
     private @Id
@@ -39,11 +39,22 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private String token;
     private boolean enabled;
     private Date accountCreated;
+
+    /**
+     * Instantiates a new User.
+     */
     public User() {
     }
+
+    /**
+     * Instantiates a new User.
+     *
+     * @param name     the name of the user
+     * @param email    the email of the user
+     * @param password the password of the user
+     */
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
@@ -58,17 +69,12 @@ public class User {
         }
     }
 
-    public static User fromJSONObject(JSONObject jsonObject) throws JSONException {
 
-        String username = jsonObject.getString("username");
-        String email = jsonObject.getString("email");
-        String password = jsonObject.getString("password");
-
-
-        return new User(username, email, password);
-
-    }
-
+    /**
+     * Add review.
+     *
+     * @param review the review to be added
+     */
     public void addReview(Review review) {
         this.reviews.add(review);
     }
@@ -91,10 +97,20 @@ public class User {
         return Objects.hash(id, name);
     }
 
+    /**
+     * Gets user role.
+     *
+     * @return the role of the user
+     */
     public String getUserRole() {
         return this.role;
     }
 
+    /**
+     * Gets authorities.
+     *
+     * @return the authorities of the user
+     */
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(getUserRole()));

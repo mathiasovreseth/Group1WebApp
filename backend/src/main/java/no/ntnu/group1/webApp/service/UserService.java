@@ -12,6 +12,9 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the user service of the application.
+ */
 @Service
 public class UserService {
 
@@ -21,18 +24,46 @@ public class UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Instantiates a new User service.
+     *
+     * @param passwordEncoder the password encoder
+     */
     UserService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Finds user by email.
+     *
+     * @param email the email of the user
+     * @return the user if present
+     */
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * Finds user by id.
+     *
+     * @param id the id of the user
+     * @return the user if present
+     */
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
+    /**
+     * Update user.
+     *
+     * @param userToUpdate the user to update
+     * @param name         the name
+     * @param email        the email
+     * @param role         the role
+     * @param enabled      the status of the user
+     * @param password     the password of the user
+     * @return {@code true} if successful, {@code false} if not successful
+     */
     public boolean updateUser(User userToUpdate, String name, String email, String role, Boolean enabled, String password) {
         userToUpdate.setName(name);
         userToUpdate.setEmail(email);
@@ -50,6 +81,13 @@ public class UserService {
         }
     }
 
+    /**
+     * Disables a user.
+     *
+     * @param id      the id of the user
+     * @param enabled the status of the user
+     * @return {@code true} if successful, {@code false} if not successful
+     */
     @Transactional
     public boolean disableUser(String id, Boolean enabled) {
         String sql = "update users set enabled=" + enabled + " where id=" + id;
@@ -59,11 +97,21 @@ public class UserService {
     }
 
 
+    /**
+     * Gets all users.
+     *
+     * @return all users
+     */
     public List<User> getAll() {
         return (List<User>) userRepository.findAll();
     }
 
 
+    /**
+     * Add user to the repository.
+     *
+     * @param user the user to be added to the repository
+     */
     public void addUser(User user) {
         userRepository.save(user);
     }

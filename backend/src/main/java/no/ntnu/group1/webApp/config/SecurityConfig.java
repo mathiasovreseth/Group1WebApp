@@ -12,6 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+/**
+ * Represents the security config of the application.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -20,6 +23,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
 
 
+    /**
+     * Defines the security config for the different mappings used by the application.
+     *
+     * @param security the HttpSecurity
+     * @throws Exception
+     */
     @CrossOrigin
     @Override
     protected void configure(HttpSecurity security) throws Exception {
@@ -29,11 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users/getAll").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/orders/getAll").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/products/getAll").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/orders/add").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/reviews/getReviewByUser").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users/getAll").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/users/delete").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/users/update").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/products/remove").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/products/update").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/products/add").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/orders/process-order").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 
+/**
+ * Represents the login service of the application.
+ */
 @Service
 public class LoginService {
 
@@ -19,6 +22,12 @@ public class LoginService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * Instantiates a new Login service.
+     *
+     * @param userRepository  the user repository
+     * @param passwordEncoder the password encoder
+     */
     public LoginService(UserRepository userRepository,
                         PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -34,24 +43,22 @@ public class LoginService {
      * @param password User's password.
      * @return Optional of user on success, empty optional on failure.
      */
-    public Optional<User> login(String email, String password) {
+    public String login(String email, String password) {
         Optional<User> foundUser = userRepository.findByEmail(email);
 
         boolean userIsEnabled = userRepository.getUserStatus(foundUser.get().getId());
         if (foundUser.isPresent() && userIsEnabled) {
             User user = foundUser.get();
-
             // Checking if password given by client matches password for user.
             if (passwordEncoder.matches(password, user.getPassword())) {
                 // Creates new token for user on successful login.
                 String token = jwtUtil.generateToken(user);
-                user.setToken(token);
                 userRepository.save(user);
-                return Optional.of(user);
+                return token;
             } else {
-                return Optional.empty();
+                return null;
             }
         }
-        return Optional.empty();
+        return null;
     }
 }

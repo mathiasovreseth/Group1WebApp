@@ -19,6 +19,9 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the user controller of the application.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/users")
@@ -26,16 +29,32 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * Instantiates a new User controller.
+     *
+     * @param userService the user service
+     */
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Gets all users.
+     *
+     * @return all users
+     */
     @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAll());
     }
 
+    /**
+     * Gets user by email.
+     *
+     * @param email the email
+     * @return the user by email
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Optional<User>> getUserByEmail(@PathParam("email")
                                                          @PathVariable("id") String email) {
@@ -43,17 +62,12 @@ public class UserController {
     }
 
 
-    @PostMapping("addUser")
-    public ResponseEntity<User> addNewUser(HttpEntity<String> entity) {
-        try {
-            saveUserFromJsonObject(new JSONObject(entity.getBody()));
-            return ResponseEntity.ok().build();
-        } catch (JSONException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-
+    /**
+     * Disables the user account specified.
+     *
+     * @param http the http data
+     * @return the response entity
+     */
     @CrossOrigin
     @PutMapping("delete")
     public ResponseEntity<?> deleteUser(HttpEntity<String> http) {
@@ -72,6 +86,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Updates the user account specified.
+     *
+     * @param http the http data
+     * @return the response entity
+     */
     @CrossOrigin
     @PutMapping("update")
     public ResponseEntity<?> updateUser(HttpEntity<String> http) {
@@ -98,10 +118,5 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
-    }
-
-    private void saveUserFromJsonObject(JSONObject jsonObject) throws JSONException {
-        User user = User.fromJSONObject(jsonObject);
-        userService.addUser(user);
     }
 }
