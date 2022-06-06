@@ -41,6 +41,9 @@ public class Product {
      * @param description the description of the product
      */
     public Product(String title, String description) {
+        this.checkForNullAndBlank(title);
+        this.checkForNullAndBlank(description);
+
         this.title = title;
         this.description = description;
     }
@@ -52,5 +55,21 @@ public class Product {
      */
     public void addReview(Review reviewToBeAdded) {
         this.reviews.add(reviewToBeAdded);
+    }
+
+    /**
+     * Checks the parameter against {@code null} and blank string.
+     * Throws IllegalArgumentException if the argument is null or blank.
+     *
+     * @param text the text to be checked
+     */
+    private void checkForNullAndBlank(String text) {
+        if (text == null) {
+            throw new IllegalArgumentException("Parameter can not be null");
+        }
+
+        if (text.isBlank()) {
+            throw new IllegalArgumentException("Parameter can not be empty");
+        }
     }
 }

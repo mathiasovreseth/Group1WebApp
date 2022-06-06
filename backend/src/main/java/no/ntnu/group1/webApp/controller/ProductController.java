@@ -117,7 +117,7 @@ public class ProductController {
             Product product = new Product(title, description);
             productService.add(product);
             return ResponseEntity.ok("product added");
-        } catch (JSONException e) {
+        } catch (JSONException | IllegalArgumentException e) {
             return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
