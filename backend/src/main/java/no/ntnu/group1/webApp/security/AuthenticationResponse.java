@@ -14,6 +14,12 @@ public class AuthenticationResponse {
     public AuthenticationResponse(String jwt) {
         this.jwt = jwt;
     }
+
+    /**
+     * Gets the JSON web token
+     *
+     * @return the JSON web token
+     */
     public String getJwt() {
         return jwt;
     }
