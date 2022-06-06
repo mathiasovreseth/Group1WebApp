@@ -27,13 +27,12 @@ public class ReviewService {
         return reviewRepository.findById(id);
     }
 
-    public List<Object> getAll() {
     /**
      * Gets all reviews.
      *
      * @return all reviews
      */
-    public List<Object[]> getAll() {
-        return reviewRepository.getCommentAndUser();
-    }
+    public List<Object> getAll() {
+        
+        return reviewRepository.getCommentAndUser();}
 }

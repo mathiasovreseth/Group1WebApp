@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
 import styled from "styled-components";
 import { useAuth } from "../../auth/Auth";
 import { getCommentsApiResponse, getCoursesApiResponse } from "../../models/CourseModel";
@@ -7,10 +8,12 @@ import { H1, MediumText, XSmallText } from "../../styles/CommonStyles";
 import { sendApiRequest } from "../../utils/requests";
 
 
-const H2 = styled.h2`
+const H2Comment = styled.h2`
   font-size: ${props => `${props.theme.fontSizes.large}`};
   font-weight: bold;
   padding-top: 1rem;
+  grid-column: 3;
+  grid-row: 1;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     font-size: ${props => `${props.theme.fontSizes.medium}`};
   }
@@ -20,8 +23,8 @@ const TrustedComment = styled.section`
   display: grid;
   padding-left: 5%;
   padding-right: 5%;
-  text-align: center;
-  grid-template-columns: 15% 1fr 1fr 15%;
+  text-align: left;
+  grid-template-columns: 15% 1fr 15%;
   grid-template-rows: 12rem fit-content;
   grid-gap: 50px;
   margin-bottom: 2rem;
@@ -33,19 +36,25 @@ const TrustedComment = styled.section`
   
 `;
 
-
-const Paragraph1 = styled.p`
+const H2Name = styled.h2`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
-  padding-top: 0.5rem;
-  grid-column: 3;
+  font-weight: bold;
+  padding-top: 1rem;
+  grid-column: 2;
+  grid-row: 1;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
-    font-size: ${props => `${props.theme.fontSizes.xSmall}`};
+    font-size: ${props => `${props.theme.fontSizes.medium}`};
   }
 `;
+
+
+
 const Paragraph2 = styled.p`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
-  padding-top: 0.5rem;
+  padding: 1rem;
   grid-column: 2;
+  background-color: #f3f3f3;
+  border-radius: ${props => `${props.theme.borderRadius}`};
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     font-size: ${props => `${props.theme.fontSizes.xSmall}`};
   }
@@ -62,15 +71,14 @@ function Comments(props: {reviews: Array<any>;}) {
           <>
           <H1>Comments</H1>
           
-           
-           {props.reviews.map((review) => {
-             return (
-              <TrustedComment>
-                 <Paragraph2>Name: <br /> {review.name}</Paragraph2>
-                 <Paragraph1> Comment: <br /> {review.comment}</Paragraph1>
-                 </TrustedComment>
-             ) 
-           })}
+               <TrustedComment>
+                      {props.reviews.map((review) => {
+                   return (
+                     <><Paragraph2> <FaUser/> {review.name} <br /> <br />{review.comment}</Paragraph2>
+                    </>
+                     ) 
+                    })}
+                </TrustedComment>
           
           </>
         )
