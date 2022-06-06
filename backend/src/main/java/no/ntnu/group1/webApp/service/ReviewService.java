@@ -32,7 +32,7 @@ public class ReviewService {
      *
      * @return all reviews
      */
-    public List<Object[]> getAll() {
-        return reviewRepository.getCommentAndUser();
-    }
+    public List<Object> getAll() {
+        
+        return reviewRepository.getCommentAndUser();}
 }

@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {Course} from "../components/courses/Course";
 import {CourseForm} from "../components/courses/CourseForm";
 import {sendApiRequest} from "../../src/utils/requests"
-import { getCoursesApiResponse } from "../models/CourseModel";
+import { getCommentsApiResponse, getCoursesApiResponse } from "../models/CourseModel";
 import Popup from "reactjs-popup";
 import LoginForm from "../components/forms/LoginForm";
 import authHelper from "../auth/AuthProvider";
@@ -79,6 +79,7 @@ function LoadCourses() {
   const [product, setProduct] = useState<Array<getCoursesApiResponse>>([]);
   const [selectedProduct, setSelectedProduct] = useState<getCoursesApiResponse>();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const[review, setReview] = useState<any>();
   const auth = useAuth();
 
   useEffect(()=> {
@@ -98,6 +99,23 @@ function LoadCourses() {
       });
   }, []);
 
+  useEffect(()=> {
+    sendApiRequest("GET","/reviews/getReviewByUser",null, true).then((data: any) => {
+        const reviewTemp: any = [];
+        data.forEach((review: any)=> {
+            reviewTemp.push({
+                id: review[0],
+                name: review[1],
+                comment: review[2]
+            });
+        });
+        console.log(reviewTemp);
+        setReview(reviewTemp);
+    }).catch((err: any) => {
+        console.log(err);
+    });
+}, [setSelectedProduct]);
+
 
   function openPopup() {
     if(!auth.isAuthenticated){
@@ -113,6 +131,14 @@ function LoadCourses() {
       <CoursesContainer>
         {product && product.map((data: getCoursesApiResponse) => {
           return <Section> <Course key={data.id} product={data} onSubmit={(data) => {
+            openPopup(); 
+            data.reviews.forEach((rev) => {
+              review.forEach((element: any ) => {
+                if(rev.id === element.id){
+                  rev.name = element.name
+                }
+              }); setSelectedProduct(data); 
+            })
               if(!auth.isAuthenticated) {
                   openPopup();
               } else{
@@ -126,17 +152,16 @@ function LoadCourses() {
       </Popup>
       {selectedProduct &&
         <SectionForm> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title ?? ""} info={selectedProduct?.description ?? ""} id={selectedProduct?.id ?? ""} /></SectionForm>}
-
     </Container>
+    {selectedProduct && 
+    <Comments reviews={selectedProduct?.reviews} />}
+    
     </>
 
   )
 
 
 }
-
-
-
 
 
 export {LoadCourses}

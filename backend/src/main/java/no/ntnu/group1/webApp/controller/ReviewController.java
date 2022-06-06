@@ -3,10 +3,7 @@ package no.ntnu.group1.webApp.controller;
 import no.ntnu.group1.webApp.models.Review;
 import no.ntnu.group1.webApp.service.ReviewService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,13 +38,14 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.findReviewById(id));
     }
 
+    @CrossOrigin
     /**
      * Gets review by user.
      *
      * @return the review by user
      */
     @GetMapping("/getReviewByUser")
-    public ResponseEntity<List<Object[]>> getReviewByUser() {
+    public ResponseEntity<List<Object>> getReviewByUser() {
         return ResponseEntity.ok((reviewService.getAll()));
     }
 }
