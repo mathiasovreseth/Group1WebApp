@@ -6,6 +6,7 @@ import no.ntnu.group1.webApp.service.UserService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,11 +79,10 @@ public class UserController {
             if (userService.disableUser(id, false)) {
                 return ResponseEntity.ok("User disabled");
             } else {
-                return ResponseEntity.badRequest().build();
+                 return new ResponseEntity("Failed to delete user", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -103,20 +103,20 @@ public class UserController {
             String name = json.getString("name");
             Boolean enabled = json.getBoolean("enabled");
             String password = json.getString("password");
+
             Optional<User> userOptional = userService.findById(Long.parseLong(id));
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 if (userService.updateUser(user, name, email, role, enabled, password)) {
                     return ResponseEntity.ok("User updated");
                 } else {
-                    return ResponseEntity.internalServerError().build();
+                    return new ResponseEntity("Failed to update user", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                return ResponseEntity.internalServerError().build();
+                return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity("Field(s) missing or null in request", HttpStatus.BAD_REQUEST);
         }
     }
 }
