@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useAuth } from "../../auth/Auth";
 import { getCommentsApiResponse, getCoursesApiResponse } from "../../models/CourseModel";
 import { getUserApiResponse } from "../../models/UserModel";
-import { H1 } from "../../styles/CommonStyles";
+import { H1, MediumText, XSmallText } from "../../styles/CommonStyles";
 import { sendApiRequest } from "../../utils/requests";
 
 
@@ -21,7 +21,7 @@ const TrustedComment = styled.section`
   padding-left: 5%;
   padding-right: 5%;
   text-align: center;
-  grid-template-columns: 15% 1fr 15%;
+  grid-template-columns: 15% 1fr 1fr 15%;
   grid-template-rows: 12rem fit-content;
   grid-gap: 50px;
   margin-bottom: 2rem;
@@ -33,17 +33,19 @@ const TrustedComment = styled.section`
   
 `;
 
-const Comment = styled.div`
-  font-size: 3rem;
-  align-self: center;
-  @media screen and (max-width: 800px) {
-    font-size: 2rem;
-  }
-`;
 
-const Paragraph = styled.p`
+const Paragraph1 = styled.p`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
   padding-top: 0.5rem;
+  grid-column: 3;
+  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
+    font-size: ${props => `${props.theme.fontSizes.xSmall}`};
+  }
+`;
+const Paragraph2 = styled.p`
+  font-size: ${props => `${props.theme.fontSizes.medium}`};
+  padding-top: 0.5rem;
+  grid-column: 2;
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     font-size: ${props => `${props.theme.fontSizes.xSmall}`};
   }
@@ -51,64 +53,25 @@ const Paragraph = styled.p`
 
 
 
-function Comments(props: {reviews: Array<any>; name: string;}) {
+function Comments(props: {reviews: Array<any>;}) {
   const reviews = props.reviews;
 
-  const[review, setReview] = useState<getCommentsApiResponse>();
-
-
-
-  useEffect(()=> {
-    sendApiRequest("GET","/reviews/getReviewByUser",null, true).then((data: any) => {
-        const reviewTemp: any = [];
-        data.forEach((review: getCommentsApiResponse)=> {
-            reviewTemp.push({
-                0: review.id,
-                1: review.name,
-                2: review.comment
-            });
-        });
-        setReview(reviewTemp);
-    }).catch((err: any) => {
-        console.log(err);
-    });
-}, [setSelectedProduct]);
-  //flytt til courses
-  
-console.log(review);
-
-function findMatchingReviews(rev: any){
-  let exists = false
-  reviews.map(function (value){
-    if(value.reviewId === rev.id){
-      exists = true
-    }
-    })
-    return exists
-  }
-
-
-
-function createComment(reviewId: number, comment: string, name: string){
-    return(
-      <>
-      <H2>{name}</H2>
-      <Paragraph>{comment}</Paragraph>
-      </>
-    )
-}
 
     
     return (
           <>
           <H1>Comments</H1>
-          <TrustedComment>
-            {review && review.map(function (value) {
-              return(
-                findMatchingReviews(value) && createComment(value.reviewId, value.comment, value.name)
-              )
-            })}
-          </TrustedComment>
+          
+           
+           {props.reviews.map((review) => {
+             return (
+              <TrustedComment>
+                 <Paragraph2>Name: <br /> {review.name}</Paragraph2>
+                 <Paragraph1> Comment: <br /> {review.comment}</Paragraph1>
+                 </TrustedComment>
+             ) 
+           })}
+          
           </>
         )
   

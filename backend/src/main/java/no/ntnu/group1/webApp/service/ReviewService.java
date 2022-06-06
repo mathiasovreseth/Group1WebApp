@@ -18,7 +18,7 @@ public class ReviewService {
         return reviewRepository.findById(id);
     }
 
-    public List<Object[]> getAll() {
+    public List<Object> getAll() {
         return reviewRepository.getCommentAndUser();
     }
 }
