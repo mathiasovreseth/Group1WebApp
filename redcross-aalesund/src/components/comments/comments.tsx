@@ -92,35 +92,37 @@ function Comments(props: { reviews: Array<any>; onDelete: (reviewId: number) => 
                 isEditing: false,
             });
         });
+        console.log(tempRev);
         setReviews(tempRev);
     }, [props.reviews])
 
-    function validateForm() {
+    function validateEditForm() {
         let isValid = true;
 
-        if (isEditingComment) {
             if (editComment.length === 0) {
                 setCommentErr('Comment is required');
                 isValid = false;
             }
-        } else {
-            if (comment.length === 0) {
-                setCommentErr('Comment is required');
-                isValid = false;
-            }
+        return isValid;
+    }
+    function validateCreateComment() {
+        let isValid = true;
+        if (comment.length === 0) {
+            setCommentErr('Comment is required');
+            isValid = false;
         }
         return isValid;
     }
-
     function onSubmit() {
-        if (validateForm()) {
+        if (validateCreateComment()) {
             setIsCreatingComment(false)
             props.onSubmit(comment);
         }
     }
 
     function onEditSubmit(reviewId: number) {
-        if (validateForm()) {
+        if (validateEditForm()) {
+            setIsEditingComment(false);
             props.onEditSubmit(editComment, reviewId);
         }
     }
@@ -130,45 +132,52 @@ function Comments(props: { reviews: Array<any>; onDelete: (reviewId: number) => 
         <FlexColumnContainer style={{width: "100vw", alignItems: "center"}}>
             <H1>Comments</H1>
             {reviews.map((review, index) => {
-                return (
-                    <CommentCard>
-                        <FlexColumnContainer>
-                            <Paragraph2>
-                                <FaUser/> {review.name}
-                                <br/>
-                                <br/>
-                                {!isEditingComment || editIndex !== index ?
-                                    <div>
-                                        {review.comment}
-                                    </div> :
-                                    <div>
-                                        <Input placeholder={"Comment..."}
-                                               onChange={(e) => setEditComment(e.target.value)} type="text"
-                                               name="editComment"/>
-                                        {commentErr && <XSmallText style={{color: "red"}}>{commentErr}</XSmallText>}
-                                        <Button style={{marginTop: "1.2rem", transform: "scale(0.7)"}}
-                                                onClick={() => onEditSubmit(review.id)}>Edit</Button>
-                                    </div>
+                if(review.enabled) {
+                    return (
+                        <CommentCard>
+                            <FlexColumnContainer>
+                                <Paragraph2>
+                                    <FaUser/> {review.name}
+                                    <br/>
+                                    <br/>
+                                    {!isEditingComment || editIndex !== index ?
+                                        <div>
+                                            {review.comment}
+                                        </div> :
+                                        <FlexContainer style={{alignItems: "flex-end"}}>
+                                          <FlexColumnContainer>
+                                              <Input placeholder={"Comment..."}
+                                                     onChange={(e) => setEditComment(e.target.value)} type="text"
+                                                     name="editComment"/>
+                                              {commentErr && <XSmallText style={{color: "red"}}>{commentErr}</XSmallText>}
+                                          </FlexColumnContainer>
+                                            <Button style={{marginBottom: "0.5rem",transform: "scale(0.7)"}}
+                                                    onClick={() => onEditSubmit(review.id)}>Edit</Button>
+                                        </FlexContainer>
 
-                                }
-                            </Paragraph2>
-                        </FlexColumnContainer>
-                        <FlexContainer>
+                                    }
+                                </Paragraph2>
+                            </FlexColumnContainer>
+                            {(auth.user.email == review.email || auth.user.role == "ADMIN") &&
+                                <FlexContainer>
+                                    <EditIconContainer>
+                                        <FaEdit onClick={() => {
+                                            setIsEditingComment(true);
+                                            setEditIndex(index);
+                                        }} style={{fontSize: "2rem"}}/>
+                                    </EditIconContainer>
+                                    <EditIconContainer style={{marginLeft: "2.4rem"}}>
+                                        <FaTrash  onClick={() => {
+                                            props.onDelete(review.id)
+                                        }} style={{fontSize: "2rem"}}/>
+                                    </EditIconContainer>
+                                </FlexContainer>
 
-                        <EditIconContainer>
-                            <FaEdit onClick={() => {
-                                setIsEditingComment(true);
-                                setEditIndex(index);
-                            }} style={{fontSize: "2rem"}}/>
-                        </EditIconContainer>
-                        <EditIconContainer style={{marginLeft: "2.4rem"}}>
-                            <FaTrash  onClick={() => {
-                                props.onDelete(review.id)
-                            }} style={{fontSize: "2rem"}}/>
-                        </EditIconContainer>
-                        </FlexContainer>
-                    </CommentCard>
-                )
+                            }
+
+                        </CommentCard>
+                    );
+                }
             })}
             {auth.isAuthenticated &&
             !isCreatingComment ?

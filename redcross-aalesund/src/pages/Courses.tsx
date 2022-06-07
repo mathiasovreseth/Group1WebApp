@@ -88,7 +88,7 @@ function LoadCourses() {
   useEffect(()=> {
       sendApiRequest("GET","/products/getAll",null, true).then((data: any) => {
           const productTemp: any = [];
-          data.forEach((product: getCoursesApiResponse)=> {
+          data.forEach((product: getCoursesApiResponse) => {
               productTemp.push({
                   id: product.id,
                   title: product.title,
@@ -108,8 +108,11 @@ function LoadCourses() {
         data.forEach((review: any)=> {
             reviewTemp.push({
                 id: review[0],
+                enabled: review[1],
                 name: review[2],
-                comment: review[3]
+                comment: review[3],
+                userEmail: review[4],
+
             });
         });
         console.log(reviewTemp);
@@ -134,8 +137,21 @@ function LoadCourses() {
         comment: comment,
 
       }
-      sendApiRequest("POST", "/reviews/add", body, false).then(()=> {
-          toast.success('Account created!', {
+      sendApiRequest("POST", "/reviews/add", body, true).then((data: any)=> {
+
+          const review: any = {
+              id: data.id,
+              name: auth.user.name,
+              comment: data.comment,
+              email: auth.user.email,
+          }
+          const tempArr = selectedProduct?.reviews.filter(t => t.id != -1);
+          tempArr?.push(review);
+          setSelectedProduct({
+              ...data,
+              reviews: tempArr,
+          });
+          toast.success('Comment added', {
               position: "top-center",
               autoClose: 1000,
               hideProgressBar: false,
@@ -165,6 +181,18 @@ function LoadCourses() {
 
       }
       sendApiRequest("PUT", "/reviews/update", body, false).then(()=> {
+          const commentToEdit: Array<any> | undefined = selectedProduct?.reviews.filter((t: any) => t.id == reviewId);
+          const newCommentList: Array<any> | undefined = selectedProduct?.reviews.filter((t: any) => t.id != reviewId);
+          // @ts-ignore
+          commentToEdit[0].comment = comment;
+          // @ts-ignore
+          newCommentList.push(commentToEdit[0]);
+
+          setSelectedProduct({
+              ...selectedProduct,
+              // @ts-ignore
+              reviews: newCommentList,
+          });
           toast.success('Review updated', {
               position: "top-center",
               autoClose: 1000,
@@ -194,6 +222,13 @@ function LoadCourses() {
             const postData = {
                 reviewId: reviewId,
             };
+            const newCommentList: Array<any> | undefined = selectedProduct?.reviews.filter((t: any) => t.id != reviewId);
+
+            setSelectedProduct({
+                ...selectedProduct,
+                // @ts-ignore
+                reviews: newCommentList,
+            });
             sendApiRequest("PUT", "/reviews/delete",postData, false).then((res: any)=> {
                 toast.success(res, {
                     position: "top-center",
@@ -234,6 +269,7 @@ function LoadCourses() {
               review.forEach((element: any ) => {
                 if(rev.id === element.id){
                   rev.name = element.name
+                  rev.email = element.userEmail;
                 }
               });
             })

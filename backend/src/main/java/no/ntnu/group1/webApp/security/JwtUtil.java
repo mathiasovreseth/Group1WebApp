@@ -38,6 +38,7 @@ public class JwtUtil {
                 .setSubject(userDetails.getEmail())
                 .claim(JWT_AUTH_KEY, userDetails.getAuthorities())
                 .claim("userID", userDetails.getId())
+                .claim("userName", userDetails.getName())
                 .setIssuedAt(new Date(TIME_NOW))
                 .setExpiration(new Date(TIME_AFTER_ONE_HOUR))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)

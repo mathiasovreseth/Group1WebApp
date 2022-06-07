@@ -23,6 +23,7 @@ export const authHelper = {
                     id: jwtObject.userID,
                     email: jwtObject.sub,
                     role: jwtObject.roles[0]["authority"],
+                    name: jwtObject.userName
                 }
 
             }
