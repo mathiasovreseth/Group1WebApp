@@ -6,6 +6,7 @@ export enum UserRole {
 }
 // change this
 export interface UserAuthResponse {
+    id: string,
     email: string,
     role: string,
 }

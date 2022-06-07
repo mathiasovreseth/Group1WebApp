@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa";
+import React, {useEffect, useState} from "react";
+import {FaEdit, FaTrash, FaUser} from "react-icons/fa";
 import styled from "styled-components";
-import { useAuth } from "../../auth/Auth";
-import { getCommentsApiResponse, getCoursesApiResponse } from "../../models/CourseModel";
-import { getUserApiResponse } from "../../models/UserModel";
-import { H1, MediumText, XSmallText } from "../../styles/CommonStyles";
-import { sendApiRequest } from "../../utils/requests";
+import {useAuth} from "../../auth/Auth";
+import {getCommentsApiResponse, getCoursesApiResponse} from "../../models/CourseModel";
+import {getUserApiResponse} from "../../models/UserModel";
+import {FlexColumnContainer, FlexContainer, H1, Input, MediumText, XSmallText} from "../../styles/CommonStyles";
+import {sendApiRequest} from "../../utils/requests";
+import {isValidEmail, isValidPassword} from "../../utils/FormValidation";
+import {sortById} from "../../utils/Sorting";
+import {toast} from "react-toastify";
 
 
 const H2Comment = styled.h2`
@@ -19,22 +22,6 @@ const H2Comment = styled.h2`
   }
 `;
 
-const TrustedComment = styled.section`
-  display: grid;
-  padding-left: 5%;
-  padding-right: 5%;
-  text-align: left;
-  grid-template-columns: 15% 1fr 15%;
-  grid-template-rows: 12rem fit-content;
-  grid-gap: 50px;
-  margin-bottom: 2rem;
-  @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {  
-    grid-template-columns: 8rem auto;
-    grid-template-rows: 8rem fit-content;
-    margin-bottom: 2rem;
-  }
-  
-`;
 
 const H2Name = styled.h2`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
@@ -48,41 +35,158 @@ const H2Name = styled.h2`
 `;
 
 
-
 const Paragraph2 = styled.p`
   font-size: ${props => `${props.theme.fontSizes.medium}`};
   padding: 1rem;
-  grid-column: 2;
-  background-color: #f3f3f3;
   border-radius: ${props => `${props.theme.borderRadius}`};
   @media screen and (max-width: ${props => `${props.theme.breakPoints.tabletLandScape}`}) {
     font-size: ${props => `${props.theme.fontSizes.xSmall}`};
   }
 `;
 
+const Button = styled.button`
+  border: 0;
+  border-radius: ${props => `${props.theme.borderRadius}`};
+  font-size: ${props => `${props.theme.fontSizes.large}`};
+  padding: 1rem 0;
+  margin-top: 2rem;
+  background-color: ${props => `${props.theme.palette.primary.accentColor}`};
+  color: white;
+  cursor: pointer;
+  width: 26rem;
+  height: 4.5rem;
+  overflow-y: hidden;
+`;
+const CommentCard = styled(FlexContainer)`
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.2rem;
+  background-color: #f3f3f3;
+  margin-bottom: 1.2rem;
+
+`;
+
+const EditIconContainer = styled.div`
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+function Comments(props: { reviews: Array<any>; onDelete: (reviewId: number) => void; onEditSubmit: (comment: string, reviewId: number) => void; onSubmit: (comment: string) => void }) {
+    const [isCreatingComment, setIsCreatingComment] = useState(false);
+    const [isEditingComment, setIsEditingComment] = useState(false);
+    const [editIndex, setEditIndex] = useState(-1);
+    const [comment, setComment] = useState("");
+    const [editComment, setEditComment] = useState("");
+    const [commentErr, setCommentErr] = useState("");
+    const [reviews, setReviews] = useState<Array<any>>([]);
+
+    const auth = useAuth();
+
+    useEffect(() => {
+        let tempRev: Array<any> = [];
+        props.reviews.forEach((rev) => {
+            tempRev.push({
+                ...rev,
+                isEditing: false,
+            });
+        });
+        setReviews(tempRev);
+    }, [props.reviews])
+
+    function validateForm() {
+        let isValid = true;
+
+        if (isEditingComment) {
+            if (editComment.length === 0) {
+                setCommentErr('Comment is required');
+                isValid = false;
+            }
+        } else {
+            if (comment.length === 0) {
+                setCommentErr('Comment is required');
+                isValid = false;
+            }
+        }
+        return isValid;
+    }
+
+    function onSubmit() {
+        if (validateForm()) {
+            setIsCreatingComment(false)
+            props.onSubmit(comment);
+        }
+    }
+
+    function onEditSubmit(reviewId: number) {
+        if (validateForm()) {
+            props.onEditSubmit(editComment, reviewId);
+        }
+    }
 
 
-function Comments(props: {reviews: Array<any>;}) {
-  const reviews = props.reviews;
-
-
-    
     return (
-          <>
-          <H1>Comments</H1>
-          
-               <TrustedComment>
-                      {props.reviews.map((review) => {
-                   return (
-                     <><Paragraph2> <FaUser/> {review.name} <br /> <br />{review.comment}</Paragraph2>
-                    </>
-                     ) 
-                    })}
-                </TrustedComment>
-          
-          </>
-        )
-  
+        <FlexColumnContainer style={{width: "100vw", alignItems: "center"}}>
+            <H1>Comments</H1>
+            {reviews.map((review, index) => {
+                return (
+                    <CommentCard>
+                        <FlexColumnContainer>
+                            <Paragraph2>
+                                <FaUser/> {review.name}
+                                <br/>
+                                <br/>
+                                {!isEditingComment || editIndex !== index ?
+                                    <div>
+                                        {review.comment}
+                                    </div> :
+                                    <div>
+                                        <Input placeholder={"Comment..."}
+                                               onChange={(e) => setEditComment(e.target.value)} type="text"
+                                               name="editComment"/>
+                                        {commentErr && <XSmallText style={{color: "red"}}>{commentErr}</XSmallText>}
+                                        <Button style={{marginTop: "1.2rem", transform: "scale(0.7)"}}
+                                                onClick={() => onEditSubmit(review.id)}>Edit</Button>
+                                    </div>
+
+                                }
+                            </Paragraph2>
+                        </FlexColumnContainer>
+                        <FlexContainer>
+
+                        <EditIconContainer>
+                            <FaEdit onClick={() => {
+                                setIsEditingComment(true);
+                                setEditIndex(index);
+                            }} style={{fontSize: "2rem"}}/>
+                        </EditIconContainer>
+                        <EditIconContainer style={{marginLeft: "2.4rem"}}>
+                            <FaTrash  onClick={() => {
+                                props.onDelete(review.id)
+                            }} style={{fontSize: "2rem"}}/>
+                        </EditIconContainer>
+                        </FlexContainer>
+                    </CommentCard>
+                )
+            })}
+            {auth.isAuthenticated &&
+            !isCreatingComment ?
+                <FlexContainer style={{justifyContent: "center"}}><Button onClick={() => setIsCreatingComment(true)}
+                                                                          style={{marginBottom: "1.2rem"}}>Create
+                    comment</Button></FlexContainer> :
+                <FlexColumnContainer style={{alignItems: "center", justifyContent: "center"}}>
+                    <Input placeholder={"Comment..."} onChange={(e) => setComment(e.target.value)} type="text"
+                           name="comment"/>
+                    {commentErr && <XSmallText style={{color: "red"}}>{commentErr}</XSmallText>}
+                    <Button style={{marginTop: "1.2rem"}} onClick={() => onSubmit()}>Create</Button>
+                </FlexColumnContainer>
+
+            }
+
+        </FlexColumnContainer>
+    )
+
 
 }
 

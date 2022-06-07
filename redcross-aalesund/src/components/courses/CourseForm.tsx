@@ -261,6 +261,7 @@ export function CourseForm(props: { title: string; info: string; id: number; }) 
                     <DatePicker
                         className='date-picker'
                         placeholderText="Click to select a date"
+                        minDate={new Date()}
                         selected={date}
                         onChange={(date: Date) => setDate(date)}
                         dateFormat={"dd-MM-yyyy"}

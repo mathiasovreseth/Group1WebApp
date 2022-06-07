@@ -14,6 +14,9 @@ import { useAuth } from "../auth/Auth";
 import { FlexColumnContainer } from "../styles/CommonStyles";
 import { H1 } from "../styles/CommonStyles";
 import Comments from "../components/comments/comments";
+import {toast, ToastContainer} from "react-toastify";
+import {getUserApiResponse} from "../models/UserModel";
+import {sortById} from "../utils/Sorting";
 
 const CoursesContainer = styled.div`
   width: 100%;
@@ -105,8 +108,8 @@ function LoadCourses() {
         data.forEach((review: any)=> {
             reviewTemp.push({
                 id: review[0],
-                name: review[1],
-                comment: review[2]
+                name: review[2],
+                comment: review[3]
             });
         });
         console.log(reviewTemp);
@@ -124,20 +127,115 @@ function LoadCourses() {
     
 }
 
-  return(
+ function handleCreateComment(comment: string) {
+      const body = {
+        productId: selectedProduct?.id ?? null,
+        email: auth.user.email,
+        comment: comment,
+
+      }
+      sendApiRequest("POST", "/reviews/add", body, false).then(()=> {
+          toast.success('Account created!', {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              bodyStyle: {fontSize: "3.2rem"},
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          });
+      }).catch(()=> {
+          toast.success('Failed to create comment', {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              bodyStyle: {fontSize: "3.2rem"},
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          });
+      });
+ }
+ function handleEditComment(reviewId: number, comment: string) {
+      const body = {
+        reviewId: reviewId,
+        comment: comment,
+
+      }
+      sendApiRequest("PUT", "/reviews/update", body, false).then(()=> {
+          toast.success('Review updated', {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              bodyStyle: {fontSize: "3.2rem"},
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          });
+      }).catch(()=> {
+          toast.success('Failed to update review', {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              bodyStyle: {fontSize: "3.2rem"},
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          });
+      });
+ }
+
+    function onDelete(reviewId: number) {
+        if(window.confirm("Are you sure?")) {
+            const postData = {
+                reviewId: reviewId,
+            };
+            sendApiRequest("PUT", "/reviews/delete",postData, false).then((res: any)=> {
+                toast.success(res, {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+            }).catch((e: any)=> {
+                toast.error(e, {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    bodyStyle: {fontSize: "3.2rem"},
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            })
+        }
+
+    }
+
+
+    return(
       <>
       <Container>
       <H1> Our courses</H1>
       <CoursesContainer>
         {product && product.map((data: getCoursesApiResponse) => {
           return <Section> <Course key={data.id} product={data} onSubmit={(data) => {
-            openPopup(); 
             data.reviews.forEach((rev) => {
               review.forEach((element: any ) => {
                 if(rev.id === element.id){
                   rev.name = element.name
                 }
-              }); setSelectedProduct(data); 
+              });
             })
               if(!auth.isAuthenticated) {
                   openPopup();
@@ -154,8 +252,19 @@ function LoadCourses() {
         <SectionForm> <CourseForm key={selectedProduct?.id} title={selectedProduct?.title ?? ""} info={selectedProduct?.description ?? ""} id={selectedProduct?.id ?? ""} /></SectionForm>}
     </Container>
     {selectedProduct && 
-    <Comments reviews={selectedProduct?.reviews} />}
-    
+    <Comments onDelete={(reviewId)=> onDelete(reviewId)} onEditSubmit={(comment, reviewId)=> handleEditComment(reviewId, comment)} onSubmit={(comment)=> handleCreateComment( comment)} reviews={selectedProduct?.reviews} />}
+          <ToastContainer
+              position="top-center"
+              autoClose={1000}
+              hideProgressBar={false}
+              style={{overflowY: "hidden"}}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+          />
     </>
 
   )

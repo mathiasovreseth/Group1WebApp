@@ -68,6 +68,7 @@ public class ReviewController {
      * @param http the http data
      * @return the response entity
      */
+    @CrossOrigin
     @PostMapping("/add")
     public ResponseEntity<?> addReview(HttpEntity<String> http) {
         try {
@@ -103,6 +104,7 @@ public class ReviewController {
      * @param http the http data
      * @return the response entity
      */
+    @CrossOrigin
     @PutMapping("/update")
     public ResponseEntity<?> updateReview(HttpEntity<String> http, HttpServletRequest request) {
         try {
@@ -141,6 +143,7 @@ public class ReviewController {
      * @param http the http data
      * @return the response entity
      */
+    @CrossOrigin
     @PutMapping("/delete")
     public ResponseEntity<?> deleteReview(HttpEntity<String> http, HttpServletRequest request) {
         try {

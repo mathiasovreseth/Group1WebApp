@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Allow JWT authentication
         security.cors().and().csrf().disable()
                 .authorizeRequests()
-                //permit logins and registrations
                 .antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/orders/getAll").permitAll()
