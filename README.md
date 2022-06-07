@@ -4,6 +4,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Intentions with the project
+A full stack application for a student project in the course IDATA2301 and IDATA2306.
 
 
 # Installation progress
@@ -36,3 +38,4 @@ spring.datasource.password=mypass
 spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
 jwt_secret_key=gammainalkmknepaalknaielpwoqoasmvbbbehjhajsdiiw
+
