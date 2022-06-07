@@ -19,3 +19,20 @@ To start the back-end application run  mvn spring-boot:run
 
 # Create admin user
 To create an admin user simply type in admin in the name field when registering a user
+
+# Env files
+In the redcross folder you need an .env 
+file with this content: REACT_APP_API_BASE_URL=http://localhost:8080/api
+
+# application.properties
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+
+## PostgreSQL
+spring.datasource.url=jdbc:postgresql://10.212.27.113:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=mypass
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+jwt_secret_key=gammainalkmknepaalknaielpwoqoasmvbbbehjhajsdiiw
