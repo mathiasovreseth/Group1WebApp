@@ -115,7 +115,6 @@ function LoadCourses() {
 
             });
         });
-        console.log(reviewTemp);
         setReview(reviewTemp);
     }).catch((err: any) => {
         console.log(err);
@@ -143,6 +142,7 @@ function LoadCourses() {
               id: data.id,
               name: auth.user.name,
               comment: data.comment,
+              enabled: true,
               email: auth.user.email,
           }
           const tempArr = selectedProduct?.reviews.filter(t => t.id != -1);
