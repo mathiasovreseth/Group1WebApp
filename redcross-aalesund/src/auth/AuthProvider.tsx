@@ -20,8 +20,10 @@ export const authHelper = {
             const jwtObject = authHelper.parseJwt(jwtString);
             if (jwtObject) {
                 user = {
+                    id: jwtObject.userID,
                     email: jwtObject.sub,
                     role: jwtObject.roles[0]["authority"],
+                    name: jwtObject.userName
                 }
 
             }

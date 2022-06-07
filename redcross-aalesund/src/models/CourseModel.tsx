@@ -4,8 +4,11 @@ export interface getCoursesApiResponse{
     title: string;
     reviews: Array<{
       id: number,
-      comment: string
-      name?: string}
+      comment: string,
+      email: string,
+      name?: string,
+      enabled: boolean | null,
+    }
     >;
   }
 

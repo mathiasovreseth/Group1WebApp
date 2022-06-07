@@ -84,26 +84,26 @@ function LoginForm(props: LoginFromProps) {
         });
     }
 
-    function validateForm() {
-        let isValid = true;
-        if (email.length === 0) {
-            setEmailErr('Required');
-            isValid = false;
+        function validateForm() {
+            let isValid = true;
+            if (email.length === 0) {
+                setEmailErr('Required');
+                isValid = false;
 
-        } else if (!isValidEmail(email)) {
-            setEmailErr('Invalid email address');
-            isValid = false;
-        }
-        if (password.length === 0) {
-            setPassErr('Required');
-            isValid = false;
+            } else if (!isValidEmail(email)) {
+                setEmailErr('Invalid email address');
+                isValid = false;
+            }
+            if (password.length === 0) {
+                setPassErr('Required');
+                isValid = false;
 
-        } else if (!isValidPassword(password)) {
-            setPassErr('Password must be 6 characters or more');
-            isValid = false;
+            } else if (!isValidPassword(password)) {
+                setPassErr('Password must be 6 characters or more');
+                isValid = false;
+            }
+            return isValid;
         }
-        return isValid;
-    }
 
     return (
         <Form onSubmit={(e) => {
