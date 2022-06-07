@@ -9,6 +9,6 @@ public class ReactAndSpringDataRestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ReactAndSpringDataRestApplication.class, args);
-        System.out.println("test");
+        System.out.println("Running");
     }
 }
